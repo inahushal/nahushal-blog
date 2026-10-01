@@ -1,0 +1,17 @@
+{{ define "main" }}
+<article class="post-card">
+  <h2 class="post-title">{{ .Title }}</h2>
+  <div class="post-content">{{ .Content }}</div>
+  <a class="substack-link" href="{{ site.Params.substack }}" target="_blank" rel="noopener">
+    ސަބްސްޓެކްގައި ލިޔުންތައް ކިޔާ
+  </a>
+</article>
+
+{{ range (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+<article class="post-card">
+  <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}" dir="ltr" lang="en">{{ .Date.Format "2 Jan 2006" }}</time>
+  <p class="post-content">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 200 }}{{ end }}</p>
+</article>
+{{ end }}
+{{ end }}

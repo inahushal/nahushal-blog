@@ -1,0 +1,87 @@
+/* Faruma: used for article pages. Uses the visitor's installed copy if present,
+   otherwise the file you add at static/fonts/Faruma.woff2. Falls back to Noto Sans Thaana. */
+@font-face {
+  font-family: 'Faruma';
+  src: local('Faruma'), url('/fonts/Faruma.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Noto Sans Thaana';
+  src: url('/fonts/NotoSansThaana-400.woff2') format('woff2');
+  font-weight: 400; font-style: normal; font-display: swap;
+  unicode-range: U+0780-07BF, U+060C, U+061B, U+061F, U+0640, U+FDF2, U+FDFD, U+200C-200F;
+}
+@font-face {
+  font-family: 'Noto Sans Thaana';
+  src: url('/fonts/NotoSansThaana-700.woff2') format('woff2');
+  font-weight: 700; font-style: normal; font-display: swap;
+  unicode-range: U+0780-07BF, U+060C, U+061B, U+061F, U+0640, U+FDF2, U+FDFD, U+200C-200F;
+}
+:root {
+  --lagoon-deep: #04222E; --lagoon-mid: #0E5C6E;
+  --turquoise: #1FC8A9; --turquoise-soft: #57E2C4;
+  --sand: #F6EFE1; --gold: #E7B65C; --card-bg: rgba(4, 34, 46, 0.7);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--lagoon-deep); }
+body {
+  font-family: 'Noto Sans Thaana', 'Faruma', 'MV Boli', system-ui, sans-serif;
+  background: radial-gradient(circle at 50% 20%, var(--lagoon-mid), var(--lagoon-deep) 70%);
+  background-attachment: fixed;
+  color: var(--sand);
+  min-height: 100vh; min-height: 100dvh;
+  line-height: 1.9;
+  display: flex; flex-direction: column;
+}
+header {
+  background: rgba(4, 34, 46, 0.85);
+  border-bottom: 1px solid rgba(31, 200, 169, 0.2);
+  padding: 1.5rem 2rem; text-align: center;
+}
+.site-title { text-decoration: none; }
+header h1 { color: var(--turquoise); font-size: 2.2rem; }
+.container { width: 100%; max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; }
+.post-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(87, 226, 196, 0.2);
+  border-radius: 12px; padding: 2rem; margin-bottom: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.post-title { color: var(--turquoise-soft); font-size: 1.6rem; margin-bottom: 0.8rem; }
+.post-title a { color: inherit; text-decoration: none; }
+.post-title a:hover { text-decoration: underline; }
+.post-date { color: var(--gold); font-size: 0.9rem; margin-bottom: 1rem; display: block; }
+.post-content { color: var(--sand); text-align: start; }
+.post-content p { margin-bottom: 1rem; }
+.post-content h2, .post-content h3 { color: var(--turquoise-soft); margin: 1.6rem 0 0.6rem; }
+.post-content a { color: var(--turquoise-soft); }
+.post-content ul, .post-content ol { margin: 0 1.5rem 1rem; }
+.post-content blockquote { border-inline-start: 3px solid var(--gold); padding-inline-start: 1rem; margin: 1rem 0; color: var(--gold); }
+.post-content img { max-width: 100%; height: auto; border-radius: 8px; }
+.substack-link, .back-link {
+  display: inline-block; margin-top: 1.2rem; padding: 0.6rem 1.4rem;
+  background: var(--turquoise); color: var(--lagoon-deep);
+  font-weight: 700; text-decoration: none; border-radius: 8px;
+  transition: background 0.2s ease;
+}
+.substack-link:hover, .substack-link:focus,
+.back-link:hover, .back-link:focus { background: var(--turquoise-soft); }
+footer {
+  background: var(--lagoon-deep); text-align: center; padding: 1.5rem;
+  border-top: 1px solid rgba(31, 200, 169, 0.2); font-size: 0.95rem;
+}
+footer a { color: var(--turquoise-soft); text-decoration: none; }
+@media (max-width: 600px) {
+  header { padding: 1.2rem 1rem; }
+  header h1 { font-size: 1.8rem; }
+  .post-card { padding: 1.3rem; }
+}
+.post-content figure { margin: 1.5rem 0; }
+.post-content figure img { display: block; width: 100%; }
+.post-content figcaption { color: var(--gold); font-size: 0.9rem; margin-top: 0.5rem; text-align: center; }
+
+/* Article pages use Faruma */
+.article, .article .post-title, .article .post-content, .article figcaption {
+  font-family: 'Faruma', 'Noto Sans Thaana', 'MV Boli', system-ui, sans-serif;
+}

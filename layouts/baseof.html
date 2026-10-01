@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="dv" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+{{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">{{ end }}
+{{ $css := resources.Get "css/style.css" | resources.Minify | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}">
+</head>
+<body>
+<header>
+  <a class="site-title" href="{{ site.Home.RelPermalink }}"><h1>{{ site.Title }}</h1></a>
+</header>
+<main class="container">
+{{ block "main" . }}{{ end }}
+</main>
+<footer>
+  <p>
+    ހުރިހާ ޙައްޤެއް ނަހުޝަލްއަށް ލިބިގެންވެއެވެ. ©
+    <bdi dir="ltr" lang="en"><a href="https://nahushal.com">nahushal.com</a></bdi>
+  </p>
+</footer>
+</body>
+</html>

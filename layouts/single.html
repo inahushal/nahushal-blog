@@ -1,0 +1,8 @@
+{{ define "main" }}
+<article class="post-card article">
+  <h2 class="post-title">{{ .Title }}</h2>
+  {{ if not .Date.IsZero }}<time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}" dir="ltr" lang="en">{{ .Date.Format "2 Jan 2006" }}</time>{{ end }}
+  <div class="post-content">{{ .Content }}</div>
+  <a class="back-link" href="{{ site.Home.RelPermalink }}">ފުރަތަމަ ސަފްޙާއަށް</a>
+</article>
+{{ end }}
