@@ -85,3 +85,5 @@ footer a { color: var(--turquoise-soft); text-decoration: none; }
 .article, .article .post-title, .article .post-content, .article figcaption {
   font-family: 'Faruma', 'Noto Sans Thaana', 'MV Boli', system-ui, sans-serif;
 }
+
+.article .post-content { font-size: 18px; line-height: 1.8; }

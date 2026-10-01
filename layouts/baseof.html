@@ -10,6 +10,9 @@
 <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
+{{ if .IsPage }}
+<meta property="og:image" content="{{ "images/rasmale-cover.png" | absURL }}">
+{{ end }}
 {{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">{{ end }}
 {{ $css := resources.Get "css/style.css" | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}">
@@ -23,7 +26,7 @@
 </main>
 <footer>
   <p>
-    ހުރިހާ ޙައްޤެއް ނަހުޝަލްއަށް ލިބިގެންވެއެވެ. ©
+    ހުރިހާ ޙައްޤެއް ލިބިގެންވަނީ ނަހުޝަލް އަށެވެ. ©
     <bdi dir="ltr" lang="en"><a href="https://nahushal.com">nahushal.com</a></bdi>
   </p>
 </footer>
