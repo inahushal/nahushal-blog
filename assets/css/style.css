@@ -367,8 +367,9 @@ footer a {
 @font-face {
   font-family: 'MV Izyan';
   src: url('/fonts/Mv-IzyanNormal-1.ttf') format('truetype');
+  unicode-range: U+0780-07BF, U+060C, U+061B, U+061F, U+200C-200F;
   font-weight: 400; font-style: normal; font-display: swap;
 }
 body, .article, .article .post-title, .article .post-content, .article figcaption {
-  font-family: 'MV Izyan', 'Noto Sans Thaana', 'MV Boli', system-ui, sans-serif;
+  font-family: 'MV Izyan', 'Noto Sans Thaana', system-ui, 'Segoe UI', Arial, sans-serif;
 }
