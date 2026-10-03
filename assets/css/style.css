@@ -103,3 +103,5 @@ footer a { color: var(--turquoise-soft); text-decoration: none; }
 .share-label { color: var(--gold); margin-inline-end: 0.4rem; }
 .share-btn { padding: 0.35rem 1rem; border: 1px solid var(--turquoise); border-radius: 999px; color: var(--turquoise-soft); text-decoration: none; font-size: 0.95rem; transition: background 0.2s ease, color 0.2s ease; }
 .share-btn:hover, .share-btn:focus { background: var(--turquoise); color: var(--lagoon-deep); }
+/* Space between the two book buttons */
+.book-text .substack-link { margin-inline-end: 0.8rem; }
