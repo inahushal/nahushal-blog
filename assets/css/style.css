@@ -1,5 +1,3 @@
-/* Faruma: used for article pages. Uses the visitor's installed copy if present,
-   otherwise the file you add at static/fonts/Faruma.woff2. Falls back to Noto Sans Thaana. */
 @font-face {
   font-family: 'Faruma';
   src: local('Faruma'), url('/fonts/Faruma.woff2') format('woff2');
@@ -85,5 +83,18 @@ footer a { color: var(--turquoise-soft); text-decoration: none; }
 .article, .article .post-title, .article .post-content, .article figcaption {
   font-family: 'Faruma', 'Noto Sans Thaana', 'MV Boli', system-ui, sans-serif;
 }
-
 .article .post-content { font-size: 18px; line-height: 1.8; }
+
+/* Book card with cover */
+.book-card { display: flex; gap: 2rem; align-items: flex-start; }
+.book-cover { flex: 0 0 200px; }
+.book-cover img {
+  display: block; width: 100%; height: auto;
+  border-radius: 6px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+.book-text { flex: 1; }
+
+@media (max-width: 600px) {
+  .book-card { flex-direction: column; }
+  .book-cover { flex: none; width: 60%; margin-inline: auto; }
+}
