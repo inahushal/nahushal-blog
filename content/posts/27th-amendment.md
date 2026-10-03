@@ -2,7 +2,7 @@
 title: "ފާސްވުމަށް 202 އަހަރު ފާއިތުވި އެމެރިކާގެ ދުސްތޫރީ އިސްލާހަކީ މެމްބަރުންގެ އިމްތިޔާޒާ ގުޅޭ އިސްލާހު"
 date: 2026-10-03T20:27:16+02:00
 description: ""
-draft: true
+draft: flase
 ---
 ![description of the picture](/images/contitution.jpg "caption text")
 
