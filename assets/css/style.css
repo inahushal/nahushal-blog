@@ -362,3 +362,13 @@ footer a {
 .nav-link { color: var(--sand); text-decoration: none; padding: 0.3rem 0.2rem; border-bottom: 2px solid transparent; transition: color 0.2s ease, border-color 0.2s ease; }
 .nav-link:hover, .nav-link:focus { color: var(--turquoise-soft); }
 .nav-link.active { color: var(--turquoise); border-bottom-color: var(--turquoise); }
+
+/* Site-wide font: MV Izyan */
+@font-face {
+  font-family: 'MV Izyan';
+  src: url('/fonts/Mv-IzyanNormal-1.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+body, .article, .article .post-title, .article .post-content, .article figcaption {
+  font-family: 'MV Izyan', 'Noto Sans Thaana', 'MV Boli', system-ui, sans-serif;
+}
