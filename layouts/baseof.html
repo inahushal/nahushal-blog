@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="dv" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -10,6 +10,21 @@
 <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
+
+{{ if .IsPage }}
+  {{ $images := findRE `(?i)src="[^"]+"` .Content 1 }}
+  {{ with $images }}
+    {{ $image := replaceRE `^src="|"$` "" (index . 0) }}
+    <meta property="og:image" content="{{ $image | absURL }}">
+    <meta property="og:image:alt" content="{{ $.Title }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $.Title }}">
+    <meta name="twitter:description" content="{{ with $.Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+    <meta name="twitter:image" content="{{ $image | absURL }}">
+    <meta name="twitter:image:alt" content="{{ $.Title }}">
+  {{ end }}
+{{ end }}
+
 {{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">{{ end }}
 {{ $css := resources.Get "css/style.css" | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}">
@@ -24,7 +39,7 @@
 </main>
 <footer>
   <p>
-    ހުރިހާ ޙައްޤެއް ލިބިގެންވަނީ ނަހުޝަލް އަށެވެ. ©
+    Þ€ÞªÞƒÞ¨Þ€Þ§ Þ™Þ¦Þ‡Þ°Þ¤Þ¬Þ‡Þ° ÞÞ¨Þ„Þ¨ÞŽÞ¬Þ‚Þ°ÞˆÞ¦Þ‚Þ© Þ‚Þ¦Þ€ÞªÞÞ¦ÞÞ° Þ‡Þ¦ÞÞ¬ÞˆÞ¬. Â©
     <bdi dir="ltr" lang="en"><a href="https://nahushal.com">nahushal.com</a></bdi>
   </p>
 </footer>
