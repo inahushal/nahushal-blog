@@ -1,45 +1,101 @@
 {{ define "main" }}
 
 <!-- BOOK HEADING -->
+
 <h2 class="section-heading">ފޮތް</h2>
 
 <!-- BOOK BLOCK -->
+
 <article class="post-card book-card">
-<!-- BOOK BLOCK -->
-<article class="post-card book-card">
+
   <div class="book-cover">
+
     <a href="https://dhivehifoiy.mv/books/the-crisis-of-maldivian-presidential-system-from-presidential-system-to-a-majilis-system" target="_blank" rel="noopener">
+
       <img src="/images/book-cover.png" alt="ފޮތުގެ ކަވަރު" loading="lazy">
+
     </a>
+
   </div>
 
   <div class="book-text">
+
     <h2 class="post-title">ދިވެހި ރިޔާސީ ނިޒާމުގެ ކާރިސާ: ރިޔާސީ ނިޒާމަކުން މަޖިލީހުގެ ނިޒާމަކަށް</h2>
+
     <div class="post-content">
+
       <p>
         މި ފޮތަކީ ދިވެހި ރިއާސީ ނިޒާމުގެ އަސާސީ މައްސަލަތަކަށް ބަހުސްކޮށް، ދިވެހި ދައުލަތުގެ ހިންގުމުގެ ނިޒާމަށް އެންމެ އެކަށީގެންވާ ނިޒާމަކީ ބަރުލަމާނީ ނިޒާމު ފަދަ ސިޔާސީ އިއްތިފާގެއްގެ މަތިން ހިންގޭ ނިޒާމެއްކަން ސާބިތުކުރުމަށް ހުއްޖަތް ގެނެސްދޭ ފޮތެކެވެ.
       </p>
+
     </div>
+
     <a class="substack-link" href="https://dhivehifoiy.mv/books/the-crisis-of-maldivian-presidential-system-from-presidential-system-to-a-majilis-system" target="_blank" rel="noopener">
       ފޮތް ކިޔާލުމަށް
-      <a class="substack-link btn-outline" href="/posts/about-the-book/">
-  ފޮތާ ބެހޭގޮތުން ކިޔާލުމަށް
-</a>
     </a>
+
+    <a class="substack-link btn-outline" href="/posts/about-the-book/">
+      ފޮތާ ބެހޭގޮތުން ކިޔާލުމަށް
+    </a>
+
   </div>
-</article>
 
 </article>
 
 <!-- ARTICLES HEADING -->
+
 <h2 class="section-heading">ލިޔުންތައް</h2>
 
 <!-- ARTICLES -->
-{{ range (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+
+{{ $articles := (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+
+{{ $paginator := .Paginate $articles 5 }}
+
+{{ range $paginator.Pages }}
+
 <article class="post-card">
-  <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-  <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "date.html" .Date }}</time>
-  <p class="post-content">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 200 }}{{ end }}</p>
+
+  <h2 class="post-title">
+    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+  </h2>
+
+  <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">
+    {{ partial "date.html" .Date }}
+  </time>
+
+  <p class="post-content">
+    {{ with .Description }}
+      {{ . }}
+    {{ else }}
+      {{ .Summary | plainify | truncate 200 }}
+    {{ end }}
+  </p>
+
 </article>
+
 {{ end }}
+
+<!-- PAGINATION -->
+
+{{ if or $paginator.HasPrev $paginator.HasNext }}
+
+<nav class="pagination">
+
+  {{ if $paginator.HasPrev }}
+    <a href="{{ $paginator.Prev.URL }}" class="pagination-prev">
+      ← ފަހަތަށް
+    </a>
+  {{ end }}
+
+  {{ if $paginator.HasNext }}
+    <a href="{{ $paginator.Next.URL }}" class="pagination-next">
+      ކުރިއަށް →
+    </a>
+  {{ end }}
+
+</nav>
+
+{{ end }}
+
 {{ end }}
