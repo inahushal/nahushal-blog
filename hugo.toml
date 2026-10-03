@@ -23,3 +23,8 @@ disableKinds = ["taxonomy", "term"]
   name = "ގުޅާލުމަށް ނުވަތަ މަޝްވަރާކުރުމަށް"
   url = "/contact/"
   weight = 3
+
+[[menus.main]]
+  name = "English Articles"
+  url = "https://substack.com/@ibrahimnahushal"
+  weight = 4

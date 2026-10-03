@@ -373,3 +373,5 @@ footer a {
 body, .article, .article .post-title, .article .post-content, .article figcaption {
   font-family: 'MV Izyan', 'Noto Sans Thaana', system-ui, 'Segoe UI', Arial, sans-serif;
 }
+/* Menu: no leftover highlight after clicking */
+.nav-link:focus:not(:focus-visible):not(:hover):not(.active) { color: var(--sand); }

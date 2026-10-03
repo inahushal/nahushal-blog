@@ -20,7 +20,7 @@
   <a class="site-title" href="{{ site.Home.RelPermalink }}"><h1>{{ site.Title }}</h1></a>
   <nav class="nav">
     {{ $page := . }}
-    {{ range site.Menus.main }}<a class="nav-link{{ if hasPrefix $page.RelPermalink .URL }} active{{ end }}" href="{{ .URL }}">{{ .Name }}</a>{{ end }}
+    {{ range site.Menus.main }}<a class="nav-link{{ if hasPrefix $page.RelPermalink .URL }} active{{ end }}" href="{{ .URL }}"{{ if hasPrefix .URL "http" }} target="_blank" rel="noopener"{{ end }}>{{ .Name }}</a>{{ end }}
   </nav>
 </header>
 <main class="container">
