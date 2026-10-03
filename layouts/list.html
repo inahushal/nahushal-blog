@@ -3,7 +3,7 @@
 {{ range .Pages.ByDate.Reverse }}
 <article class="post-card">
   <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-  <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}" dir="ltr" lang="en">{{ .Date.Format "2 Jan 2006" }}</time>
+  <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "date.html" .Date }}</time>
 </article>
 {{ end }}
 {{ end }}
