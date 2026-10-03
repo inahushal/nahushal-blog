@@ -357,3 +357,8 @@ footer a {
     font-size: 0.95rem;
   }
 }
+/* Navigation bar */
+.nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1.6rem; margin-top: 0.9rem; }
+.nav-link { color: var(--sand); text-decoration: none; padding: 0.3rem 0.2rem; border-bottom: 2px solid transparent; transition: color 0.2s ease, border-color 0.2s ease; }
+.nav-link:hover, .nav-link:focus { color: var(--turquoise-soft); }
+.nav-link.active { color: var(--turquoise); border-bottom-color: var(--turquoise); }

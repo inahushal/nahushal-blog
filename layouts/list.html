@@ -1,9 +1,10 @@
 {{ define "main" }}
-<h2 class="post-title">{{ .Title }}</h2>
-{{ range .Pages.ByDate.Reverse }}
+<h2 class="section-heading">{{ .Title }}</h2>
+{{ range (where .Pages "Params.unlisted" "ne" true).ByDate.Reverse }}
 <article class="post-card">
   <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
   <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "date.html" .Date }}</time>
+  <p class="post-content">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 200 }}{{ end }}</p>
 </article>
 {{ end }}
 {{ end }}
