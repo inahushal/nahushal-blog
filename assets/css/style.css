@@ -385,3 +385,9 @@ body, .article, .article .post-title, .article .post-content, .article figcaptio
 @media (max-width: 600px) { .post-nav { flex-direction: column; } .post-nav-link { max-width: 100%; } }
 /* Article links: text starts from the right */
 .post-nav-link, .post-nav-older { text-align: start; }
+/* Larger article text on phones */
+html { -webkit-text-size-adjust: 100%; }
+@media (max-width: 600px) {
+  .article .post-content { font-size: 20px; line-height: 1.95; }
+  .article .post-title { font-size: 1.7rem; line-height: 1.5; }
+}
