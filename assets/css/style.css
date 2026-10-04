@@ -1,4 +1,4 @@
-@font-face {
+﻿@font-face {
   font-family: 'Faruma';
   src: local('Faruma'), url('/fonts/Faruma.woff2') format('woff2');
   font-weight: 400;
@@ -394,4 +394,11 @@ html { -webkit-text-size-adjust: 100%; }
 /* Justified article paragraphs, wider screens only */
 @media (min-width: 700px) {
   .article .post-content p { text-align: justify; text-justify: inter-word; text-align-last: start; }
+}
+/* Article subheadings */
+.post-content h2 {
+  font-size: 1.35rem;
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
 }
