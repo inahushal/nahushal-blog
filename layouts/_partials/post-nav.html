@@ -1,0 +1,16 @@
+{{- $list := (where (where site.RegularPages "Section" "posts") "Params.unlisted" "ne" true).ByDate.Reverse -}}
+{{- $current := . -}}
+{{- $newer := false -}}
+{{- $older := false -}}
+{{- range $i, $p := $list -}}
+  {{- if eq $p.RelPermalink $current.RelPermalink -}}
+    {{- if gt $i 0 }}{{ $newer = index $list (sub $i 1) }}{{ end -}}
+    {{- if lt (add $i 1) (len $list) }}{{ $older = index $list (add $i 1) }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- if or $newer $older }}
+<nav class="post-nav">
+  {{ if $newer }}<a class="post-nav-link" href="{{ $newer.RelPermalink }}"><span class="post-nav-label">އާ ލިޔުން</span><span class="post-nav-title">{{ $newer.Title }}</span></a>{{ end }}
+  {{ if $older }}<a class="post-nav-link post-nav-older" href="{{ $older.RelPermalink }}"><span class="post-nav-label">ކުރީގެ ލިޔުން</span><span class="post-nav-title">{{ $older.Title }}</span></a>{{ end }}
+</nav>
+{{ end -}}

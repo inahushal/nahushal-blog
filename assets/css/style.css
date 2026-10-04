@@ -375,3 +375,13 @@ body, .article, .article .post-title, .article .post-content, .article figcaptio
 }
 /* Menu: no leftover highlight after clicking */
 .nav-link:focus:not(:focus-visible):not(:hover):not(.active) { color: var(--sand); }
+/* Previous / next article links */
+.post-nav { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid rgba(87, 226, 196, 0.2); }
+.post-nav-link { flex: 1; max-width: 48%; display: flex; flex-direction: column; gap: 0.2rem; padding: 0.8rem 1rem; border: 1px solid rgba(87, 226, 196, 0.25); border-radius: 10px; text-decoration: none; transition: border-color 0.2s ease, background 0.2s ease; }
+.post-nav-link:hover, .post-nav-link:focus { border-color: var(--turquoise); background: rgba(31, 200, 169, 0.08); }
+.post-nav-older { text-align: end; }
+.post-nav-label { color: var(--gold); font-size: 0.85rem; }
+.post-nav-title { color: var(--turquoise-soft); }
+@media (max-width: 600px) { .post-nav { flex-direction: column; } .post-nav-link { max-width: 100%; } }
+/* Article links: text starts from the right */
+.post-nav-link, .post-nav-older { text-align: start; }
