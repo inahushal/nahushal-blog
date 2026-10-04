@@ -391,3 +391,7 @@ html { -webkit-text-size-adjust: 100%; }
   .article .post-content { font-size: 20px; line-height: 1.95; }
   .article .post-title { font-size: 1.7rem; line-height: 1.5; }
 }
+/* Justified article paragraphs, wider screens only */
+@media (min-width: 700px) {
+  .article .post-content p { text-align: justify; text-justify: inter-word; text-align-last: start; }
+}
