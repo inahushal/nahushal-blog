@@ -1,0 +1,89 @@
+<div id="search-panel" class="search-panel" hidden>
+  <form id="search-form" class="search-box" role="search">
+    <input id="search-input" type="search" aria-label="ހޯދާ" autocomplete="off">
+  </form>
+  <div id="search-results" class="search-results" aria-live="polite"></div>
+</div>
+<script>
+(function () {
+  var input = document.getElementById('search-input');
+  var form = document.getElementById('search-form');
+  var box = document.getElementById('search-results');
+  var panel = document.getElementById('search-panel');
+  var toggle = document.getElementById('search-toggle');
+  var items = null;
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+  function escRe(s) {
+    return s.replace(/[.*+?^$(){}|\[\]\\]/g, '\\$&');
+  }
+  function searchItems(list, q) {
+    var terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+    var out = [];
+    list.forEach(function (it) {
+      var title = it.title.toLowerCase();
+      var text = (it.description + ' ' + it.content).toLowerCase();
+      var ok = terms.every(function (t) { return title.indexOf(t) > -1 || text.indexOf(t) > -1; });
+      if (ok) {
+        out.push({ it: it, inTitle: terms.some(function (t) { return title.indexOf(t) > -1; }) });
+      }
+    });
+    out.sort(function (a, b) { return (b.inTitle ? 1 : 0) - (a.inTitle ? 1 : 0); });
+    return { terms: terms, results: out };
+  }
+  function snippet(it, terms) {
+    var text = it.content.replace(/\s+/g, ' ');
+    var low = text.toLowerCase();
+    var pos = -1;
+    for (var i = 0; i < terms.length; i++) {
+      var p = low.indexOf(terms[i]);
+      if (p > -1) { pos = p; break; }
+    }
+    if (pos < 0) return esc(it.description || '');
+    var start = Math.max(0, pos - 50);
+    var s = esc(text.substring(start, pos + 120));
+    var re = new RegExp('(' + terms.map(function (t) { return escRe(esc(t)); }).join('|') + ')', 'gi');
+    return (start > 0 ? '… ' : '') + s.replace(re, '<mark>$1</mark>') + ' …';
+  }
+  function render(res) {
+    if (!res.results.length) {
+      box.innerHTML = '<p class="search-empty">ނަތީޖާއެއް ނުފެނުނު</p>';
+      return;
+    }
+    box.innerHTML = res.results.slice(0, 10).map(function (r) {
+      return '<a class="search-result" href="' + r.it.url + '">' +
+        '<span class="search-result-title">' + esc(r.it.title) + '</span>' +
+        '<span class="search-result-date">' + esc(r.it.date) + '</span>' +
+        '<span class="search-result-text">' + snippet(r.it, res.terms) + '</span></a>';
+    }).join('');
+  }
+  function run() {
+    var q = input.value.trim();
+    if (!q) { box.innerHTML = ''; return; }
+    if (items) { render(searchItems(items, q)); return; }
+    fetch('/index.json').then(function (r) { return r.json(); }).then(function (data) {
+      items = data;
+      render(searchItems(items, input.value.trim()));
+    });
+  }
+  function openPanel() {
+    panel.hidden = false;
+    toggle.setAttribute('aria-expanded', 'true');
+    input.focus();
+  }
+  function closePanel() {
+    panel.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+    input.value = '';
+    box.innerHTML = '';
+  }
+  toggle.addEventListener('click', function () { if (panel.hidden) { openPanel(); } else { closePanel(); } });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !panel.hidden) { closePanel(); toggle.focus(); }
+  });
+  input.addEventListener('input', run);
+  form.addEventListener('submit', function (e) { e.preventDefault(); run(); });
+})();
+</script>

@@ -9,7 +9,7 @@ disableKinds = ["taxonomy", "term"]
   substack = "https://substack.com/@ibrahimnahushal"
   ga4 = "G-5JMJJ24VM9"
 [outputs]
-  home = ["HTML", "RSS"]
+  home = ["HTML", "RSS", "JSON"]
 
 [[menus.main]]
   name = "ލިޔުން"

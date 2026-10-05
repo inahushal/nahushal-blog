@@ -24,7 +24,9 @@
   <nav class="nav">
     {{ $page := . }}
     {{ range site.Menus.main }}<a class="nav-link{{ if hasPrefix $page.RelPermalink .URL }} active{{ end }}" href="{{ .URL }}"{{ if hasPrefix .URL "http" }} target="_blank" rel="noopener"{{ end }}>{{ .Name }}</a>{{ end }}
+  {{ partial "search-button.html" . }}
   </nav>
+  {{ partial "search.html" . }}
 </header>
 <main class="container">
 {{ block "main" . }}{{ end }}

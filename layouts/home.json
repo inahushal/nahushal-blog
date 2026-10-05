@@ -1,0 +1,5 @@
+{{- $items := slice -}}
+{{- range (where (where site.RegularPages "Section" "posts") "Params.unlisted" "ne" true).ByDate.Reverse -}}
+  {{- $items = $items | append (dict "title" .Title "url" .RelPermalink "date" (partial "date.html" .Date | string) "description" (.Description | default "") "content" .Plain) -}}
+{{- end -}}
+{{- $items | jsonify -}}
