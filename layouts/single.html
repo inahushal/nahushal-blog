@@ -85,12 +85,11 @@
   "use strict";
 
   var popup = document.getElementById("subscribe-popup");
-  var article = document.getElementById("article-content");
+  
 
-  if (!popup || !article) {
+  if (!popup) {
     return;
   }
-
   var closeButton = document.getElementById("subscribe-popup-close");
   var laterButton = document.getElementById("subscribe-popup-later");
   var overlay = popup.querySelector(".subscribe-popup-overlay");
@@ -140,29 +139,20 @@
   }
 
   function checkScroll() {
-    if (recentlyShown()) {
-      return;
-    }
+    if (recentlyShown()) return;
 
-    var rect = article.getBoundingClientRect();
-    var articleTop = rect.top + window.scrollY;
-    var articleHeight = article.offsetHeight;
-
-    if (articleHeight < 100) {
-      return;
-    }
-
-    var progress = (
-      window.scrollY - articleTop
-    ) / (
-      articleHeight - window.innerHeight
+    var documentHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
     );
 
-    if (progress >= 0.70) {
+    var viewportBottom = window.scrollY + window.innerHeight;
+
+    if (viewportBottom >= documentHeight - 40) {
       showPopup();
+      window.removeEventListener("scroll", checkScroll);
     }
   }
-
   closeButton.addEventListener("click", hidePopup);
   laterButton.addEventListener("click", hidePopup);
   overlay.addEventListener("click", hidePopup);
@@ -218,10 +208,28 @@
       button.textContent = "ސަބްސްކްރައިބް ކުރަން";
     });
   });
+  function checkBottom() {
+    if (recentlyShown()) {
+      return;
+    }
 
-  setTimeout(checkScroll, 300);
+    var scrollPosition = window.scrollY + window.innerHeight;
+    var pageHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
 
-})();
+    if (scrollPosition >= pageHeight - 50) {
+      showPopup();
+      window.removeEventListener("scroll", checkBottom);
+    }
+  }
+
+  window.addEventListener("scroll", checkBottom, {
+    passive: true
+  });
+
+  checkBottom();})();
 </script>
 
 {{ end }}
