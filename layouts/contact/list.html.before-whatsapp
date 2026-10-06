@@ -3,6 +3,5 @@
   <h2 class="post-title">{{ .Title }}</h2>
   <div class="post-content">{{ .Content }}</div>
   <a class="substack-link" href="mailto:inahushal@gmail.com"><bdi dir="ltr" lang="en">inahushal@gmail.com</bdi></a>
-  <a class="substack-link" href="https://wa.me/+4917641139766" target="_blank" rel="noopener"><span>ވޯޓްސްއެޕް</span> <bdi dir="ltr" lang="en">+4917641139766</bdi></a>
 </article>
 {{ end }}
