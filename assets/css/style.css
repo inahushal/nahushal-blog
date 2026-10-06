@@ -814,3 +814,9 @@ body.subscribe-popup-open {
   text-align: center;
 }
 
+
+/* More articles */
+.more-articles { margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid rgba(87, 226, 196, 0.2); }
+.more-articles-heading { color: var(--gold); font-size: 1rem; margin: 0 0 0.8rem; }
+.more-articles-link { display: block; padding: 0.7rem 1rem; margin-bottom: 0.6rem; border: 1px solid rgba(87, 226, 196, 0.25); border-radius: 10px; color: var(--turquoise-soft); text-decoration: none; transition: border-color 0.2s ease, background 0.2s ease; }
+.more-articles-link:hover, .more-articles-link:focus { border-color: var(--turquoise); background: rgba(31, 200, 169, 0.08); }

@@ -1,0 +1,15 @@
+{{- $all := (where (where site.RegularPages "Section" "posts") "Params.unlisted" "ne" true).ByDate.Reverse -}}
+{{- $cur := . -}}
+{{- $older := where $all "Date" "lt" $cur.Date -}}
+{{- $picks := first 3 (after 1 $older) -}}
+{{- if eq (len $picks) 0 -}}
+  {{- $picks = first 3 (where $all "RelPermalink" "ne" $cur.RelPermalink) -}}
+{{- end -}}
+{{- with $picks }}
+<section class="more-articles">
+  <h3 class="more-articles-heading">އިތުރު ލިޔުންތައް</h3>
+  {{ range . }}
+  <a class="more-articles-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+  {{ end }}
+</section>
+{{ end -}}

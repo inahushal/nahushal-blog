@@ -21,12 +21,8 @@
 
   {{ partial "share.html" . }}
 
-  {{ partial "post-nav.html" . }}
-
-  {{ partial "more-articles.html" . }}
-
   <a class="back-link" href="{{ site.Home.RelPermalink }}">
-    ފުރަތަމަ ސަފްޙާއަށް
+    ÞŠÞ¦Þ€Þ¦ÞŒÞ¦ÞÞ° Þ‹Þ¨Þ”ÞªÞ‰Þ¦ÞÞ°
   </a>
 
 </article>
