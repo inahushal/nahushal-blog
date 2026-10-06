@@ -1,0 +1,243 @@
+{{ define "main" }}
+
+<article class="post-card article">
+
+  <h2 class="post-title">{{ .Title }}</h2>
+
+  {{ if not .Date.IsZero }}
+  <time
+    class="post-date"
+    datetime="{{ .Date.Format "2006-01-02" }}"
+    dir="ltr"
+    lang="en"
+  >
+    {{ partial "date.html" .Date }}
+  </time>
+  {{ end }}
+
+  <div class="post-content" id="article-content">
+    {{ .Content }}
+  </div>
+
+  {{ partial "share.html" . }}
+
+  {{ partial "post-nav.html" . }}
+
+  {{ partial "more-articles.html" . }}
+
+  <a class="back-link" href="{{ site.Home.RelPermalink }}">
+    ފުރަތަމަ ސަފްޙާއަށް
+  </a>
+
+</article>
+
+<div id="subscribe-popup" class="subscribe-popup" aria-hidden="true">
+
+  <div class="subscribe-popup-overlay"></div>
+
+  <div class="subscribe-popup-box" role="dialog" aria-modal="true">
+
+    <button
+      type="button"
+      class="subscribe-popup-close"
+      id="subscribe-popup-close"
+      aria-label="Close"
+    >×</button>
+
+    
+
+    <h2>ލިޔުމެއް ޝާއިއު ކޮށްލެވުމުން ހަބަރުކޮށްލެވިދާނެ،</h2>
+
+    <form
+      class="subscribe-popup-form"
+      id="subscribe-popup-form"
+    >
+      <label for="subscribe-popup-email">އީމެއިލް އެޑްރެސް</label>
+
+      <input
+        type="email"
+        id="subscribe-popup-email"
+        name="email"
+        autocomplete="email"
+        required
+      >
+
+      <button
+        type="submit"
+        class="subscribe-popup-button"
+      >ސަބްސްކްރައިބް ކުރަން</button>
+
+      <p
+        id="subscribe-popup-message"
+        class="subscribe-popup-message"
+        aria-live="polite"
+      ></p>
+    </form>
+
+    <button
+      type="button"
+      class="subscribe-popup-later"
+      id="subscribe-popup-later"
+    >ފަހުން</button>
+
+  </div>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var popup = document.getElementById("subscribe-popup");
+  
+
+  if (!popup) {
+    return;
+  }
+  var closeButton = document.getElementById("subscribe-popup-close");
+  var laterButton = document.getElementById("subscribe-popup-later");
+  var overlay = popup.querySelector(".subscribe-popup-overlay");
+  var form = document.getElementById("subscribe-popup-form");
+  var emailInput = document.getElementById("subscribe-popup-email");
+  var message = document.getElementById("subscribe-popup-message");
+
+  var storageKey = "nahushal-subscribe-popup-v7";
+  var thirtyDays = 30 * 24 * 60 * 60 * 1000;
+
+  function recentlyShown() {
+    try {
+      var saved = localStorage.getItem(storageKey);
+
+      if (!saved) {
+        return false;
+      }
+
+      var timestamp = Number(saved);
+
+      return timestamp > 0 &&
+        (Date.now() - timestamp) < thirtyDays;
+
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function showPopup() {
+    if (recentlyShown()) {
+      return;
+    }
+
+    popup.classList.add("is-visible");
+    popup.setAttribute("aria-hidden", "false");
+    document.body.classList.add("subscribe-popup-open");
+
+    try {
+      localStorage.setItem(storageKey, String(Date.now()));
+    } catch (error) {}
+  }
+
+  function hidePopup() {
+    popup.classList.remove("is-visible");
+    popup.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("subscribe-popup-open");
+  }
+
+  function checkScroll() {
+    if (recentlyShown()) return;
+
+    var documentHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
+
+    var viewportBottom = window.scrollY + window.innerHeight;
+
+    if (viewportBottom >= documentHeight - 40) {
+      showPopup();
+      window.removeEventListener("scroll", checkScroll);
+    }
+  }
+  closeButton.addEventListener("click", hidePopup);
+  laterButton.addEventListener("click", hidePopup);
+  overlay.addEventListener("click", hidePopup);
+
+  window.addEventListener("scroll", checkScroll, {
+    passive: true
+  });
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var email = emailInput.value.trim();
+
+    if (!email) {
+      return;
+    }
+
+    var button = form.querySelector(".subscribe-popup-button");
+
+    button.disabled = true;
+    button.textContent = "...";
+    message.textContent = "ޝުކުރިއްޔާ! ނަން ނޯޓުކޮށްލިވިއްޖެ!";
+
+    fetch("https://nahushal-newsletter.inahushal.workers.dev/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        email: email
+      })
+    })
+    .then(function (response) {
+      if (!response.ok) {
+        throw new Error("Subscription failed");
+      }
+
+      return response.text();
+    })
+    .then(function () {
+      message.textContent = "ޝުކުރިއްޔާ! ނަން ނޯޓުކޮށްލިވިއްޖެ!";
+      emailInput.value = "";
+
+      setTimeout(function () {
+        hidePopup();
+      }, 1500);
+    })
+    .catch(function () {
+      message.textContent = "ޝުކުރިއްޔާ! ނަން ނޯޓުކޮށްލިވިއްޖެ!";
+    })
+    .finally(function () {
+      button.disabled = false;
+      button.textContent = "ސަބްސްކްރައިބް ކުރަން";
+    });
+  });
+  function checkBottom() {
+    if (recentlyShown()) {
+      return;
+    }
+
+    var scrollPosition = window.scrollY + window.innerHeight;
+    var pageHeight = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight
+    );
+
+    if (scrollPosition >= pageHeight - 50) {
+      showPopup();
+      window.removeEventListener("scroll", checkBottom);
+    }
+  }
+
+  window.addEventListener("scroll", checkBottom, {
+    passive: true
+  });
+
+  checkBottom();})();
+</script>
+
+{{ end }}
+
+
+
+
