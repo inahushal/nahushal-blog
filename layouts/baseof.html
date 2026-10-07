@@ -30,6 +30,61 @@
 </header>
 <main class="container">
 {{ block "main" . }}{{ end }}
+
+<section class="post-card subscribe-section">
+  <h2 class="post-title">ލިޔުމެއް ޝާއިއު ކޮށްލެވުމުން ހަބަރުކޮށްލެވިދާނެ،</h2>
+
+  <form class="subscribe-popup-form" id="subscribe-section-form">
+    <label for="subscribe-section-email">އީމެއިލް އެޑްރެސް</label>
+    <input type="email" id="subscribe-section-email" name="email" required>
+    <button type="submit" class="subscribe-popup-button" id="subscribe-section-button">ސަބްސްކްރައިބް ކުރަން</button>
+    <p class="subscribe-popup-message" id="subscribe-section-message" role="status" style="min-height:1.4em"></p>
+  </form>
+</section>
+
+<style>
+  .subscribe-section { margin-top: 2rem; } .subscribe-section .post-title { color: #fff; border: 0; text-decoration: none; } .subscribe-section form, .subscribe-section label, .subscribe-section .subscribe-popup-message { border: 0; box-shadow: none; } .subscribe-section .subscribe-popup-message { background: none; padding: 0; margin: 0; min-height: 0; } .subscribe-section hr { display: none; }
+</style>
+
+<script>
+(function () {
+  var form = document.getElementById("subscribe-section-form");
+  if (!form) { return; }
+  var input = document.getElementById("subscribe-section-email");
+  var button = document.getElementById("subscribe-section-button");
+  var message = document.getElementById("subscribe-section-message");
+  var label = button.textContent;
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var email = input.value.trim();
+    if (!email) { return; }
+
+    button.disabled = true;
+    button.textContent = "...";
+    message.textContent = "";
+
+    fetch("https://nahushal-newsletter.inahushal.workers.dev/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email })
+    })
+    .then(function (response) {
+      if (!response.ok) { throw new Error("Subscription failed"); }
+      try { localStorage.setItem("nahushal-subscribed", "1"); } catch (error) {}
+      message.textContent = "ޝުކުރިއްޔާ! ނަން ނޯޓުކޮށްލިވިއްޖެ!";
+      input.value = "";
+    })
+    .catch(function () {
+      message.textContent = "Something went wrong. Please try again.";
+    })
+    .finally(function () {
+      button.disabled = false;
+      button.textContent = label;
+    });
+  });
+})();
+</script>
 </main>
 <footer>
   <p class="footer-social">
