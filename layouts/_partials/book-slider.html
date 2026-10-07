@@ -1,0 +1,56 @@
+<style>
+  .book-slider { position: relative; margin-bottom: 2rem; }
+  .book-track { display: flex; align-items: flex-start; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .book-track::-webkit-scrollbar { display: none; }
+  .book-slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
+  .book-controls { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem; }
+  .book-arrow { width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 1px solid var(--turquoise); background: transparent; color: var(--turquoise); font-size: 1.4rem; line-height: 1; cursor: pointer; }
+  .book-arrow:hover, .book-arrow:focus { background: var(--turquoise); color: var(--lagoon-deep); }
+  .book-dots { display: flex; gap: .5rem; }
+  .book-dot { width: .7rem; height: .7rem; padding: 0; border: 0; border-radius: 50%; background: rgba(87, 226, 196, .3); cursor: pointer; }
+  .book-dot.is-active { background: var(--turquoise-soft); }
+</style>
+<div class="book-slider">
+<div class="book-track" id="book-track">
+{{ partial "book-cards.html" (dict "slider" true) }}
+</div>
+<div class="book-controls">
+  <button type="button" class="book-arrow" id="book-prev" aria-label="Previous book">&rsaquo;</button>
+  <div class="book-dots">
+    <button type="button" class="book-dot is-active" aria-label="Book 1"></button>
+    <button type="button" class="book-dot" aria-label="Book 2"></button>
+  </div>
+  <button type="button" class="book-arrow" id="book-next" aria-label="Next book">&lsaquo;</button>
+</div>
+</div>
+<script>
+(function () {
+  var track = document.getElementById("book-track");
+  if (!track) { return; }
+  var slides = track.querySelectorAll(".book-slide");
+  var dots = document.querySelectorAll(".book-dot");
+  var current = 0;
+
+  function go(i) {
+    if (i < 0 || i >= slides.length) { return; }
+    slides[i].scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+  }
+  function mark(i) {
+    current = i;
+    dots.forEach(function (d, n) { d.classList.toggle("is-active", n === i); });
+  }
+
+  document.getElementById("book-prev").addEventListener("click", function () { go(current - 1); });
+  document.getElementById("book-next").addEventListener("click", function () { go(current + 1); });
+  dots.forEach(function (d, n) { d.addEventListener("click", function () { go(n); }); });
+
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { mark(Array.prototype.indexOf.call(slides, e.target)); }
+      });
+    }, { root: track, threshold: 0.6 });
+    slides.forEach(function (s) { io.observe(s); });
+  }
+})();
+</script>
