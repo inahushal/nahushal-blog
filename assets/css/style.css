@@ -823,3 +823,5 @@ body.subscribe-popup-open {
 .footer-social { display: flex; justify-content: center; gap: 1.2rem; margin: 0 0 0.6rem; }
 .footer-social a { display: inline-flex; line-height: 0; }
 .footer-social svg { display: block; }
+/* Book titles slightly smaller */
+.book-text .post-title { font-size: 1.4rem; }
