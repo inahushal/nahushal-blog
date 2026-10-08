@@ -1,26 +1,28 @@
 <style>
-  .book-slider { position: relative; margin-bottom: 2rem; }
-  .book-track { display: flex; align-items: flex-start; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .book-slider { margin-bottom: 2rem; }
+  .book-stage { position: relative; padding: 0 1.8rem; }
+  .book-track { display: flex; align-items: flex-start; gap: 1.5rem; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; transition: height .25s ease; }
   .book-track::-webkit-scrollbar { display: none; }
   .book-slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
-  .book-controls { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top: 1rem; }
-  .book-arrow { width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 1px solid var(--turquoise); background: transparent; color: var(--turquoise); font-size: 1.4rem; line-height: 1; cursor: pointer; }
+  .book-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 2.4rem; height: 2.4rem; padding: 0; border-radius: 50%; border: 1px solid var(--turquoise); background: var(--lagoon-deep); color: var(--turquoise); font-size: 1.4rem; line-height: 1; cursor: pointer; }
   .book-arrow:hover, .book-arrow:focus { background: var(--turquoise); color: var(--lagoon-deep); }
-  .book-dots { display: flex; gap: .5rem; }
+  .book-arrow-prev { right: 0; }
+  .book-arrow-next { left: 0; }
+  .book-dots { display: flex; justify-content: center; gap: .5rem; margin-top: 1rem; }
   .book-dot { width: .7rem; height: .7rem; padding: 0; border: 0; border-radius: 50%; background: rgba(87, 226, 196, .3); cursor: pointer; }
   .book-dot.is-active { background: var(--turquoise-soft); }
 </style>
 <div class="book-slider">
-<div class="book-track" id="book-track">
+<div class="book-stage">
+  <button type="button" dir="ltr" class="book-arrow book-arrow-prev" id="book-prev" aria-label="Previous book">&rsaquo;</button>
+  <div class="book-track" id="book-track">
 {{ partial "book-cards.html" (dict "slider" true) }}
-</div>
-<div class="book-controls">
-  <button type="button" class="book-arrow" id="book-prev" aria-label="Previous book">&rsaquo;</button>
-  <div class="book-dots">
-    <button type="button" class="book-dot is-active" aria-label="Book 1"></button>
-    <button type="button" class="book-dot" aria-label="Book 2"></button>
   </div>
-  <button type="button" class="book-arrow" id="book-next" aria-label="Next book">&lsaquo;</button>
+  <button type="button" dir="ltr" class="book-arrow book-arrow-next" id="book-next" aria-label="Next book">&lsaquo;</button>
+</div>
+<div class="book-dots">
+  <button type="button" class="book-dot is-active" aria-label="Book 1"></button>
+  <button type="button" class="book-dot" aria-label="Book 2"></button>
 </div>
 </div>
 <script>
@@ -31,6 +33,10 @@
   var dots = document.querySelectorAll(".book-dot");
   var current = 0;
 
+  function fit() {
+    var s = slides[current];
+    if (s) { track.style.height = s.offsetHeight + "px"; }
+  }
   function go(i) {
     if (i < 0 || i >= slides.length) { return; }
     slides[i].scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
@@ -38,6 +44,7 @@
   function mark(i) {
     current = i;
     dots.forEach(function (d, n) { d.classList.toggle("is-active", n === i); });
+    fit();
   }
 
   document.getElementById("book-prev").addEventListener("click", function () { go(current - 1); });
@@ -52,5 +59,12 @@
     }, { root: track, threshold: 0.6 });
     slides.forEach(function (s) { io.observe(s); });
   }
+  if ("ResizeObserver" in window) {
+    var ro = new ResizeObserver(fit);
+    slides.forEach(function (s) { ro.observe(s); });
+  }
+  window.addEventListener("resize", fit);
+  window.addEventListener("load", fit);
+  fit();
 })();
 </script>
