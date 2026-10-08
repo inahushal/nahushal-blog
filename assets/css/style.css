@@ -839,3 +839,5 @@ body, .article, .article .post-title, .article .post-content, .article figcaptio
 .site-title, header h1 {
   font-family: 'MV Izyan', 'Noto Sans Thaana', system-ui, 'Segoe UI', Arial, sans-serif;
 }
+/* Article date on the right */
+.article .post-date { text-align: right; }
