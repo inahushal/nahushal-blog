@@ -20,7 +20,7 @@ disableKinds = ["taxonomy", "term"]
   url = "/books/"
   weight = 2
 [[menus.main]]
-  name = "ގުޅާލުމަށް ނުވަތަ މަޝްވަރާކުރުމަށް"
+  name = "ގުޅާލުމަށް"
   url = "/contact/"
   weight = 3
 
