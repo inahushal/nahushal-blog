@@ -858,3 +858,5 @@ body, .article, .article .post-title, .article .post-content, .article figcaptio
   font-family: 'MV Waheed', 'MV Funa', 'MV Izyan', 'Noto Sans Thaana', system-ui, 'Segoe UI', Arial, sans-serif;
   font-weight: 400;
 }
+/* White paragraphs in articles */
+.white-text, .white-text p, .white-text h2, .white-text h3 { color: #fff; }
