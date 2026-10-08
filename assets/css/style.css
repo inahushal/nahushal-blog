@@ -841,3 +841,20 @@ body, .article, .article .post-title, .article .post-content, .article figcaptio
 }
 /* Article date on the right */
 .article .post-date { text-align: right; }
+
+/* Titles, book titles, nav tabs and newsletter title: MV A Waheed */
+@font-face {
+  font-family: 'MV Waheed';
+  src: url('/fonts/MvAWaheed.ttf') format('truetype');
+  unicode-range: U+0780-07BF, U+060C, U+061B, U+061F, U+200C-200F;
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+.post-title, .article .post-title, .book-text .post-title, .subscribe-section .post-title, .nav, .nav-link {
+  font-family: 'MV Waheed', 'MV Funa', 'MV Izyan', 'Noto Sans Thaana', system-ui, 'Segoe UI', Arial, sans-serif;
+}
+.post-title, .article .post-title, .book-text .post-title, .subscribe-section .post-title { font-weight: 400; }
+/* Section headings in articles and the Books page: MV A Waheed */
+.post-content h2, .post-content h3, .post-content h4, .section-heading {
+  font-family: 'MV Waheed', 'MV Funa', 'MV Izyan', 'Noto Sans Thaana', system-ui, 'Segoe UI', Arial, sans-serif;
+  font-weight: 400;
+}

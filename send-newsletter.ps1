@@ -86,12 +86,13 @@ function Invoke-Resend($path, $body) {
 }
 
 # 1. Create the broadcast
+$bName = "Article: $Title"; if ($bName.Length -gt 70) { $bName = $bName.Substring(0, 67) + "..." }
 $payload = @{
   segment_id = $segmentId
   from       = $from
   subject    = $subject
   html       = $html
-  name       = "Article: $Title"
+  name       = $bName
 }
 if ($replyTo) { $payload.reply_to = $replyTo }
 
