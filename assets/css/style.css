@@ -825,3 +825,17 @@ body.subscribe-popup-open {
 .footer-social svg { display: block; }
 /* Book titles slightly smaller */
 .book-text .post-title { font-size: 1.4rem; }
+
+/* Site-wide font: MV Funa (header title stays MV Izyan) */
+@font-face {
+  font-family: 'MV Funa';
+  src: url('/fonts/MvFuna-Light.ttf') format('truetype');
+  unicode-range: U+0780-07BF, U+060C, U+061B, U+061F, U+200C-200F;
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+body, .article, .article .post-title, .article .post-content, .article figcaption {
+  font-family: 'MV Funa', 'MV Izyan', 'Noto Sans Thaana', system-ui, 'Segoe UI', Arial, sans-serif;
+}
+.site-title, header h1 {
+  font-family: 'MV Izyan', 'Noto Sans Thaana', system-ui, 'Segoe UI', Arial, sans-serif;
+}
