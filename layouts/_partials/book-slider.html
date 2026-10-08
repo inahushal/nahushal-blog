@@ -1,13 +1,13 @@
 <style>
   .book-slider { margin-bottom: 2rem; }
-  .book-stage { position: relative; padding: 0 1.8rem; }
+  .book-stage { position: relative; }
   .book-track { display: flex; align-items: flex-start; gap: 1.5rem; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; transition: height .25s ease; }
   .book-track::-webkit-scrollbar { display: none; }
   .book-slide { flex: 0 0 100%; min-width: 0; scroll-snap-align: start; }
-  .book-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 2.4rem; height: 2.4rem; padding: 0; border-radius: 50%; border: 1px solid var(--turquoise); background: var(--lagoon-deep); color: var(--turquoise); font-size: 1.4rem; line-height: 1; cursor: pointer; }
+  .book-arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 2; width: 2rem; height: 2rem; padding: 0; border-radius: 50%; border: 1px solid var(--turquoise); background: var(--lagoon-deep); color: var(--turquoise); font-size: 1.2rem; line-height: 1; cursor: pointer; }
   .book-arrow:hover, .book-arrow:focus { background: var(--turquoise); color: var(--lagoon-deep); }
-  .book-arrow-prev { right: 0; }
-  .book-arrow-next { left: 0; }
+  .book-arrow-prev { right: -1rem; }
+  .book-arrow-next { left: -1rem; }
   .book-dots { display: flex; justify-content: center; gap: .5rem; margin-top: 1rem; }
   .book-dot { width: .7rem; height: .7rem; padding: 0; border: 0; border-radius: 50%; background: rgba(87, 226, 196, .3); cursor: pointer; }
   .book-dot.is-active { background: var(--turquoise-soft); }
