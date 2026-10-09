@@ -1,6 +1,14 @@
-﻿{{ with site.Params.ga4 }}{{ if hugo.IsProduction }}
+{{ with site.Params.ga4 }}{{ if hugo.IsProduction }}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
 <script>
+  (function () {
+    try {
+      var q = location.search;
+      if (/[?&]notrack=1/.test(q)) { localStorage.setItem("nahushal-notrack", "1"); }
+      if (/[?&]notrack=0/.test(q)) { localStorage.removeItem("nahushal-notrack"); }
+      if (localStorage.getItem("nahushal-notrack") === "1") { window["ga-disable-{{ . }}"] = true; }
+    } catch (e) {}
+  })();
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
