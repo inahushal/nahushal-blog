@@ -1,6 +1,17 @@
 {{ define "main" }}
-<article class="post-card">
-  <h2 class="post-title">{{ .Title }}</h2>
-  <div class="post-content">{{ .Content }}</div>
+<h2 class="section-heading" dir="ltr">{{ .Title }}</h2>
+{{ range .Params.articles }}
+<article class="post-card journal-card">
+  <span class="journal-status{{ if eq .status "Forthcoming" }} is-forthcoming{{ end }}">{{ .status }}</span>
+  <h3 class="journal-title">{{ .title }}</h3>
+  <p class="journal-meta">{{ .journal }}{{ with .details }} &middot; {{ . }}{{ end }}</p>
+  {{ with .summary }}<p class="journal-summary">{{ . }}</p>{{ end }}
+  {{ with .keywords }}<ul class="journal-tags">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+  <div class="journal-actions">
+    {{ with .url }}<a class="substack-link" href="{{ . }}" target="_blank" rel="noopener">Read the article</a>{{ end }}
+    {{ with .doi }}<a class="substack-link btn-outline" href="https://doi.org/{{ . }}" target="_blank" rel="noopener">DOI: {{ . }}</a>{{ end }}
+    {{ with .note }}<p class="journal-note">{{ . }}</p>{{ end }}
+  </div>
 </article>
+{{ end }}
 {{ end }}

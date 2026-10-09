@@ -860,3 +860,15 @@ body, .article, .article .post-title, .article .post-content, .article figcaptio
 }
 /* White paragraphs in articles */
 .white-text, .white-text p, .white-text h2, .white-text h3 { color: #fff; }
+
+/* Journal Articles page */
+.journal-card { direction: ltr; text-align: left; font-family: system-ui, 'Segoe UI', Arial, sans-serif; }
+.journal-status { display: inline-block; font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.2rem 0.7rem; border-radius: 999px; border: 1px solid var(--turquoise); color: var(--turquoise-soft); margin-bottom: 0.9rem; }
+.journal-status.is-forthcoming { border-color: var(--gold); color: var(--gold); }
+.journal-title { font-family: Georgia, 'Times New Roman', serif; font-size: 1.35rem; line-height: 1.4; font-weight: 400; margin: 0 0 0.5rem; color: var(--turquoise-soft); }
+.journal-meta { color: var(--gold); font-size: 0.95rem; margin: 0 0 1rem; }
+.journal-summary { line-height: 1.8; margin: 0 0 1rem; }
+.journal-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.2rem; padding: 0; list-style: none; }
+.journal-tags li { font-size: 0.78rem; padding: 0.15rem 0.6rem; border-radius: 6px; background: rgba(87, 226, 196, 0.1); color: var(--turquoise-soft); }
+.journal-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; }
+.journal-note { opacity: 0.75; font-size: 0.9rem; margin: 0; }
