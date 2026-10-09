@@ -1,4 +1,4 @@
-﻿@font-face {
+@font-face {
   font-family: 'Faruma';
   src: local('Faruma'), url('/fonts/Faruma.woff2') format('woff2');
   font-weight: 400;
@@ -872,5 +872,5 @@ body, .article, .article .post-title, .article .post-content, .article figcaptio
 .journal-tags li { font-size: 0.78rem; padding: 0.15rem 0.6rem; border-radius: 6px; background: rgba(87, 226, 196, 0.1); color: var(--turquoise-soft); }
 .journal-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; }
 .journal-note { opacity: 0.75; font-size: 0.9rem; margin: 0; }
-/* Article body text 16px */
-.article .post-content { font-size: 16px; }
+/* Article body text 17px */
+.article .post-content { font-size: 17px; word-spacing: 0.1em; }
