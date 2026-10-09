@@ -31,13 +31,13 @@
 <main class="container">
 {{ block "main" . }}{{ end }}
 
-<section class="post-card subscribe-section">
-  <h2 class="post-title">ލިޔުމެއް ޝާއިއު ކޮށްލެވުމުން ހަބަރުކޮށްލެވިދާނެ،</h2>
+<section class="post-card subscribe-section"{{ if eq .Section "journal-articles" }} dir="ltr"{{ end }}>
+  <h2 class="post-title">{{ if eq .Section "journal-articles" }}Get notified when a new article is published{{ else }}ލިޔުމެއް ޝާއިއު ކޮށްލެވުމުން ހަބަރުކޮށްލެވިދާނެ،{{ end }}</h2>
 
   <form class="subscribe-popup-form" id="subscribe-section-form">
-    <label for="subscribe-section-email">އީމެއިލް އެޑްރެސް</label>
+    <label for="subscribe-section-email">{{ if eq .Section "journal-articles" }}Email address{{ else }}އީމެއިލް އެޑްރެސް{{ end }}</label>
     <input type="email" id="subscribe-section-email" name="email" required>
-    <button type="submit" class="subscribe-popup-button" id="subscribe-section-button">ސަބްސްކްރައިބް ކުރަން</button>
+    <button type="submit" class="subscribe-popup-button" id="subscribe-section-button">{{ if eq .Section "journal-articles" }}Subscribe{{ else }}ސަބްސްކްރައިބް ކުރަން{{ end }}</button>
     <p class="subscribe-popup-message" id="subscribe-section-message" role="status" style="min-height:1.4em"></p>
   </form>
 </section>
@@ -72,7 +72,7 @@
     .then(function (response) {
       if (!response.ok) { throw new Error("Subscription failed"); }
       try { localStorage.setItem("nahushal-subscribed", "1"); } catch (error) {}
-      message.textContent = "ޝުކުރިއްޔާ! ނަން ނޯޓުކޮށްލިވިއްޖެ!";
+      message.textContent = "{{ if eq .Section "journal-articles" }}Thank you! You are now subscribed.{{ else }}ޝުކުރިއްޔާ! ނަން ނޯޓުކޮށްލިވިއްޖެ!{{ end }}";
       input.value = "";
     })
     .catch(function () {
@@ -95,10 +95,10 @@
       <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
     </a>
   </p>
-  <p>
+  {{ if eq .Section "journal-articles" }}<p dir="ltr">Copyright &copy; {{ now.Year }} Ibrahim Nahushal</p>{{ else }}<p>
     ހުރިހާ ޙައްޤެއް ރައްކާކުރެވިފައި. ©
-    <bdi dir="ltr" lang="en"><a href="https://nahushal.com">nahushal.com</a></bdi>
-  </p>
+    {{ now.Year }} <a href="https://nahushal.com">ނަހުޝަލް</a>
+  </p>{{ end }}
 </footer>
 </body>
 </html>
