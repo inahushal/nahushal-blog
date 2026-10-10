@@ -874,3 +874,27 @@ body, .article, .article .post-title, .article .post-content, .article figcaptio
 .journal-note { opacity: 0.75; font-size: 0.9rem; margin: 0; }
 /* Article body text 17px */
 .article .post-content { font-size: 17px; word-spacing: 0.1em; }
+
+/* Article text: no justify, no extra word spacing */
+.article .post-content,
+.article .post-content p {
+  text-align: start;
+  text-justify: auto;
+  word-spacing: normal;
+  hyphens: none;
+}
+
+/* Wider column on article pages only */
+.container:has(.article) {
+  max-width: 1100px;
+}
+.article {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+@media (max-width: 600px) {
+  .article {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

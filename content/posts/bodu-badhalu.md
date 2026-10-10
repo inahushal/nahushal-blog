@@ -3,6 +3,7 @@ title: '"ބޮޑު ބަދަލު" ގެންނަންވާނީ އެމް.ޑީ.ޕީ އަ
 date: 2026-10-04T22:23:54+02:00
 description: ""
 draft: false
+image: "/images/bodu-badhalu-og.jpg"
 ---
 
 ![Description of the picture](/images/Gemini_Generated_Image_au1krhau1krhau1k.jpg)
