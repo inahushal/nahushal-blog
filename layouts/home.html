@@ -16,7 +16,7 @@
 
 {{ $articles := (where site.RegularPages "Section" "posts").ByDate.Reverse }}
 
-{{ $paginator := .Paginate $articles 5 }}
+{{ $paginator := .Paginate $articles 3 }}
 
 {{ range $paginator.Pages }}
 
