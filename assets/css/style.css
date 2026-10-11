@@ -931,3 +931,7 @@ section.comments h2, section.comments h3 { color: #fff; }
 :where(.comment-form button) { margin-top: 1rem; border: 0; font-family: inherit; cursor: pointer; }
 /* Comments: divider line (same as more-articles) */
 section.comments { border-top: 1px solid rgba(87, 226, 196, 0.2); }
+
+/* Comments: heading sizes */
+section.comments h2 { font-size: 1rem; }
+section.comments h3 { font-size: 1em; }
