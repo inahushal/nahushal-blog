@@ -935,3 +935,12 @@ section.comments { border-top: 1px solid rgba(87, 226, 196, 0.2); }
 /* Comments: heading sizes */
 section.comments h2 { font-size: 1rem; }
 section.comments h3 { font-size: 1em; }
+
+/* Comments: collapsible */
+section.comments details > summary { cursor: pointer; list-style-position: inside; }
+section.comments details > summary h2 { display: inline; margin: 0; }
+section.comments summary::marker { color: #fff; }
+section.comments details[open] > summary { margin-bottom: 1rem; }
+/* Comments: gold main heading */
+section.comments h2 { color: var(--gold, #c9a227); }
+section.comments summary::marker { color: var(--gold, #c9a227); }

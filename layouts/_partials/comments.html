@@ -18,7 +18,8 @@
   "busy" " ކުޑަ ވަގުތަކަށްފަހު އަލުން މަސައްކަތް ކުރައްވާ."
 -}}
 <section class="comments" id="comments" dir="rtl" data-slug="{{ .File.ContentBaseName }}">
-  <h2>{{ $t.heading }}</h2>
+  <details id="comments-details">
+  <summary><h2>{{ $t.heading }} <span id="comment-count"></span></h2></summary>
   <p id="comment-loading" class="comment-empty">{{ $t.loading }}</p>
   <ol id="comment-list" class="comment-list"></ol>
 
@@ -32,6 +33,7 @@
     <button type="submit" class="back-link">{{ $t.send }}</button>
     <p id="comment-status" role="status"></p>
   </form>
+</details>
 </section>
 
 <script>
@@ -60,6 +62,7 @@
 
   function render(rows) {
     list.textContent = '';
+    document.getElementById('comment-count').textContent = rows.length ? '(' + rows.length + ')' : '';
     if (!rows.length) { loading.textContent = T.none; loading.style.display = ''; return; }
     loading.style.display = 'none';
     rows.forEach(function (c) {
@@ -116,6 +119,7 @@
     .then(function () { btn.disabled = false; });
   });
 
+  if (location.hash === '#comments') { document.getElementById('comments-details').open = true; }
   load();
 })();
 </script>
