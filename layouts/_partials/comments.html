@@ -1,0 +1,122 @@
+{{- $on := true -}}
+{{- if isset .Params "comments" }}{{ $on = .Params.comments }}{{ end -}}
+{{- if $on -}}
+{{- /* ===== Dhivehi text: edit any line here ===== */ -}}
+{{- $t := dict
+  "heading" "ހިޔާލުތައް"
+  "leave" "ހިޔާލެއް ހުށަހަޅުއްވާ"
+  "name" "ނަން"
+  "msg" "ހިޔާލު"
+  "send" "ފޮނުއްވާ"
+  "sending" "ހުށަހަޅަނީ…"
+  "loading" "ހިޔާލުތައް ލޯޑު ކުރަނީ…"
+  "loadError" "ހިޔާލެއް ނެތް."
+  "none" "އަދި ހިޔާލެއް ނެތް. ފުރަތަމަ ހިޔާލު ލިޔުއްވާ."
+  "thanks" "ޝުކުރިއްޔާ! ތިޔަބޭފުޅާގެ ހިޔާލު ޝާއިޢު ކުރެވިއްޖެ."
+  "error" "މަޢާފުކުރައްވާ! އަލުން މަސައްކަތް ކުރައްވާ."
+  "invalid" "1500 އަކުރަށްވުރެ ކުރުކޮށް ލިއުއްވާ"
+  "busy" " ކުޑަ ވަގުތަކަށްފަހު އަލުން މަސައްކަތް ކުރައްވާ."
+-}}
+<section class="comments" id="comments" dir="rtl" data-slug="{{ .File.ContentBaseName }}">
+  <h2>{{ $t.heading }}</h2>
+  <p id="comment-loading" class="comment-empty">{{ $t.loading }}</p>
+  <ol id="comment-list" class="comment-list"></ol>
+
+  <h3>{{ $t.leave }}</h3>
+  <form id="comment-form" class="comment-form" autocomplete="off">
+    <label for="c-name">{{ $t.name }}</label>
+    <input type="text" id="c-name" dir="rtl" required maxlength="60">
+    <label for="c-msg">{{ $t.msg }}</label>
+    <textarea id="c-msg" dir="rtl" required maxlength="1500" rows="5"></textarea>
+    <input type="text" id="c-site" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
+    <button type="submit" class="back-link">{{ $t.send }}</button>
+    <p id="comment-status" role="status"></p>
+  </form>
+</section>
+
+<script>
+(function () {
+  var SUPABASE_URL = 'https://hoygogijigvlrtesxvaq.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_9X6CACW3TegXrWh98Bumgw_LMUADKQW';
+  var T = { none: {{ $t.none }}, loadError: {{ $t.loadError }}, sending: {{ $t.sending }},
+            thanks: {{ $t.thanks }}, error: {{ $t.error }}, invalid: {{ $t.invalid }}, busy: {{ $t.busy }} };
+
+  var slug = document.getElementById('comments').getAttribute('data-slug');
+  var list = document.getElementById('comment-list');
+  var loading = document.getElementById('comment-loading');
+  var form = document.getElementById('comment-form');
+  var status = document.getElementById('comment-status');
+  var btn = form.querySelector('button[type=submit]');
+
+  var headers = { apikey: SUPABASE_KEY };
+  if (SUPABASE_KEY.indexOf('eyJ') === 0) headers.Authorization = 'Bearer ' + SUPABASE_KEY;
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;   // plain text only, never HTML
+    return e;
+  }
+
+  function render(rows) {
+    list.textContent = '';
+    if (!rows.length) { loading.textContent = T.none; loading.style.display = ''; return; }
+    loading.style.display = 'none';
+    rows.forEach(function (c) {
+      var li = el('li', 'comment');
+      var head = el('div', 'comment-head');
+      head.appendChild(el('strong', 'comment-name', c.name));
+      head.appendChild(el('time', 'comment-date', new Date(c.created_at).toLocaleDateString('en-GB')));
+      li.appendChild(head);
+      li.appendChild(el('p', 'comment-text', c.message));
+      list.appendChild(li);
+    });
+  }
+
+  function load() {
+    var url = SUPABASE_URL + '/rest/v1/comments?select=name,message,created_at&slug=eq.' +
+              encodeURIComponent(slug) + '&order=created_at.asc&limit=200';
+    return fetch(url, { headers: headers })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(render)
+      .catch(function () { loading.textContent = T.loadError; });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (document.getElementById('c-site').value) { form.reset(); return; }   // bot trap
+    var name = document.getElementById('c-name').value.trim();
+    var message = document.getElementById('c-msg').value.trim();
+    if (!name || !message) return;
+
+    btn.disabled = true;
+    status.className = '';
+    status.textContent = T.sending;
+
+    var h = { 'Content-Type': 'application/json', 'Prefer': 'return=minimal' };
+    for (var k in headers) h[k] = headers[k];
+
+    fetch(SUPABASE_URL + '/rest/v1/comments', {
+      method: 'POST', headers: h,
+      body: JSON.stringify({ slug: slug, name: name, message: message })
+    })
+    .then(function (r) {
+      if (r.ok) {
+        form.reset();
+        status.className = 'ok';
+        status.textContent = T.thanks;
+        return load();
+      }
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        status.className = 'err';
+        status.textContent = j.code === '23514' ? T.invalid : (j.code === 'P0001' ? T.busy : T.error);
+      });
+    })
+    .catch(function () { status.className = 'err'; status.textContent = T.error; })
+    .then(function () { btn.disabled = false; });
+  });
+
+  load();
+})();
+</script>
+{{- end -}}

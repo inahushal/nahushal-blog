@@ -898,3 +898,36 @@ body, .article, .article .post-title, .article .post-content, .article figcaptio
     padding-right: 1rem;
   }
 }
+
+/* Comments */
+.comments { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--gold, #c9a227); }
+.comment-list { list-style: none; margin: 0 0 2rem; padding: 0; }
+.comment { padding: 0.9rem 1.1rem; margin-bottom: 0.8rem; border: 1px solid rgba(128,128,128,.35); border-radius: 10px; background: rgba(128,128,128,.08); }
+.comment-head { display: flex; gap: .8rem; align-items: baseline; margin-bottom: .4rem; }
+.comment-name { color: var(--gold, #c9a227); }
+.comment-date { font-size: .85rem; opacity: .7; }
+.comment-text { margin: 0; white-space: pre-line; overflow-wrap: anywhere; }
+.comment-empty, .comment-note { opacity: .75; }
+.comment-form label { display: block; margin: .8rem 0 .3rem; }
+.comment-form input[type=text], .comment-form textarea { width: 100%; box-sizing: border-box; padding: .7rem .9rem; font: inherit; color: inherit; background: rgba(128,128,128,.12); border: 1px solid rgba(128,128,128,.5); border-radius: 8px; }
+.comment-form textarea { min-height: 8rem; resize: vertical; }
+.comment-form input:focus, .comment-form textarea:focus { outline: 2px solid var(--gold, #c9a227); outline-offset: 1px; }
+.comment-form button:disabled { opacity: .6; cursor: wait; }
+#comment-status.ok { color: #4caf50; }
+#comment-status.err { color: #e57373; }
+
+/* Comments: rtl and gold */
+.comments, .comments h2, .comments h3, .comment-text, .comment-date,
+.comment-note, .comment-empty, .comment-form label,
+.comment-form input[type=text], .comment-form textarea { color: var(--gold, #c9a227); }
+.comment-date, .comment-note, .comment-empty { opacity: .85; }
+.comments, .comment-form label, .comment-text, .comment-name,
+.comment-form input[type=text], .comment-form textarea { direction: rtl; text-align: right; }
+
+/* Comments: white headings */
+section.comments h2, section.comments h3 { color: #fff; }
+
+/* Comments: send button (looks like .back-link) */
+:where(.comment-form button) { margin-top: 1rem; border: 0; font-family: inherit; cursor: pointer; }
+/* Comments: divider line (same as more-articles) */
+section.comments { border-top: 1px solid rgba(87, 226, 196, 0.2); }
