@@ -16,9 +16,14 @@
   {{- if $m }}{{ $img = index (index $m 0) 1 }}{{ end -}}
 {{- end -}}
 {{- $img = $img | default "/images/book-cover.png" -}}
-<meta property="og:image" content="{{ $img | absURL }}">
+{{- $name := strings.TrimSuffix (path.Ext $img) (path.Base $img) -}}
+{{- $share := printf "/images/share/%s.jpg" $name -}}
+{{- if not (fileExists (printf "static%s" $share)) }}{{ $share = $img }}{{ end -}}
+<meta property="og:image" content="{{ $share | absURL }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="{{ $img | absURL }}">
+<meta name="twitter:image" content="{{ $share | absURL }}">
 {{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">{{ end }}
 {{ $css := resources.Get "css/style.css" | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}">
