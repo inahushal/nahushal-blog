@@ -953,3 +953,9 @@ section.comments summary::marker { color: var(--gold, #c9a227); }
   .container { padding-left: 0.5rem; padding-right: 0.5rem; margin-top: 1rem; }
   .post-card.article { padding-left: 0.9rem; padding-right: 0.9rem; }
 }
+
+/* Article body: more space between lines */
+.article .post-content { line-height: 2.1; }
+@media (max-width: 600px) {
+  .article .post-content { line-height: 2.2; }
+}
