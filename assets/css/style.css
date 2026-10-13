@@ -944,3 +944,12 @@ section.comments details[open] > summary { margin-bottom: 1rem; }
 /* Comments: gold main heading */
 section.comments h2 { color: var(--gold, #c9a227); }
 section.comments summary::marker { color: var(--gold, #c9a227); }
+
+/* Article: more room for the text */
+.container { padding-left: 1rem; padding-right: 1rem; }
+.container:has(.article) { max-width: 1200px; }
+.post-card.article { padding-left: 2rem; padding-right: 2rem; }
+@media (max-width: 700px) {
+  .container { padding-left: 0.5rem; padding-right: 0.5rem; margin-top: 1rem; }
+  .post-card.article { padding-left: 0.9rem; padding-right: 0.9rem; }
+}
