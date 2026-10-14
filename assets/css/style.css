@@ -961,11 +961,16 @@ section.comments summary::marker { color: var(--gold, #c9a227); }
 }
 table {
   direction: ltr;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
 }
 th, td {
   direction: rtl;
   text-align: right;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
 }
-.section-heading {
-  padding-right: 1rem;
+th {
+  background: rgba(255, 255, 255, 0.08);
 }
