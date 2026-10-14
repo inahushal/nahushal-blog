@@ -966,3 +966,6 @@ th, td {
   direction: rtl;
   text-align: right;
 }
+.section-heading {
+  padding-right: 1rem;
+}
