@@ -1,4 +1,4 @@
-@font-face {
+﻿@font-face {
   font-family: 'Faruma';
   src: local('Faruma'), url('/fonts/Faruma.woff2') format('woff2');
   font-weight: 400;
@@ -958,4 +958,11 @@ section.comments summary::marker { color: var(--gold, #c9a227); }
 .article .post-content { line-height: 2.1; }
 @media (max-width: 600px) {
   .article .post-content { line-height: 2.2; }
+}
+table {
+  direction: ltr;
+}
+th, td {
+  direction: rtl;
+  text-align: right;
 }
