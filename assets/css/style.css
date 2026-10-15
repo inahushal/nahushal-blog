@@ -1116,3 +1116,10 @@ h2.section-heading { padding-right: 1.6rem !important; padding-left: 1rem !impor
 }
 
 .reader-hint { font-size: 0.9rem; opacity: 0.7; margin: 0 0 1.2rem; color: var(--gold); }
+
+.reader-content, .reader-content * { overflow-wrap: anywhere; word-break: break-word; max-width: 100%; box-sizing: border-box; }
+.reader-content a { word-break: break-all; }
+.reader-content table { display: block; overflow-x: auto; }
+.reader-content pre, .reader-content code { white-space: pre-wrap; }
+.reader-page { overflow-x: hidden; }
+html, body { overflow-x: hidden; }
