@@ -12,11 +12,14 @@
 <article class="post-card article reader-page" id="reader">
 
   <nav class="reader-bar">
-    <select id="reader-menu" aria-label="Chapters">
-      {{ range $pages }}
-      <option value="{{ .RelPermalink }}" {{ if eq .RelPermalink $.RelPermalink }}selected{{ end }}>{{ .Title }}</option>
-      {{ end }}
-    </select>
+    <details class="reader-menu">
+      <summary>{{ .Title }}</summary>
+      <ul>
+        {{ range $pages }}
+        <li><a href="{{ .RelPermalink }}"{{ if eq .RelPermalink $.RelPermalink }} class="current"{{ end }}>{{ .Title }}</a></li>
+        {{ end }}
+      </ul>
+    </details>
   </nav>
 
   <h2 class="post-title">{{ .Title }}</h2>
