@@ -1025,3 +1025,33 @@ th {
 .reader-toc a:hover { color: #5eead4; }
 .reader-toc a:visited { color: #e6f4f1; }
 .reader-toc li { margin: 0; }
+
+/* Reader chapter menu */
+.reader-bar select {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  direction: rtl;
+  text-align: right;
+  text-align-last: right;
+  padding: 0.8rem 1rem 0.8rem 2.6rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #e6f4f1;
+  background-color: rgba(8, 38, 46, 0.85);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M3 6l5 5 5-5' fill='none' stroke='%235eead4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 0.9rem center;
+  border: 1px solid rgba(94, 234, 212, 0.35);
+  border-radius: 12px;
+  outline: none;
+}
+.reader-bar select:focus {
+  border-color: #5eead4;
+  box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.2);
+}
+.reader-bar select option {
+  background: #08262e;
+  color: #e6f4f1;
+  direction: rtl;
+}
