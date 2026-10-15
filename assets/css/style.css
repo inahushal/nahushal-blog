@@ -1020,3 +1020,8 @@ th {
 }
 
 .reader-content img { display: block; max-width: 100%; height: auto; margin: 0 auto 1.5rem; pointer-events: none; }
+
+.reader-toc a { color: #e6f4f1; text-decoration: none; font-size: 1.3rem; line-height: 1.9; display: block; padding: 0.4rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.12); }
+.reader-toc a:hover { color: #5eead4; }
+.reader-toc a:visited { color: #e6f4f1; }
+.reader-toc li { margin: 0; }
