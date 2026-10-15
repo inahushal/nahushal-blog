@@ -1097,3 +1097,5 @@ th {
   background: rgba(94, 234, 212, 0.15);
   color: #5eead4;
 }
+
+h2.section-heading { padding-right: 1.6rem !important; padding-left: 1rem !important; box-sizing: border-box; overflow: visible; }
