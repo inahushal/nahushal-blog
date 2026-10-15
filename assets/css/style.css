@@ -1106,3 +1106,13 @@ h2.section-heading { padding-right: 1.6rem !important; padding-left: 1rem !impor
 #resume-box { margin: 0 0 1.2rem; }
 #resume-link, #resume-link:visited { color: var(--gold); text-decoration: none; font-size: 1.15rem; line-height: 1.8; }
 #resume-link:hover { opacity: 0.8; text-decoration: underline; }
+
+/* Bookmarked paragraph */
+.reader-content .bookmarked {
+  border-right: 4px solid var(--gold);
+  padding-right: 0.8rem;
+  background: rgba(255, 215, 120, 0.08);
+  border-radius: 6px;
+}
+
+.reader-hint { font-size: 0.9rem; opacity: 0.7; margin: 0 0 1.2rem; color: var(--gold); }

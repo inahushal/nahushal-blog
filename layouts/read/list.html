@@ -18,7 +18,8 @@
   var link = document.getElementById("resume-link");
   var box = document.getElementById("resume-box");
   if (!link || !box) { return; }
-  link.href = saved.path + "#resume";
+  var bm = null; try { bm = JSON.parse(localStorage.getItem("reader-bookmark")); } catch (e) {}
+  if (bm && bm.path) { link.href = bm.path + "#bookmark"; saved = bm; } else { link.href = saved.path + "#resume"; }
   link.textContent = link.getAttribute("data-label") + ": " + saved.title;
   box.hidden = false;
 })();

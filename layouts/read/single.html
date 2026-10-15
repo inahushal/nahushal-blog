@@ -23,6 +23,7 @@
   </nav>
 
   <h2 class="post-title">{{ .Title }}</h2>
+  <p class="reader-hint">ކިޔަމުން ދިޔަ ހިސާބު ފާހަގަކޮށްލަން ކިޔަމުންދާ ޕެރެގްރާފަށް ފިއްތަވާ</p>
 
   <div class="post-content reader-content" id="reader-content">
     {{ .Content }}
@@ -91,6 +92,56 @@
     clearTimeout(timer);
     timer = setTimeout(save, 400);
   }, { passive: true });
+})();
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var content = document.getElementById("reader-content");
+  if (!content) { return; }
+  var key = "reader-bookmark";
+  var here = location.pathname;
+  var sel = "p, li, blockquote, h2, h3, h4";
+  var items = content.querySelectorAll(sel);
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; }
+  }
+  function mark(i) {
+    for (var n = 0; n < items.length; n++) { items[n].classList.remove("bookmarked"); }
+    if (i >= 0 && items[i]) { items[i].classList.add("bookmarked"); }
+  }
+
+  var bm = load();
+  if (bm && bm.path === here) {
+    mark(bm.idx);
+    if (location.hash === "#bookmark" && items[bm.idx]) {
+      items[bm.idx].scrollIntoView({ block: "center" });
+    }
+  }
+
+  content.addEventListener("click", function (e) {
+    var el = e.target.closest ? e.target.closest(sel) : null;
+    if (!el || !content.contains(el)) { return; }
+    var idx = Array.prototype.indexOf.call(items, el);
+    if (idx < 0) { return; }
+    var cur = load();
+    try {
+      if (cur && cur.path === here && cur.idx === idx) {
+        localStorage.removeItem(key);
+        mark(-1);
+        return;
+      }
+      var t = document.querySelector(".post-title");
+      localStorage.setItem(key, JSON.stringify({
+        path: here,
+        idx: idx,
+        title: t ? t.textContent.trim() : ""
+      }));
+      mark(idx);
+    } catch (err) {}
+  });
 })();
 </script>
 {{ end }}
