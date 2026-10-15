@@ -1099,3 +1099,6 @@ th {
 }
 
 h2.section-heading { padding-right: 1.6rem !important; padding-left: 1rem !important; box-sizing: border-box; overflow: visible; }
+
+.reader-pager a, .reader-pager a:visited { color: var(--gold); text-decoration: none; font-size: 1.1rem; line-height: 1.7; }
+.reader-pager a:hover { opacity: 0.8; text-decoration: underline; }
