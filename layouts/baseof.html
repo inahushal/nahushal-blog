@@ -45,6 +45,7 @@
 <main class="container">
 {{ block "main" . }}{{ end }}
 
+{{ if ne .Section "read" }}
 <section class="post-card subscribe-section"{{ if eq .Section "journal-articles" }} dir="ltr"{{ end }}>
   <h2 class="post-title">{{ if eq .Section "journal-articles" }}Get notified when a new article is published{{ else }}ލިޔުމެއް ޝާއިއު ކޮށްލެވުމުން ހަބަރުކޮށްލެވިދާނެ،{{ end }}</h2>
 
@@ -99,6 +100,7 @@
   });
 })();
 </script>
+{{ end }}
 </main>
 <footer>
   <p class="footer-social">
@@ -116,7 +118,3 @@
 </footer>
 </body>
 </html>
-
-
-
-

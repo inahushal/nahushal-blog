@@ -1,0 +1,93 @@
+{{ define "main" }}
+{{ $pages := .CurrentSection.RegularPages.ByWeight }}
+{{ $prev := false }}
+{{ $next := false }}
+{{ range $i, $p := $pages }}
+  {{ if eq $p.RelPermalink $.RelPermalink }}
+    {{ if gt $i 0 }}{{ $prev = index $pages (sub $i 1) }}{{ end }}
+    {{ if lt (add $i 1) (len $pages) }}{{ $next = index $pages (add $i 1) }}{{ end }}
+  {{ end }}
+{{ end }}
+
+<article class="post-card article reader-page" id="reader">
+
+  <nav class="reader-bar">
+    <select id="reader-menu" aria-label="Chapters">
+      {{ range $pages }}
+      <option value="{{ .RelPermalink }}" {{ if eq .RelPermalink $.RelPermalink }}selected{{ end }}>{{ .Title }}</option>
+      {{ end }}
+    </select>
+  </nav>
+
+  <h2 class="post-title">{{ .Title }}</h2>
+
+  <div class="post-content reader-content" id="reader-content">
+    {{ .Content }}
+  </div>
+
+  <nav class="reader-pager">
+    {{ with $prev }}<a href="{{ .RelPermalink }}"><span dir="ltr">&rarr;</span> {{ .Title }}</a>{{ else }}<span></span>{{ end }}
+    {{ with $next }}<a href="{{ .RelPermalink }}">{{ .Title }} <span dir="ltr">&larr;</span></a>{{ else }}<span></span>{{ end }}
+  </nav>
+
+</article>
+
+<script>
+(function () {
+  "use strict";
+  var menu = document.getElementById("reader-menu");
+  if (menu) {
+    menu.addEventListener("change", function () { location.href = menu.value; });
+  }
+  var box = document.getElementById("reader");
+  if (!box) { return; }
+  ["contextmenu", "copy", "cut", "dragstart", "selectstart"].forEach(function (name) {
+    box.addEventListener(name, function (e) {
+      if (e.target && e.target.id === "reader-menu") { return; }
+      e.preventDefault();
+    });
+  });
+  document.addEventListener("keydown", function (e) {
+    var tag = e.target && e.target.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA") { return; }
+    var k = (e.key || "").toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && ["c", "x", "s", "p", "a"].indexOf(k) > -1) {
+      e.preventDefault();
+    }
+  });
+})();
+</script>
+
+<script>
+(function () {
+  "use strict";
+  var key = "reader-position";
+  var here = location.pathname;
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem(key)); } catch (e) {}
+
+  function save() {
+    var t = document.querySelector(".post-title");
+    try {
+      localStorage.setItem(key, JSON.stringify({
+        path: here,
+        y: Math.round(window.scrollY),
+        title: t ? t.textContent.trim() : ""
+      }));
+    } catch (e) {}
+  }
+
+  if (location.hash === "#resume" && saved && saved.path === here && saved.y > 0) {
+    window.scrollTo(0, saved.y);
+  } else {
+    save();
+  }
+
+  var timer;
+  window.addEventListener("scroll", function () {
+    clearTimeout(timer);
+    timer = setTimeout(save, 400);
+  }, { passive: true });
+})();
+</script>
+{{ end }}

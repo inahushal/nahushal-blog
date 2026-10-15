@@ -1,0 +1,26 @@
+{{ define "main" }}
+<article class="post-card article reader-page">
+  <h2 class="post-title">{{ .Title }}</h2>
+  <p id="resume-box" hidden><a id="resume-link" href="#" data-label="ކިޔަމުންދިޔަ ތަނުން ކިޔާލުމަށް">Continue reading</a></p>
+  <ul class="reader-toc">
+    {{ range .Pages.ByWeight }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{ end }}
+  </ul>
+</article>
+
+<script>
+(function () {
+  "use strict";
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem("reader-position")); } catch (e) {}
+  if (!saved || !saved.path) { return; }
+  var link = document.getElementById("resume-link");
+  var box = document.getElementById("resume-box");
+  if (!link || !box) { return; }
+  link.href = saved.path + "#resume";
+  link.textContent = link.getAttribute("data-label") + ": " + saved.title;
+  box.hidden = false;
+})();
+</script>
+{{ end }}

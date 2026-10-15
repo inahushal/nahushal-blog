@@ -986,3 +986,37 @@ th {
     display: block;
   }
 }
+/* Book reader */
+.reader-content {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  direction: rtl;
+  text-align: right;
+}
+.reader-bar select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  background: transparent;
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  font: inherit;
+  direction: rtl;
+}
+.reader-bar select option { color: #000; }
+.reader-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  direction: rtl;
+  margin-top: 2rem;
+}
+.reader-toc { list-style: none; padding: 0; direction: rtl; }
+.reader-toc li { margin: 0.7rem 0; }
+@media print {
+  #reader { display: none; }
+}
+
+.reader-content img { display: block; max-width: 100%; height: auto; margin: 0 auto 1.5rem; pointer-events: none; }
