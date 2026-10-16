@@ -1215,3 +1215,18 @@ html, body { overflow-x: hidden; }
 .reader-book:hover { border-color: #5eead4; }
 
 .home-library-link { text-align: center; margin: 1.5rem 0; }
+
+/* Library button in header */
+.library-btn, .library-btn:visited {
+  display: block;
+  width: fit-content;
+  margin: 0.4rem auto 0.4rem 0;
+  padding: 0.4rem 1.2rem;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+.library-btn:hover { background: var(--gold); color: #08262e; }
