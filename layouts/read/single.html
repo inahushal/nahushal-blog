@@ -137,6 +137,7 @@
       localStorage.setItem(key, JSON.stringify({
         path: here,
         idx: idx,
+        page: (el.closest(".reader-sheet") ? Number(el.closest(".reader-sheet").getAttribute("data-page")) : 1),
         title: t ? t.textContent.trim() : ""
       }));
       mark(idx);
@@ -179,6 +180,7 @@
   pages.forEach(function (group, n) {
     var s = document.createElement("section");
     s.className = "reader-sheet";
+    s.setAttribute("data-page", String(n + 1));
     content.insertBefore(s, group[0]);
     group.forEach(function (el) { s.appendChild(el); });
     var d = document.createElement("div");
