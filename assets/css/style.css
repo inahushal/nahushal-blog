@@ -1243,3 +1243,7 @@ html, body { overflow-x: hidden; }
 
 /* reader library heading */
 .reader-page:has(.reader-library) > h2.post-title { font-size: 1.1rem; }
+
+/* Reader site tagline */
+.site-title .t-tag { display: none; }
+.reader-site .site-title .t-tag { display: block; text-align: center; font-size: 0.85rem; opacity: 0.8; margin-top: 0.35rem; }
