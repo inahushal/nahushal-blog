@@ -1,6 +1,6 @@
 {{ define "main" }}
 <article class="post-card article reader-page">
-  <h2 class="post-title">{{ .Title }}</h2>
+  <h2 class="post-title">{{ .Title }}{{ if .Sections }} ({{ len .Sections }}){{ end }}</h2>
   {{ if not .Sections }}<p id="resume-box" hidden><a id="resume-link" href="#" data-page-label="ސަފުހާ" data-label="ކިޔަމުންދިޔަ ތަނުން ކިޔާލުމަށް">Continue reading</a></p>{{ end }}
   {{ if .Sections }}<div class="reader-library">{{ range .Sections }}<a class="reader-book" href="{{ .RelPermalink }}">{{ with .Params.cover }}<img src="{{ . }}" alt="">{{ else }}<div class="reader-book-blank"></div>{{ end }}<span>{{ .Title }}</span></a>{{ end }}</div>{{ else }}<ul class="reader-toc">
     {{ range .Pages.ByWeight }}
