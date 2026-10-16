@@ -1,7 +1,7 @@
 {{ define "main" }}
 <article class="post-card article reader-page">
   <h2 class="post-title">{{ .Title }}</h2>
-  <p id="resume-box" hidden><a id="resume-link" href="#" data-page-label="Page" data-label="ކިޔަމުންދިޔަ ތަނުން ކިޔާލުމަށް">Continue reading</a></p>
+  <p id="resume-box" hidden><a id="resume-link" href="#" data-page-label="ސަފުހާ" data-label="ކިޔަމުންދިޔަ ތަނުން ކިޔާލުމަށް">Continue reading</a></p>
   <ul class="reader-toc">
     {{ range .Pages.ByWeight }}
     <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
