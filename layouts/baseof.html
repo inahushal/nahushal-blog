@@ -2,14 +2,15 @@
 <html lang="dv" dir="rtl">
 <head>
 <meta charset="UTF-8">
+{{- $rh := eq .RelPermalink "/read/" -}}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
-<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
-<link rel="canonical" href="{{ .Permalink }}">
-<meta property="og:title" content="{{ .Title }}">
-<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+<meta name="description" content="{{ if $rh }}ޑިޖިޓަލް ފޮތް ކިޔުމަށް ޑިޒައިންކުރެވިފައި{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}">
+<link rel="canonical" href="{{ if $rh }}https://kiyeveshi.nahushal.com/{{ else }}{{ .Permalink }}{{ end }}">
+<meta property="og:title" content="{{ if $rh }}ކިޔެވެށި{{ else }}{{ .Title }}{{ end }}">
+<meta property="og:description" content="{{ if $rh }}ޑިޖިޓަލް ފޮތް ކިޔުމަށް ޑިޒައިންކުރެވިފައި{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
-<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:url" content="{{ if $rh }}https://kiyeveshi.nahushal.com/{{ else }}{{ .Permalink }}{{ end }}">
 {{- $img := .Params.image -}}
 {{- if and (not $img) .IsPage -}}
   {{- $m := findRESubmatch `!\[[^\]]*\]\(\s*([^)\s]+)` .RawContent 1 -}}
@@ -19,11 +20,11 @@
 {{- $name := strings.TrimSuffix (path.Ext $img) (path.Base $img) -}}
 {{- $share := printf "/images/share/%s.jpg" $name -}}
 {{- if not (fileExists (printf "static%s" $share)) }}{{ $share = $img }}{{ end -}}
-<meta property="og:image" content="{{ $share | absURL }}">
+<meta property="og:image" content="{{ if $rh }}https://kiyeveshi.nahushal.com/images/share/kiyeveshi.jpg{{ else }}{{ $share | absURL }}{{ end }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="{{ $share | absURL }}">
+<meta name="twitter:image" content="{{ if $rh }}https://kiyeveshi.nahushal.com/images/share/kiyeveshi.jpg{{ else }}{{ $share | absURL }}{{ end }}">
 {{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">{{ end }}
 {{ $css := resources.Get "css/style.css" | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}">
