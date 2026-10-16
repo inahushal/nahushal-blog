@@ -1,4 +1,4 @@
-﻿@font-face {
+@font-face {
   font-family: 'Faruma';
   src: local('Faruma'), url('/fonts/Faruma.woff2') format('woff2');
   font-weight: 400;
@@ -1239,4 +1239,4 @@ html, body { overflow-x: hidden; }
 .site-title .t-reader, .site-title .t-by { display: none; }
 .reader-site .site-title .t-main { display: none; }
 .reader-site .site-title .t-reader { display: inline; }
-.reader-site .site-title .t-by { display: block; text-align: center; direction: ltr; font-size: 0.9rem; opacity: 0.75; margin-top: 0.25rem; }
+.reader-site .site-title .t-by { display: block; text-align: center; direction: ltr; font-size: 0.75rem; color: #d4af37; opacity: 1; letter-spacing: 0.05em; margin-top: 0.15rem; }
