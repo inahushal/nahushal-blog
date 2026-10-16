@@ -1246,4 +1246,4 @@ html, body { overflow-x: hidden; }
 
 /* Reader site tagline */
 .site-title .t-tag { display: none; }
-.reader-site .site-title .t-tag { display: block; text-align: center; font-size: 0.85rem; opacity: 0.8; margin-top: 0.35rem; }
+.reader-site .site-title .t-tag { display: block; text-align: center; font-size: 0.85rem; color: #d4af37; opacity: 1; margin-top: 0.35rem; }
