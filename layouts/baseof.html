@@ -27,9 +27,8 @@
 {{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">{{ end }}
 {{ $css := resources.Get "css/style.css" | resources.Minify | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}">
-<script>if (["nahushal.com","www.nahushal.com","localhost"].indexOf(location.hostname) === -1) { document.documentElement.classList.add("reader-site"); }</script>
+<script>if (location.hostname === "kiyeveshi.nahushal.com") { document.documentElement.classList.add("reader-site"); }</script>
 <style>.reader-site header > :not(.site-title), .reader-site .footer-social { display: none !important; }</style>
-<script>if (["nahushal.com","www.nahushal.com","localhost"].indexOf(location.hostname) === -1) 
 {{ partial "analytics.html" . }}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
