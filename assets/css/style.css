@@ -1234,3 +1234,9 @@ html, body { overflow-x: hidden; }
 /* Dedicated reader site */
 .reader-site header > *:not(.site-title) { display: none !important; }
 .reader-site .footer-social { display: none !important; }
+
+/* Reader site title */
+.site-title .t-reader, .site-title .t-by { display: none; }
+.reader-site .site-title .t-main { display: none; }
+.reader-site .site-title .t-reader { display: inline; }
+.reader-site .site-title .t-by { display: block; text-align: center; direction: ltr; font-size: 0.9rem; opacity: 0.75; margin-top: 0.25rem; }
