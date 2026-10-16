@@ -1123,3 +1123,45 @@ h2.section-heading { padding-right: 1.6rem !important; padding-left: 1rem !impor
 .reader-content pre, .reader-content code { white-space: pre-wrap; }
 .reader-page { overflow-x: hidden; }
 html, body { overflow-x: hidden; }
+
+/* Book pages */
+.reader-sheet { display: none; }
+.reader-sheet.active { display: block; }
+.reader-pages {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  direction: rtl;
+  margin: 1rem 0;
+}
+.reader-pages-btn {
+  min-width: 3.2rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  color: #e6f4f1;
+  background: rgba(8, 38, 46, 0.85);
+  border: 1px solid rgba(94, 234, 212, 0.35);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.reader-pages-btn:disabled { opacity: 0.3; cursor: default; }
+.reader-pages-label { color: var(--gold); direction: ltr; font-size: 1rem; }
+
+/* Continuous scrolling pages */
+.reader-sheet { display: block !important; }
+.reader-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  direction: ltr;
+  margin: 1.8rem 0;
+  color: var(--gold);
+}
+.reader-divider::before, .reader-divider::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid rgba(255, 215, 120, 0.35);
+}
+.reader-divider span { font-size: 0.9rem; }

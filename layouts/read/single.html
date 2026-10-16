@@ -144,4 +144,74 @@
   });
 })();
 </script>
+
+<script>
+(function () {
+  "use strict";
+  var content = document.getElementById("reader-content");
+  if (!content) { return; }
+  var BUDGET = 1600;
+  var kids = Array.prototype.slice.call(content.children);
+  if (kids.length < 2) { return; }
+
+  function textLen(el) { return (el.textContent || "").length; }
+  function isHeading(el) { return /^H[1-6]$/.test(el.tagName); }
+
+  var pages = [];
+  var cur = [];
+  var size = 0;
+  kids.forEach(function (el) {
+    var len = textLen(el);
+    if (cur.length && size + len > BUDGET) {
+      var carry = [];
+      while (cur.length > 1 && isHeading(cur[cur.length - 1])) { carry.unshift(cur.pop()); }
+      pages.push(cur);
+      cur = carry;
+      size = 0;
+      carry.forEach(function (x) { size += textLen(x); });
+    }
+    cur.push(el);
+    size += len;
+  });
+  if (cur.length) { pages.push(cur); }
+  if (pages.length < 2) { return; }
+
+  pages.forEach(function (group, n) {
+    var s = document.createElement("section");
+    s.className = "reader-sheet";
+    content.insertBefore(s, group[0]);
+    group.forEach(function (el) { s.appendChild(el); });
+    var d = document.createElement("div");
+    d.className = "reader-divider";
+    d.setAttribute("aria-hidden", "true");
+    var span = document.createElement("span");
+    span.textContent = String(n + 1);
+    d.appendChild(span);
+    content.insertBefore(d, s.nextSibling);
+  });
+
+  content.addEventListener("click", function (e) {
+    var a = e.target.closest ? e.target.closest("a[href^='#']") : null;
+    if (!a) { return; }
+    var id = a.getAttribute("href").slice(1);
+    try { id = decodeURIComponent(id); } catch (err) {}
+    var target = id ? document.getElementById(id) : null;
+    if (!target) { return; }
+    e.preventDefault();
+    e.stopPropagation();
+    target.scrollIntoView({ block: "center" });
+  }, true);
+
+  var h = location.hash;
+  if (h === "#bookmark") {
+    var bm = content.querySelector(".bookmarked");
+    if (bm) { bm.scrollIntoView({ block: "center" }); }
+  } else if (h === "#resume") {
+    try {
+      var sv = JSON.parse(localStorage.getItem("reader-position"));
+      if (sv && sv.path === location.pathname && sv.y > 0) { window.scrollTo(0, sv.y); }
+    } catch (err) {}
+  }
+})();
+</script>
 {{ end }}
