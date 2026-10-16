@@ -1230,3 +1230,7 @@ html, body { overflow-x: hidden; }
   line-height: 1.7;
 }
 .library-btn:hover { background: var(--gold); color: #08262e; }
+
+/* Dedicated reader site */
+.reader-site header > *:not(.site-title) { display: none !important; }
+.reader-site .footer-social { display: none !important; }
