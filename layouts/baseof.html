@@ -36,7 +36,7 @@
 <body>
 <header>
   <a class="site-title" href="{{ site.Home.Permalink }}"><h1>{{ site.Title }}</h1></a>
-  <a class="library-btn" href="https://reader.nahushal.com">ފޮތްކިޔާ</a>
+  <a class="library-btn" href="https://kiyeveshi.nahushal.com">ކިޔެވެށި</a>
   <nav class="nav">
     {{ $page := . }}
     {{ range site.Menus.main }}<a class="nav-link{{ if hasPrefix $page.RelPermalink .URL }} active{{ end }}" href="{{ if hasPrefix .URL "/" }}{{ absURL .URL }}{{ else }}{{ .URL }}{{ end }}"{{ if hasPrefix .URL "http" }} target="_blank" rel="noopener"{{ end }}>{{ .Name }}</a>{{ end }}
