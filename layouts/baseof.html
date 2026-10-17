@@ -120,5 +120,65 @@
     {{ now.Year }} <a href="https://nahushal.com">ނަހުޝަލް</a>
   </p>{{ end }}
 </footer>
+<script>
+/* SITE-NAV */
+(function () {
+  "use strict";
+  var h = location.hostname;
+  if (!(h.indexOf("kiyeveshi") === 0 || h === "localhost" || h === "127.0.0.1")) { return; }
+  var HOME = (h === "localhost" || h === "127.0.0.1") ? "/" : "https://kiyeveshi.nahushal.com/";
+  var BLOG = "https://nahushal.com/";
+  var TITLE = "\u0786\u07A8\u0794\u07AC\u0788\u07AC\u0781\u07A8";
+  var BLOG_LABEL = "\u0784\u07B0\u078D\u07AE\u078E\u07B0";
+
+  function pill() {
+    if (document.getElementById("site-blog-link")) { return; }
+    var a = document.createElement("a");
+    a.id = "site-blog-link";
+    a.href = BLOG;
+    a.textContent = BLOG_LABEL;
+    a.style.cssText = "position:absolute;top:8px;right:10px;z-index:50;font-size:12px;" +
+      "padding:2px 10px;border:1px solid rgba(255,255,255,.35);border-radius:999px;" +
+      "color:#fff;background:rgba(0,0,0,.25);text-decoration:none";
+    document.body.appendChild(a);
+  }
+
+  function titleLink() {
+    var all = document.querySelectorAll("h1, h2, a, div, span, p");
+    for (var i = 0; i < all.length; i++) {
+      var el = all[i];
+      if (el.closest("#reader") || el.dataset.homeLinked) { continue; }
+      if ((el.textContent || "").trim() !== TITLE) { continue; }
+      var deeper = Array.prototype.some.call(el.children, function (c) {
+        return (c.textContent || "").trim() === TITLE;
+      });
+      if (deeper) { continue; }
+      var a = el.tagName === "A" ? el : el.closest("a");
+      if (a) {
+        a.setAttribute("href", HOME);
+        a.removeAttribute("target");
+      } else {
+        a = document.createElement("a");
+        a.href = HOME;
+        a.style.cssText = "color:inherit;text-decoration:none";
+        el.parentNode.insertBefore(a, el);
+        a.appendChild(el);
+      }
+      el.dataset.homeLinked = "1";
+      return;
+    }
+  }
+
+  function run() {
+    pill();
+    titleLink();
+    document.querySelectorAll(".reader-home-btn").forEach(function (x) { x.href = HOME; });
+  }
+  run();
+  document.addEventListener("DOMContentLoaded", run);
+  setTimeout(run, 700);
+  setTimeout(run, 2000);
+})();
+</script>
 </body>
 </html>
