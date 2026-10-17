@@ -332,6 +332,24 @@
     .hl-dot{flex:none}
   `;
   document.head.appendChild(st5);
+  // MENU-HIDE: hide the toolbar while the chapter menu is open
+  function syncMenu() {
+    var openMenu = document.querySelector("details.reader-menu[open]");
+    var sel = document.getElementById("reader-menu");
+    var selOpen = sel && document.activeElement === sel;
+    if (openMenu || selOpen) {
+      tools.style.setProperty("display", "none", "important");
+      hide();
+    } else {
+      tools.style.removeProperty("display");
+    }
+  }
+  document.addEventListener("toggle", syncMenu, true);
+  document.addEventListener("click", function () { setTimeout(syncMenu, 0); }, true);
+  document.addEventListener("focusin", syncMenu);
+  document.addEventListener("focusout", function () { setTimeout(syncMenu, 0); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") setTimeout(syncMenu, 0); });
+  syncMenu();
   restore();
   refresh();
 })();
