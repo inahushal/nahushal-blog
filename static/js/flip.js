@@ -23,6 +23,11 @@
   view.id = "flip-view";
   root.parentNode.insertBefore(view, root);
   view.appendChild(root);
+  // FLIP-PAGENO: page number below the text of every page
+  var pageNo = document.createElement("div");
+  pageNo.id = "flip-pageno";
+  pageNo.style.cssText = "text-align:center;direction:rtl;font-size:13px;opacity:.75;margin:6px 0 0;line-height:1.2";
+  view.parentNode.insertBefore(pageNo, view.nextSibling);
 
   var st = document.createElement("style");
   st.textContent = [
@@ -133,7 +138,7 @@
   function show(n) {
     cur = Math.max(0, Math.min(total - 1, n));
     root.style.transform = "translateX(" + (cur * step) + "px)";
-    pg.textContent = (cur + 1) + " / " + total;
+    pg.textContent = (cur + 1) + " / " + total; pageNo.textContent = "\u0790\u07A6\u078A\u07AA\u0780\u07A7 " + (cur + 1);
     prevB.disabled = (cur === 0);
     nextB.disabled = (cur === total - 1);
     togglePager();
