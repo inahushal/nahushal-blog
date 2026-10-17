@@ -57,6 +57,17 @@
   document.body.appendChild(nav);
 
   var blocks = Array.prototype.slice.call(root.querySelectorAll(BLOCKS));
+  // FLIP-TITLE: the chapter title lives inside the text, so only page 1 shows it
+  var origTitle = document.querySelector("#reader > .post-title");
+  if (origTitle && !root.querySelector(".flip-title")) {
+    var tc = origTitle.cloneNode(true);
+    tc.classList.add("flip-title");
+    tc.removeAttribute("id");
+    root.insertBefore(tc, root.firstChild);
+    var tst = document.createElement("style");
+    tst.textContent = "#reader > .post-title{display:none !important}#reader-content .flip-title{margin-top:0}";
+    document.head.appendChild(tst);
+  }
   var H = 0, W = 0, step = 1, total = 1, cur = 0, busy = false, lastVH = 0;
 
   function layout() {
