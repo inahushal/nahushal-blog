@@ -1252,8 +1252,6 @@ html, body { overflow-x: hidden; }
 .site-title .t-tag { display: none; }
 .reader-site .site-title .t-tag { display: block; text-align: center; font-size: 0.85rem; color: #d4af37; opacity: 1; margin-top: 0.35rem; }
 
-/* reader justify */
-.reader-content p, .reader-content li, .reader-content blockquote { text-align: justify; text-justify: inter-word; text-align-last: right; }
 
 /* reader nav links */
 .reader-topline { text-align: right; margin: 0 0 8px; }
@@ -1263,3 +1261,7 @@ html, body { overflow-x: hidden; }
 .reader-blog-link:hover, .reader-home-btn:hover { background: rgba(255,255,255,.12); }
 /* reader homebar outside */
 .reader-homebar { text-align: center; margin: 18px 0 80px; }
+
+/* reader strict justify */
+#reader-content p, #reader-content li, #reader-content blockquote, #reader-content td { text-align: justify !important; text-align-last: right !important; text-justify: inter-word; hyphens: manual; word-spacing: normal; letter-spacing: 0; text-wrap: wrap; }
+#reader-content h2, #reader-content h3, #reader-content h4 { text-align: right; text-align-last: right; }
