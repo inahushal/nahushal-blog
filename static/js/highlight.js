@@ -364,6 +364,33 @@
       background:rgba(30,30,30,.97) !important;box-shadow:0 4px 14px rgba(0,0,0,.35)}
   `;
   document.head.appendChild(st6);
+  // BOOKMARK-BTN: bookmark ribbon in the toolbar, uses the reader's existing bookmark
+  var bmBtn = mk("button", "hl-btn hl-bm");
+  bmBtn.setAttribute("aria-label", "Bookmark");
+  bmBtn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="display:block"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4.5L5 21V4a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+  tools.insertBefore(bmBtn, panel);
+
+  function bmState() {
+    var on = !!root.querySelector(".bookmarked");
+    bmBtn.classList.toggle("on", on);
+    bmBtn.querySelector("path").setAttribute("fill", on ? "currentColor" : "none");
+  }
+  bmBtn.addEventListener("click", function () {
+    var topEdge = tools.getBoundingClientRect().bottom + 4;
+    var existing = root.querySelector(".bookmarked");
+    if (existing) {
+      var br = existing.getBoundingClientRect();
+      if (br.bottom > topEdge && br.top < window.innerHeight) { existing.click(); return; }
+    }
+    var els = root.querySelectorAll("p, li, blockquote, h2, h3, h4");
+    for (var i = 0; i < els.length; i++) {
+      var r = els[i].getBoundingClientRect();
+      if (r.height > 0 && r.bottom > topEdge + 10) { els[i].click(); return; }
+    }
+  });
+  new MutationObserver(bmState).observe(root, { attributes: true, attributeFilter: ["class"], subtree: true });
+  bmState();
+  setTimeout(bmState, 500);
   restore();
   refresh();
 })();
