@@ -351,7 +351,7 @@
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setTimeout(syncMenu, 0); });
   syncMenu();
   // ONE-LINE-2: always a single row; the list opens as a panel under the bar
-  modeBtn.textContent = "\u270E";
+  modeBtn.textContent = "\u270E " + L.highlight;
   modeBtn.setAttribute("aria-label", L.highlight);
   var st6 = document.createElement("style");
   st6.textContent = `
