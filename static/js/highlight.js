@@ -132,8 +132,6 @@
     tools.appendChild(d);
   });
   tools.appendChild(listBtn);
-  tools.appendChild(prevBtn);
-  tools.appendChild(nextBtn);
   tools.appendChild(panel);
   root.parentNode.insertBefore(tools, root);
 
@@ -326,6 +324,14 @@
   listBtn.addEventListener("click", function () { setTimeout(place, 0); });
   place();
   setTimeout(place, 300);
+  // ONE-LINE: keep the buttons on a single line on small screens
+  var st5 = document.createElement("style");
+  st5.textContent = `
+    .hl-tools{gap:5px !important;padding:4px 7px !important}
+    .hl-btn{white-space:nowrap;padding:2px 7px !important;font-size:11.5px !important}
+    .hl-dot{flex:none}
+  `;
+  document.head.appendChild(st5);
   restore();
   refresh();
 })();
