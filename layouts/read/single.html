@@ -45,7 +45,7 @@
   }
   var box = document.getElementById("reader");
   if (!box) { return; }
-  ["contextmenu", "copy", "cut", "dragstart", "selectstart"].forEach(function (name) {
+  ["contextmenu", "copy", "cut", "dragstart"].forEach(function (name) {
     box.addEventListener(name, function (e) {
       if (e.target && e.target.id === "reader-menu") { return; }
       e.preventDefault();
@@ -216,4 +216,5 @@
   }
 })();
 </script>
+<script src="/js/highlight.js" defer></script>
 {{ end }}

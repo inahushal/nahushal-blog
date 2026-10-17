@@ -988,8 +988,12 @@ th {
 }
 /* Book reader */
 .reader-content {
-  -webkit-user-select: none;
-  user-select: none;
+  -webkit-user-select: text;
+  user-select: text;
+  -webkit-touch-callout: none;
+  direction: rtl;
+  text-align: right;
+}
   -webkit-touch-callout: none;
   direction: rtl;
   text-align: right;
