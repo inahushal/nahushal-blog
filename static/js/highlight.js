@@ -350,6 +350,20 @@
   document.addEventListener("focusout", function () { setTimeout(syncMenu, 0); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") setTimeout(syncMenu, 0); });
   syncMenu();
+  // ONE-LINE-2: always a single row; the list opens as a panel under the bar
+  modeBtn.textContent = "\u270E";
+  modeBtn.setAttribute("aria-label", L.highlight);
+  var st6 = document.createElement("style");
+  st6.textContent = `
+    .hl-tools{flex-wrap:nowrap !important;width:max-content !important;max-width:96vw !important;
+      gap:5px !important;padding:4px 8px !important}
+    .hl-btn{white-space:nowrap !important;font-size:11.5px !important;padding:2px 8px !important}
+    .hl-dot{flex:none !important}
+    .hl-panel{position:absolute !important;top:100% !important;left:0 !important;right:0 !important;
+      margin-top:6px !important;padding:6px 10px !important;border-radius:12px;
+      background:rgba(30,30,30,.97) !important;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+  `;
+  document.head.appendChild(st6);
   restore();
   refresh();
 })();
