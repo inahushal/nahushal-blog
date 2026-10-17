@@ -154,7 +154,7 @@
   function jump(id) {
     var marks = root.querySelectorAll('mark.hl[data-id="' + id + '"]');
     if (!marks.length) return;
-    marks[0].scrollIntoView({ block: "center" });
+    if (window.readerFlip) { window.readerFlip.reveal(marks[0]); } marks[0].scrollIntoView({ block: "center" });
     marks.forEach(function (m) { m.classList.add("flash"); });
     setTimeout(function () { marks.forEach(function (m) { m.classList.remove("flash"); }); }, 1600);
   }
