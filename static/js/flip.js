@@ -535,11 +535,16 @@
     eB.style.background = eink ? "rgba(255,255,255,.28)" : "transparent";
   });
   eB.style.background = eink ? "rgba(255,255,255,.28)" : "transparent";
-  pop.appendChild(zbtn("A\u2212", function () { zoom(-Z_STEP); }));
+  pop.appendChild((function () { var b = zbtn("\u2212", function () { zoom(-Z_STEP); }); b.style.fontSize = "16px"; b.style.padding = "1px 14px"; return b; })());
   pop.appendChild(zl);
-  pop.appendChild(zbtn("A+", function () { zoom(Z_STEP); }));
-  pop.appendChild(eB);
+  pop.appendChild((function () { var b = zbtn("+", function () { zoom(Z_STEP); }); b.style.fontSize = "16px"; b.style.padding = "1px 14px"; return b; })());
+  eink = false; reduce = baseReduce; try { localStorage.removeItem(E_KEY); } catch (e) {} einkCss();
   var aaB = zbtn("Aa", function () { pop.style.display = (pop.style.display === "flex") ? "none" : "flex"; });
+    // FLIP-AA: three Thaana letters, each smaller than the last
+  aaB.textContent = "";
+  aaB.setAttribute("aria-label", "Text size");
+  aaB.style.cssText += ";display:inline-flex;align-items:center;gap:1px;direction:rtl;padding:2px 12px;line-height:1";
+  [["\u0780", 22], ["\u0781", 17], ["\u0782", 12]].forEach(function (a) { var s = document.createElement("span"); s.textContent = a[0]; s.style.fontSize = a[1] + "px"; aaB.appendChild(s); });
   nav.appendChild(aaB);
   nav.appendChild(pop);
 
