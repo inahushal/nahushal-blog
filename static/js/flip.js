@@ -1,30 +1,45 @@
-/* FLIP-PAGES */
+/* FLIP-FIT: pages sized to the screen, no scrolling inside a page */
 (function () {
   "use strict";
   var root = document.getElementById("reader-content");
   if (!root) { return; }
-  var sheets = Array.prototype.slice.call(root.querySelectorAll(".reader-sheet"));
-  if (sheets.length < 2) { return; }
 
   var L = {
     next: "\u0786\u07AA\u0783\u07A8\u0787\u07A6\u0781\u07B0",
     prev: "\u078A\u07A6\u0780\u07A6\u078C\u07A6\u0781\u07B0"
   };
-  var KEY = "flip-page:" + location.pathname;
+  var KEY = "flip-anchor:" + location.pathname;
+  var TOP = 46;            // room for the highlight toolbar
+  var BOTTOM = 60;         // room for the page bar
+  var GAP = 28;
+  var ALIGN_ON_LOAD = false;
+  var BLOCKS = "p, li, blockquote, h2, h3, h4";
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var cur = 0, busy = false;
+
+  // page dividers are no longer needed
+  root.querySelectorAll(".reader-divider").forEach(function (d) { d.parentNode.removeChild(d); });
+
+  var view = document.createElement("div");
+  view.id = "flip-view";
+  root.parentNode.insertBefore(view, root);
+  view.appendChild(root);
 
   var st = document.createElement("style");
-  st.textContent =
-    ".reader-sheet{display:none}" +
-    ".reader-sheet.flip-on{display:block;transform-origin:right center}" +
-    ".reader-divider{display:none !important}" +
-    "#reader-content{margin-bottom:64px}" +
-    "#flip-nav{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:1000;display:flex;direction:rtl;gap:6px;align-items:center;padding:4px 8px;border-radius:18px;background:rgba(30,30,30,.93);color:#fff;font-size:12px;line-height:1.2;box-shadow:0 2px 10px rgba(0,0,0,.3)}" +
-    "#flip-nav button{font:inherit;color:inherit;background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:3px 12px;cursor:pointer;white-space:nowrap}" +
-    "#flip-nav button:disabled{opacity:.35;cursor:default}" +
-    "#flip-nav .pg{direction:ltr;min-width:48px;text-align:center}";
+  st.textContent = [
+    ".reader-sheet{display:contents}",
+    "#flip-view{overflow:hidden;direction:rtl;transform-origin:right center}",
+    "#reader-content{margin:0 !important;padding:0 !important;max-width:none !important;overflow:visible !important;column-fill:auto}",
+    "#reader-content h2,#reader-content h3,#reader-content h4{break-after:avoid;break-inside:avoid}",
+    "#reader-content p,#reader-content li{orphans:2;widows:2}",
+    "#reader-content table{break-inside:avoid}",
+    "#flip-nav{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:1000;display:flex;direction:rtl;gap:6px;align-items:center;padding:4px 8px;border-radius:18px;background:rgba(30,30,30,.93);color:#fff;font-size:12px;line-height:1.2;box-shadow:0 2px 10px rgba(0,0,0,.3)}",
+    "#flip-nav button{font:inherit;color:inherit;background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:3px 12px;cursor:pointer;white-space:nowrap}",
+    "#flip-nav button:disabled{opacity:.35;cursor:default}",
+    "#flip-nav .pg{direction:ltr;min-width:48px;text-align:center}"
+  ].join("");
   document.head.appendChild(st);
+  var imgSt = document.createElement("style");
+  document.head.appendChild(imgSt);
 
   var nav = document.createElement("div");
   nav.id = "flip-nav";
@@ -41,59 +56,121 @@
   nav.appendChild(nextB);
   document.body.appendChild(nav);
 
+  var blocks = Array.prototype.slice.call(root.querySelectorAll(BLOCKS));
+  var H = 0, W = 0, step = 1, total = 1, cur = 0, busy = false, lastVH = 0;
+
+  function layout() {
+    lastVH = window.innerHeight;
+    H = Math.max(240, Math.floor(lastVH - TOP - BOTTOM));
+    view.style.height = H + "px";
+    W = Math.floor(view.clientWidth);
+    root.style.width = W + "px";
+    root.style.height = H + "px";
+    root.style.columnWidth = W + "px";
+    root.style.columnGap = GAP + "px";
+    imgSt.textContent = "#reader-content img{max-height:" + (H - 10) + "px;width:auto;max-width:100%}";
+    step = W + GAP;
+    var rr = root.getBoundingClientRect().right;
+    var range = document.createRange();
+    range.selectNodeContents(root);
+    var rects = range.getClientRects();
+    var maxD = 0;
+    for (var i = 0; i < rects.length; i++) {
+      var r = rects[i];
+      if (r.width > 0 && r.height > 0) {
+        var d = rr - r.left;
+        if (d > maxD) { maxD = d; }
+      }
+    }
+    total = Math.max(1, Math.floor(maxD / step) + 1);
+  }
+
+  function pageOfRect(r) {
+    var rr = root.getBoundingClientRect().right;
+    var cx = (r.left + r.right) / 2;
+    return Math.max(0, Math.floor((rr - cx) / step));
+  }
+  function usable(el) {
+    var rs = el.getClientRects(), out = [];
+    for (var i = 0; i < rs.length; i++) { if (rs[i].width > 0 && rs[i].height > 0) { out.push(rs[i]); } }
+    return out;
+  }
+  function firstPage(el) { var u = usable(el); return u.length ? pageOfRect(u[0]) : null; }
+  function lastPage(el) { var u = usable(el); return u.length ? pageOfRect(u[u.length - 1]) : null; }
+
+  function anchorBlock() {
+    for (var i = 0; i < blocks.length; i++) {
+      var lp = lastPage(blocks[i]);
+      if (lp !== null && lp >= cur) { return blocks[i]; }
+    }
+    return blocks.length ? blocks[blocks.length - 1] : null;
+  }
+  function saveAnchor() {
+    var b = anchorBlock();
+    if (!b) { return; }
+    try { localStorage.setItem(KEY, String(blocks.indexOf(b))); } catch (e) {}
+  }
+
   function togglePager() {
     document.querySelectorAll(".reader-pager").forEach(function (el) {
       if (root.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) {
-        el.style.display = (cur === sheets.length - 1) ? "" : "none";
+        el.style.display = (cur === total - 1) ? "" : "none";
       }
     });
   }
 
   function show(n) {
-    sheets.forEach(function (s, i) { s.classList.toggle("flip-on", i === n); });
-    cur = n;
-    pg.textContent = (n + 1) + " / " + sheets.length;
-    prevB.disabled = (n === 0);
-    nextB.disabled = (n === sheets.length - 1);
-    try { localStorage.setItem(KEY, String(n)); } catch (e) {}
+    cur = Math.max(0, Math.min(total - 1, n));
+    root.style.transform = "translateX(" + (cur * step) + "px)";
+    pg.textContent = (cur + 1) + " / " + total;
+    prevB.disabled = (cur === 0);
+    nextB.disabled = (cur === total - 1);
     togglePager();
+    saveAnchor();
   }
 
-  function toTop() {
-    var y = (cur === 0) ? 0 : Math.max(0, root.getBoundingClientRect().top + window.pageYOffset - 60);
+  function align() {
+    var y = Math.max(0, view.getBoundingClientRect().top + window.pageYOffset - TOP);
     try { window.scrollTo({ top: y, behavior: "instant" }); } catch (e) { window.scrollTo(0, y); }
   }
 
   function goTo(n) {
-    n = Math.max(0, Math.min(sheets.length - 1, n));
+    n = Math.max(0, Math.min(total - 1, n));
     if (n === cur || busy) { return; }
     var dir = n > cur ? 1 : -1;
-    var from = sheets[cur], to = sheets[n];
-    if (reduce || !from.animate) { show(n); toTop(); return; }
+    if (reduce || !view.animate) { show(n); align(); return; }
     busy = true;
-    setTimeout(function () { busy = false; }, 800);
+    setTimeout(function () { busy = false; }, 900);
     var P = "perspective(1400px) rotateY(";
-    var out = from.animate(
+    var out = view.animate(
       [{ transform: P + "0deg)", opacity: 1 },
        { transform: P + (dir > 0 ? 75 : -30) + "deg)", opacity: 0 }],
-      { duration: 220, easing: "ease-in", fill: "forwards" });
+      { duration: 200, easing: "ease-in", fill: "forwards" });
     out.onfinish = function () {
-      show(n);
       out.cancel();
-      toTop();
-      var inn = to.animate(
+      show(n);
+      align();
+      var inn = view.animate(
         [{ transform: P + (dir > 0 ? -30 : 75) + "deg)", opacity: 0 },
          { transform: P + "0deg)", opacity: 1 }],
-        { duration: 240, easing: "ease-out" });
+        { duration: 230, easing: "ease-out" });
       inn.onfinish = function () { busy = false; };
     };
   }
 
-  function reveal(el) {
-    var s = (el && el.closest) ? el.closest(".reader-sheet") : null;
-    var i = sheets.indexOf(s);
-    if (i >= 0 && i !== cur) { show(i); }
+  function gotoBlock(b) {
+    var p = firstPage(b);
+    show(p === null ? 0 : p);
   }
+
+  function relayout() {
+    var b = anchorBlock();
+    layout();
+    if (b) { gotoBlock(b); } else { show(0); }
+  }
+
+  // keep the clipped area from ever scrolling by itself
+  view.addEventListener("scroll", function () { view.scrollLeft = 0; view.scrollTop = 0; });
 
   prevB.addEventListener("click", function () { goTo(cur - 1); });
   nextB.addEventListener("click", function () { goTo(cur + 1); });
@@ -130,8 +207,8 @@
     try { id = decodeURIComponent(id); } catch (err) {}
     var target = id ? document.getElementById(id) : null;
     if (!target) { return; }
-    reveal(target);
-    target.scrollIntoView({ block: "center" });
+    var p = firstPage(target);
+    if (p !== null && p !== cur) { show(p); align(); }
   }, true);
 
   function syncMenu() {
@@ -145,23 +222,35 @@
   document.addEventListener("focusin", syncMenu);
   document.addEventListener("focusout", function () { setTimeout(syncMenu, 0); });
 
-  var h = location.hash, start = 0, bm = null;
-  if (h === "#bookmark") {
-    bm = root.querySelector(".bookmarked");
-    var bs = bm ? bm.closest(".reader-sheet") : null;
-    if (bs) { start = sheets.indexOf(bs); }
-  } else if (h === "#resume") {
-    try {
-      var sv = parseInt(localStorage.getItem(KEY), 10);
-      if (sv >= 0 && sv < sheets.length) { start = sv; }
-    } catch (e) {}
+  var rt;
+  function onResize() {
+    clearTimeout(rt);
+    rt = setTimeout(function () {
+      var w = Math.floor(view.clientWidth);
+      if (w !== W || Math.abs(window.innerHeight - lastVH) > 120) { relayout(); }
+    }, 250);
   }
-  show(start);
-  if (start > 0) {
-    setTimeout(function () {
-      if (bm) { bm.scrollIntoView({ block: "center" }); } else { toTop(); }
-    }, 60);
-  }
+  window.addEventListener("resize", onResize);
+  window.addEventListener("orientationchange", onResize);
 
-  window.readerFlip = { reveal: reveal, goTo: goTo };
+  // ----- start -----
+  var savedIdx = -1;
+  try { var sv = parseInt(localStorage.getItem(KEY), 10); if (sv >= 0) { savedIdx = sv; } } catch (e) {}
+  var h = location.hash, startB = null;
+  if (h === "#bookmark") { startB = root.querySelector(".bookmarked"); }
+  else if (h === "#resume" && savedIdx >= 0 && savedIdx < blocks.length) { startB = blocks[savedIdx]; }
+
+  layout();
+  if (startB) { gotoBlock(startB); } else { show(0); }
+  if (cur > 0 || ALIGN_ON_LOAD) { setTimeout(align, 60); }
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(relayout); }
+  window.addEventListener("load", function () { setTimeout(relayout, 150); });
+
+  window.readerFlip = {
+    reveal: function (el) {
+      var p = firstPage(el);
+      if (p !== null && p !== cur) { show(p); align(); }
+    },
+    goTo: goTo
+  };
 })();
