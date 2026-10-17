@@ -180,5 +180,34 @@
   setTimeout(run, 2000);
 })();
 </script>
+<script>
+/* FOOTER-NAME */
+(function () {
+  "use strict";
+  var h = location.hostname;
+  if (!(h.indexOf("kiyeveshi") === 0 || h === "localhost" || h === "127.0.0.1")) { return; }
+  var HOME = (h === "localhost" || h === "127.0.0.1") ? "/" : "https://kiyeveshi.nahushal.com/";
+  var OLD = "\u0782\u07A6\u0780\u07AA\u079D\u07A6\u078D\u07B0";
+  var NEW = "\u0789\u07AA\u0790\u07A6\u07A2\u07B0\u0782\u07A8\u078A\u07AA\u0782\u07B0";
+  function fix() {
+    var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.indexOf(OLD) < 0) { continue; }
+      var p = n.parentElement;
+      if (!p || p.closest("#reader-content")) { continue; }
+      var inFooter = p.closest("footer, .site-footer, .footer");
+      var scope = inFooter || (p.parentElement || p);
+      if (!inFooter && scope.textContent.indexOf("\u00A9") < 0) { continue; }
+      n.nodeValue = n.nodeValue.split(OLD).join(NEW);
+      var a = p.closest("a");
+      if (a) { a.setAttribute("href", HOME); a.removeAttribute("target"); }
+    }
+  }
+  fix();
+  document.addEventListener("DOMContentLoaded", fix);
+  setTimeout(fix, 700);
+})();
+</script>
 </body>
 </html>
