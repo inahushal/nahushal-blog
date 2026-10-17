@@ -13,7 +13,7 @@
   };
 
   var KEY = "hl:" + location.pathname;
-  var COLORS = { yellow: "#fff1a8", green: "#c8f0c4", pink: "#ffd0e0" };
+  var COLORS = { yellow: "#fff1a8", pink: "#ffd0e0" };
 
   // ---------- styles ----------
   var css = "mark.hl{color:#111;border-radius:2px;cursor:pointer;padding:0}" +
@@ -146,7 +146,7 @@
   }
   modeBtn.addEventListener("click", function () { setMode(!mode); });
   listBtn.addEventListener("click", function () {
-    var open = panel.style.display === "block";
+    var open = panel.style.display === "block" || !items.length;
     panel.style.display = open ? "none" : "block";
     listBtn.classList.toggle("on", !open);
   });
@@ -175,7 +175,7 @@
   function refresh() {
     listBtn.textContent = L.list + " (" + items.length + ")";
     panel.textContent = "";
-    if (!items.length) { panel.appendChild(mk("div", "hl-empty", L.empty)); return; }
+    if (!items.length) { return; }
     sorted().forEach(function (h) {
       var row = mk("div", "hl-row");
       var sw = mk("span", "hl-sw");
@@ -282,6 +282,50 @@
     if (!bar.contains(e.target) && window.getSelection().isCollapsed) hide();
   });
 
+  // FLOAT-TOOLBAR: compact, floating toolbar
+  var st2 = document.createElement("style");
+  st2.textContent = `
+    mark.hl{background:#fff1a8}
+    .hl-tools{position:sticky;top:6px;z-index:1000;gap:6px;margin:8px 0;padding:4px 8px;
+      border:0;border-radius:18px;background:rgba(30,30,30,.93);color:#fff;font-size:12px;
+      line-height:1.2;box-shadow:0 2px 10px rgba(0,0,0,.3);backdrop-filter:blur(6px)}
+    .hl-btn{font-size:12px;padding:2px 9px;border-radius:999px;border-color:rgba(255,255,255,.35)}
+    .hl-btn.on{background:rgba(255,255,255,.22)}
+    .hl-dot{width:16px;height:16px;border-width:1px;border-color:rgba(255,255,255,.6)}
+    .hl-dot.on{outline:2px solid #fff;outline-offset:1px}
+    .hl-panel{max-height:30vh;font-size:12px;border-top:1px solid rgba(255,255,255,.2)}
+    .hl-row{padding:3px 0;border-bottom-color:rgba(255,255,255,.12)}
+  `;
+  document.head.appendChild(st2);
+  // FLOAT-BODY: put the toolbar directly in <body> so it always stays on screen
+  document.body.appendChild(tools);
+  if (typeof spacer !== "undefined" && spacer.parentNode) { spacer.parentNode.removeChild(spacer); }
+  var st4 = document.createElement("style");
+  st4.textContent = `
+    .hl-tools{position:fixed !important;top:8px !important;left:50% !important;
+      transform:translateX(-50%) !important;z-index:2147483000 !important;margin:0 !important}
+  `;
+  document.head.appendChild(st4);
+  // FLOAT-SLOT: sits above the chapter title, floats when scrolled
+  var titleEl = document.querySelector("#reader .post-title") || document.querySelector(".post-title") || root;
+  var slot = document.createElement("div");
+  slot.className = "hl-slot";
+  titleEl.parentNode.insertBefore(slot, titleEl);
+  var slotH = 0;
+  function place() {
+    if (panel.style.display !== "block") {
+      slotH = tools.offsetHeight;
+      slot.style.height = (slotH + 8) + "px";
+    }
+    var r = slot.getBoundingClientRect();
+    tools.style.setProperty("top", Math.max(r.top, 8) + "px", "important");
+    tools.style.setProperty("left", (r.left + r.width / 2) + "px", "important");
+  }
+  window.addEventListener("scroll", place, { passive: true });
+  window.addEventListener("resize", place);
+  listBtn.addEventListener("click", function () { setTimeout(place, 0); });
+  place();
+  setTimeout(place, 300);
   restore();
   refresh();
 })();
