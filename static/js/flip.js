@@ -577,13 +577,18 @@
   pill.appendChild(pOrig);
   document.body.appendChild(pill);
 
+  // FLIP-HIDEPILL: no floating size pill; the size and revert button live in the panel
+  var revB = zbtn("\u21BA 100%", function () { setScaleNow(1, currentOffset()); });
+  pop.appendChild(revB);
   function updatePill() {
     var s = pinching ? pTarget : scale;
-    var changed = Math.abs(s - 1) > 0.001;
-    pCur.textContent = Math.round(s * 100) + "%";
-    pOrig.style.display = changed ? "" : "none";
-    pill.style.display = (pinching || changed) ? "flex" : "none";
+    zl.textContent = Math.round(s * 100) + "%";
+    revB.style.display = (Math.abs(s - 1) > 0.001) ? "" : "none";
+    pill.style.display = "none";
   }
+  var pgFix = document.createElement("style");
+  pgFix.textContent = "#flip-nav .pg{white-space:nowrap}";
+  document.head.appendChild(pgFix);
 
   function setScaleNow(s, off) {
     clearTimeout(zt); zt = null; pendScale = null; pendOff = null;
