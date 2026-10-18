@@ -755,11 +755,13 @@
       busy = false;
     }
   });
+  var wantLast = (h === "#last") || enterDir < 0, lastT0 = Date.now();
+  function keepLast() { if (wantLast && !startB && Date.now() - lastT0 < 2000 && cur !== total - 1) { show(total - 1); } }
   if (h === "#bookmark") { startB = root.querySelector(".bookmarked"); }
   else if (h === "#resume" && savedIdx >= 0 && savedIdx < blocks.length) { startB = blocks[savedIdx]; }
 
   layout();
-  if (startB) { gotoBlock(startB); } else if (h === "#last") { show(total - 1); } else { show(0); }
+  if (startB) { gotoBlock(startB); } else if (wantLast) { show(total - 1); } else { show(0); }
   if (cur > 0 || ALIGN_ON_LOAD) { setTimeout(align, 60); }
   if (enterDir) {
     busy = true;
@@ -772,8 +774,8 @@
     inA.onfinish = function () { busy = false; };
     setTimeout(function () { busy = false; }, 900);
   }
-  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(relayout); }
-  window.addEventListener("load", function () { setTimeout(relayout, 150); });
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { relayout(); keepLast(); }); }
+  window.addEventListener("load", function () { setTimeout(function () { relayout(); keepLast(); }, 150); setTimeout(keepLast, 900); });
 
   window.readerFlip = {
     reveal: function (el) {
