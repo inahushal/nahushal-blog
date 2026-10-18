@@ -125,7 +125,7 @@
     else if (++tries > 80) { clearInterval(iv); }
   }, 100);
 })();
-/* First-visit demo: swipe and text size. Tap anywhere to close. */
+/* First-visit demo v2: swipe and pinch. Tap anywhere to close. */
 (function () {
   "use strict";
   var KEY = "rd-demo-seen";
@@ -133,21 +133,27 @@
   try { if (localStorage.getItem(KEY)) { return; } } catch (e) {}
 
   var css = [
-    ".rd-demo{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:56px;background:rgba(12,12,12,.92);touch-action:none;-webkit-user-select:none;user-select:none;opacity:0;animation:rdFade .3s ease forwards}",
+    ".rd-demo{position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.3);touch-action:none;-webkit-user-select:none;user-select:none;opacity:0;animation:rdFade .3s ease forwards}",
     "@keyframes rdFade{to{opacity:1}}",
-    ".rd-box{position:relative;width:200px;height:130px;display:flex;align-items:center;justify-content:center}",
-    ".rd-page{width:96px;height:124px;border:2px solid rgba(255,255,255,.55);border-radius:6px;background:rgba(255,255,255,.06)}",
-    ".rd-dot{position:absolute;width:38px;height:38px;border-radius:50%;background:rgba(94,234,212,.55);border:2px solid #5eead4;box-shadow:0 0 14px rgba(94,234,212,.5)}",
-    ".rd-swipe{top:46px;left:81px;animation:rdSwipe 1.8s ease-in-out infinite}",
-    "@keyframes rdSwipe{0%{transform:translateX(62px);opacity:0}15%{opacity:1}75%{opacity:1}100%{transform:translateX(-62px);opacity:0}}",
-    ".rd-p1{top:12px;left:36px;animation:rdP1 2s ease-in-out infinite}",
-    ".rd-p2{top:80px;left:126px;animation:rdP2 2s ease-in-out infinite}",
-    "@keyframes rdP1{0%,100%{transform:translate(18px,18px)}50%{transform:translate(-10px,-10px)}}",
-    "@keyframes rdP2{0%,100%{transform:translate(-18px,-18px)}50%{transform:translate(10px,10px)}}",
-    ".rd-letters{position:absolute;bottom:-44px;left:0;right:0;display:flex;direction:rtl;justify-content:center;align-items:baseline;gap:14px;color:#e6f4f1;line-height:1}",
-    ".rd-letters span{display:inline-block;animation:rdPulse 2s ease-in-out infinite}",
-    ".rd-letters span:nth-child(2){animation-delay:.15s}.rd-letters span:nth-child(3){animation-delay:.3s}",
-    "@keyframes rdPulse{0%,100%{opacity:.6}50%{opacity:1}}"
+    ".rd-scene{position:absolute;left:0;right:0;top:50%;height:260px;margin-top:-130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0}",
+    ".rd-s1{animation:rdS1 7s infinite}",
+    ".rd-s2{animation:rdS2 7s infinite}",
+    "@keyframes rdS1{0%{opacity:0}5%,45%{opacity:1}50%,100%{opacity:0}}",
+    "@keyframes rdS2{0%,50%{opacity:0}55%,95%{opacity:1}100%{opacity:0}}",
+    ".rd-arrows{display:flex;gap:120px;font-size:54px;line-height:1;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.7);direction:ltr}",
+    ".rd-hand{position:relative;width:70px;height:120px}",
+    ".rd-palm{position:absolute;left:8px;bottom:0;width:54px;height:62px;border-radius:14px 14px 26px 26px;background:#f3cfae;border:2px solid #b98b68;box-shadow:0 4px 14px rgba(0,0,0,.45)}",
+    ".rd-f{position:absolute;width:18px;border-radius:10px;background:#f3cfae;border:2px solid #b98b68;transform-origin:50% 100%}",
+    ".rd-idx{left:26px;bottom:52px;height:58px}",
+    ".rd-thumb{left:6px;bottom:30px;height:44px}",
+    ".rd-move{animation:rdMove 1.75s ease-in-out infinite}",
+    "@keyframes rdMove{0%,100%{transform:translateX(95px) rotate(10deg)}50%{transform:translateX(-95px) rotate(-10deg)}}",
+    ".rd-pinch .rd-idx{animation:rdIdx 1.6s ease-in-out infinite}",
+    ".rd-pinch .rd-thumb{animation:rdThumb 1.6s ease-in-out infinite}",
+    "@keyframes rdIdx{0%,100%{transform:rotate(4deg)}50%{transform:rotate(32deg)}}",
+    "@keyframes rdThumb{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(-44deg)}}",
+    ".rd-letters{display:flex;direction:rtl;align-items:baseline;gap:16px;color:#fff;line-height:1;text-shadow:0 2px 10px rgba(0,0,0,.7);animation:rdGrow 1.6s ease-in-out infinite}",
+    "@keyframes rdGrow{0%,100%{transform:scale(.85)}50%{transform:scale(1.2)}}"
   ].join("");
   var st = document.createElement("style");
   st.textContent = css;
@@ -157,9 +163,10 @@
   d.className = "rd-demo";
   d.setAttribute("aria-hidden", "true");
   d.innerHTML =
-    '<div class="rd-box"><div class="rd-page"></div><div class="rd-dot rd-swipe"></div></div>' +
-    '<div class="rd-box"><div class="rd-dot rd-p1"></div><div class="rd-dot rd-p2"></div>' +
-    '<div class="rd-letters"><span style="font-size:18px">\u0780</span><span style="font-size:28px">\u0781</span><span style="font-size:40px">\u0782</span></div></div>';
+    '<div class="rd-scene rd-s1"><div class="rd-arrows"><span>\u2039</span><span>\u203A</span></div>' +
+    '<div class="rd-hand rd-move"><div class="rd-palm"></div><div class="rd-f rd-idx"></div></div></div>' +
+    '<div class="rd-scene rd-s2"><div class="rd-letters"><span style="font-size:20px">\u0780</span><span style="font-size:30px">\u0781</span><span style="font-size:42px">\u0782</span></div>' +
+    '<div class="rd-hand rd-pinch"><div class="rd-palm"></div><div class="rd-f rd-thumb"></div><div class="rd-f rd-idx"></div></div></div>';
 
   function close() {
     try { localStorage.setItem(KEY, "1"); } catch (e) {}
