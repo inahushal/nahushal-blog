@@ -125,7 +125,7 @@
     else if (++tries > 80) { clearInterval(iv); }
   }, 100);
 })();
-/* First-visit demo v6: whole-hand swipe, static pinch icon. Tap anywhere to close. */
+/* First-visit demo v7: traced icons. Tap anywhere to close. */
 (function () {
   "use strict";
   var KEY = "rd-demo-seen";
@@ -135,22 +135,19 @@
   var css = [
     ".rd-demo{position:fixed;inset:0;z-index:2147483000;background:rgba(0,0,0,.3);touch-action:none;-webkit-user-select:none;user-select:none;opacity:0;animation:rdFade .3s ease forwards}",
     "@keyframes rdFade{to{opacity:1}}",
-    ".rd-scene{position:absolute;left:0;right:0;top:50%;height:300px;margin-top:-150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;opacity:0}",
+    ".rd-scene{position:absolute;left:0;right:0;top:50%;height:300px;margin-top:-150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;opacity:0}",
     ".rd-s1{animation:rdS1 7s infinite}",
     ".rd-s2{animation:rdS2 7s infinite}",
     "@keyframes rdS1{0%{opacity:0}5%,45%{opacity:1}50%,100%{opacity:0}}",
     "@keyframes rdS2{0%,50%{opacity:0}55%,95%{opacity:1}100%{opacity:0}}",
-    ".rd-stage{position:relative;width:280px;height:140px}",
-    ".rd-sw{position:absolute;left:65px;top:5px;opacity:0;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}",
+    ".rd-stage{position:relative;width:300px;height:150px}",
+    ".rd-sw{position:absolute;left:75px;top:2px;opacity:0;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}",
     ".rd-a{animation:rdL 3.6s ease-in-out infinite}",
     ".rd-b{animation:rdR 3.6s ease-in-out infinite}",
     ".rd-b svg{transform:scaleX(-1)}",
     "@keyframes rdL{0%{transform:translateX(70px);opacity:0}8%{opacity:1}40%{transform:translateX(-70px);opacity:1}48%,100%{transform:translateX(-70px);opacity:0}}",
     "@keyframes rdR{0%,50%{transform:translateX(-70px);opacity:0}58%{opacity:1}90%{transform:translateX(70px);opacity:1}98%,100%{transform:translateX(70px);opacity:0}}",
-    ".rd-hand{display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}",
-    ".rd-idx,.rd-thumb{transform-box:fill-box;transform-origin:50% 100%}",
-    ".rd-idx{transform:rotate(-14deg)}",
-    ".rd-thumb{transform:rotate(24deg)}",
+    ".rd-zoom{display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}",
     ".rd-letters{display:flex;direction:rtl;align-items:baseline;gap:16px;color:#fff;line-height:1;text-shadow:0 2px 10px rgba(0,0,0,.7);animation:rdGrow 1.8s ease-in-out infinite}",
     "@keyframes rdGrow{0%,100%{transform:scale(1.25)}50%{transform:scale(.85)}}"
   ].join("");
@@ -158,32 +155,23 @@
   st.textContent = css;
   document.head.appendChild(st);
 
-  var S = 'fill="#fff" stroke="#000" stroke-width="5" stroke-linejoin="round"';
-  function tip(cx, cy, r) {
-    return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" ' + S + '/><circle cx="' + cx + '" cy="' + cy + '" r="' + (r - 6) + '" fill="#e6e6e6"/>';
-  }
+  var SWIPE =
+    '<svg viewBox="120 90 460 450" width="150" height="147">' +
+    '<path d="M560 275C470 215 380 175 270 162L270 128C380 128 480 190 560 275Z" fill="#000"/>' +
+    '<g fill="#fff" stroke="#000" stroke-width="22" stroke-linejoin="round" stroke-linecap="round">' +
+    '<path d="M212 340L172 296Q146 296 142 326Q146 348 196 420Q245 515 320 515Q412 508 412 400V318Q408 286 380 286Q362 268 336 268Q312 248 288 248Q262 250 262 272V170H212Z"/>' +
+    '<rect x="210" y="130" width="55" height="215" rx="27"/>' +
+    '<circle cx="232" cy="150" r="44"/>' +
+    '</g><circle cx="232" cy="150" r="24" fill="#e8e8e8"/></svg>';
 
-  var HAND1 =
-    '<svg viewBox="0 0 150 130" width="150" height="130">' +
-    '<path d="M54 12C95 10 125 35 142 58C118 40 90 28 54 24Z" fill="#000"/>' +
-    '<g ' + S + '>' +
-    '<rect x="8" y="64" width="22" height="46" rx="11" transform="rotate(32 19 87)"/>' +
-    '<rect x="30" y="50" width="60" height="72" rx="26"/>' +
-    '<rect x="50" y="44" width="14" height="30" rx="7"/>' +
-    '<rect x="64" y="42" width="14" height="30" rx="7"/>' +
-    '<rect x="78" y="46" width="14" height="30" rx="7"/>' +
-    '<rect x="32" y="16" width="18" height="76" rx="9"/>' +
-    tip(41, 18, 13) +
-    '</g></svg>';
-
-  var HAND2 =
-    '<svg class="rd-hand" viewBox="0 0 130 150" width="130" height="150"><g ' + S + '>' +
-    '<rect x="36" y="82" width="62" height="62" rx="26"/>' +
-    '<rect x="62" y="74" width="12" height="26" rx="6"/>' +
-    '<rect x="74" y="76" width="12" height="26" rx="6"/>' +
-    '<rect x="86" y="80" width="12" height="26" rx="6"/>' +
-    '<g class="rd-idx"><rect x="66" y="16" width="18" height="90" rx="9"/>' + tip(75, 20, 13) + '</g>' +
-    '<g class="rd-thumb"><rect x="26" y="52" width="18" height="66" rx="9"/>' + tip(35, 56, 12) + '</g>' +
+  var ZOOM =
+    '<svg class="rd-zoom" viewBox="190 140 560 600" width="140" height="150">' +
+    '<g fill="none" stroke="#fff" stroke-width="26" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M425 432V205A35 45 0 0 1 495 205V405"/>' +
+    '<path d="M495 405V340Q495 295 540 295Q580 295 580 335V405"/>' +
+    '<path d="M580 345Q580 315 615 315Q650 315 650 350V405"/>' +
+    '<path d="M650 370Q650 345 690 345Q722 350 722 385V540C722 640 650 715 555 715C500 715 460 690 430 660L228 458Q205 432 238 418Q282 402 322 437L350 462Q385 490 415 462Q425 450 425 432"/>' +
+    '<path d="M222 350L355 217"/><path d="M280 212H360V292"/><path d="M212 280V358H292"/>' +
     '</g></svg>';
 
   var d = document.createElement("div");
@@ -191,8 +179,8 @@
   d.setAttribute("aria-hidden", "true");
   d.innerHTML =
     '<div class="rd-scene rd-s1"><div class="rd-stage">' +
-    '<div class="rd-sw rd-a">' + HAND1 + '</div><div class="rd-sw rd-b">' + HAND1 + '</div></div></div>' +
-    '<div class="rd-scene rd-s2"><div class="rd-letters"><span style="font-size:20px">\u0780</span><span style="font-size:30px">\u0781</span><span style="font-size:42px">\u0782</span></div>' + HAND2 + '</div>';
+    '<div class="rd-sw rd-a">' + SWIPE + '</div><div class="rd-sw rd-b">' + SWIPE + '</div></div></div>' +
+    '<div class="rd-scene rd-s2"><div class="rd-letters"><span style="font-size:20px">\u0780</span><span style="font-size:30px">\u0781</span><span style="font-size:42px">\u0782</span></div>' + ZOOM + '</div>';
 
   function close() {
     try { localStorage.setItem(KEY, "1"); } catch (e) {}
