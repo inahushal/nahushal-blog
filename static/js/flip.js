@@ -357,11 +357,13 @@
   });
 
   var sx = 0, sy = 0, tracking = false;
-  root.addEventListener("touchstart", function (e) {
+  document.addEventListener("touchstart", function (e) {
+    var tg = e.target;
+    if (tg && tg.closest && tg.closest(".hl-tools, #flip-nav, .rd-menu, .reader-homebar, button, input, select, textarea, summary")) { tracking = false; return; }
     tracking = e.touches.length === 1;
     if (tracking) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }
   }, { passive: true });
-  root.addEventListener("touchend", function (e) {
+  document.addEventListener("touchend", function (e) {
     if (!tracking) { return; }
     tracking = false;
     var sel = window.getSelection();
