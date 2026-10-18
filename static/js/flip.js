@@ -756,7 +756,9 @@
     }
   });
   var wantLast = (h === "#last") || enterDir < 0, lastT0 = Date.now();
-  function keepLast() { if (wantLast && !startB && Date.now() - lastT0 < 2000 && cur !== total - 1) { show(total - 1); } }
+  function keepLast() { if (wantLast && !startB && Date.now() - lastT0 < 3500) { layout(); if (cur !== total - 1) { show(total - 1); } } }
+  var klTimer = setInterval(function () { if (!wantLast || Date.now() - lastT0 > 3500) { clearInterval(klTimer); } else { keepLast(); } }, 120);
+  document.addEventListener("pointerdown", function () { wantLast = false; }, { once: true, capture: true });
   if (h === "#bookmark") { startB = root.querySelector(".bookmarked"); }
   else if (h === "#resume" && savedIdx >= 0 && savedIdx < blocks.length) { startB = blocks[savedIdx]; }
 
