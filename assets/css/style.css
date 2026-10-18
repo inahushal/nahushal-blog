@@ -1,4 +1,4 @@
-﻿@font-face {
+@font-face {
   font-family: 'Faruma';
   src: local('Faruma'), url('/fonts/Faruma.woff2') format('woff2');
   font-weight: 400;
@@ -1337,3 +1337,9 @@ html body nav.reader-pager > a {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Smooth chapter changes */
+@view-transition { navigation: auto; }
+html.flip-pending #reader { opacity: 0; }
+#reader { transition: opacity .25s ease; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .22s; }

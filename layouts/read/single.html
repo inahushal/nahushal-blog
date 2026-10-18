@@ -9,6 +9,12 @@
   {{ end }}
 {{ end }}
 
+<script>
+document.documentElement.classList.add("flip-pending");
+setTimeout(function () { document.documentElement.classList.remove("flip-pending"); }, 3000);
+</script>
+{{ with $next }}<link rel="prefetch" href="{{ .RelPermalink }}">{{ end }}
+{{ with $prev }}<link rel="prefetch" href="{{ .RelPermalink }}">{{ end }}
 <article class="post-card article reader-page" id="reader">
 
   <nav class="reader-bar">

@@ -763,7 +763,14 @@
   layout();
   if (startB) { gotoBlock(startB); } else if (wantLast) { show(total - 1); } else { show(0); }
   if (cur > 0 || ALIGN_ON_LOAD) { setTimeout(align, 60); }
-  if (enterDir) {
+  var revealed = false;
+  function reveal() {
+    if (revealed) { return; }
+    revealed = true;
+    document.documentElement.classList.remove("flip-pending");
+    playEnter();
+  }
+  function playEnter() { if (!enterDir) { return; }
     busy = true;
     var P2 = "perspective(1400px) rotateY(";
     var inA = view.animate(
@@ -774,8 +781,8 @@
     inA.onfinish = function () { busy = false; };
     setTimeout(function () { busy = false; }, 900);
   }
-  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { relayout(); keepLast(); }); }
-  window.addEventListener("load", function () { setTimeout(function () { relayout(); keepLast(); }, 150); setTimeout(keepLast, 900); });
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { relayout(); keepLast(); reveal(); }); }
+  window.addEventListener("load", function () { setTimeout(function () { relayout(); keepLast(); }, 150); setTimeout(keepLast, 900); setTimeout(reveal, 200); });
 
   window.readerFlip = {
     reveal: function (el) {
