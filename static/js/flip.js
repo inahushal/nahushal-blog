@@ -64,7 +64,7 @@
   var blocks = Array.prototype.slice.call(root.querySelectorAll(BLOCKS));
   // FLIP-TITLE: the chapter title lives inside the text, so only page 1 shows it
   var origTitle = document.querySelector("#reader > .post-title");
-  if (origTitle && !root.querySelector(".flip-title")) {
+  if (false && origTitle && !root.querySelector(".flip-title")) {
     var tc = origTitle.cloneNode(true);
     tc.classList.add("flip-title");
     tc.removeAttribute("id");
