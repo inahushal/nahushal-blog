@@ -125,7 +125,7 @@
     else if (++tries > 80) { clearInterval(iv); }
   }, 100);
 })();
-/* First-visit demo v4: icon-style hands. Tap anywhere to close. */
+/* First-visit demo v6: whole-hand swipe, static pinch icon. Tap anywhere to close. */
 (function () {
   "use strict";
   var KEY = "rd-demo-seen";
@@ -149,10 +149,8 @@
     "@keyframes rdR{0%,50%{transform:translateX(-70px);opacity:0}58%{opacity:1}90%{transform:translateX(70px);opacity:1}98%,100%{transform:translateX(70px);opacity:0}}",
     ".rd-hand{display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}",
     ".rd-idx,.rd-thumb{transform-box:fill-box;transform-origin:50% 100%}",
-    ".rd-idx{animation:rdIdx 1.8s ease-in-out infinite}",
-    ".rd-thumb{animation:rdThumb 1.8s ease-in-out infinite}",
-    "@keyframes rdIdx{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-16deg)}}",
-    "@keyframes rdThumb{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(26deg)}}",
+    ".rd-idx{transform:rotate(-14deg)}",
+    ".rd-thumb{transform:rotate(24deg)}",
     ".rd-letters{display:flex;direction:rtl;align-items:baseline;gap:16px;color:#fff;line-height:1;text-shadow:0 2px 10px rgba(0,0,0,.7);animation:rdGrow 1.8s ease-in-out infinite}",
     "@keyframes rdGrow{0%,100%{transform:scale(1.25)}50%{transform:scale(.85)}}"
   ].join("");
