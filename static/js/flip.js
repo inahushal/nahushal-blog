@@ -9,8 +9,9 @@
     prev: "\u078A\u07A6\u0780\u07A6\u078C\u07A6\u0781\u07B0"
   };
   var KEY = "flip-anchor:" + location.pathname;
-  var TOP = 46;            // room for the highlight toolbar
-  var BOTTOM = 60;         // room for the page bar
+  var TOP = 36;            // room for the highlight toolbar
+  var BOTTOM = 60;
+  var SAFE = 14;           // text columns are this much shorter than the clip box         // room for the page bar
   var GAP = 28;
   var ALIGN_ON_LOAD = false;
   var BLOCKS = "p, li, blockquote, h2, h3, h4";
@@ -81,7 +82,7 @@
     view.style.height = H + "px";
     W = Math.floor(view.clientWidth);
     root.style.width = W + "px";
-    root.style.height = H + "px";
+    root.style.height = (H - SAFE) + "px";
     root.style.columnWidth = W + "px";
     root.style.columnGap = GAP + "px";
     imgSt.textContent = "#reader-content img{max-height:" + (H - 10) + "px;width:auto;max-width:100%}";
