@@ -382,7 +382,7 @@
       var br = existing.getBoundingClientRect();
       if (br.bottom > topEdge && br.top < window.innerHeight) { existing.click(); return; }
     }
-    var els = root.querySelectorAll("p, li, blockquote, h2, h3, h4");
+    var els = document.querySelectorAll("#reader-content p, #reader-content li, #reader-content blockquote, #reader-content h2, #reader-content h3, #reader-content h4");
     for (var i = 0; i < els.length; i++) {
       var r = els[i].getBoundingClientRect();
       if (r.height > 0 && r.bottom > topEdge + 10) { els[i].click(); return; }
