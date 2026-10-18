@@ -125,3 +125,51 @@
     else if (++tries > 80) { clearInterval(iv); }
   }, 100);
 })();
+/* First-visit demo: swipe and text size. Tap anywhere to close. */
+(function () {
+  "use strict";
+  var KEY = "rd-demo-seen";
+  if (!document.getElementById("reader-content")) { return; }
+  try { if (localStorage.getItem(KEY)) { return; } } catch (e) {}
+
+  var css = [
+    ".rd-demo{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:56px;background:rgba(12,12,12,.92);touch-action:none;-webkit-user-select:none;user-select:none;opacity:0;animation:rdFade .3s ease forwards}",
+    "@keyframes rdFade{to{opacity:1}}",
+    ".rd-box{position:relative;width:200px;height:130px;display:flex;align-items:center;justify-content:center}",
+    ".rd-page{width:96px;height:124px;border:2px solid rgba(255,255,255,.55);border-radius:6px;background:rgba(255,255,255,.06)}",
+    ".rd-dot{position:absolute;width:38px;height:38px;border-radius:50%;background:rgba(94,234,212,.55);border:2px solid #5eead4;box-shadow:0 0 14px rgba(94,234,212,.5)}",
+    ".rd-swipe{top:46px;left:81px;animation:rdSwipe 1.8s ease-in-out infinite}",
+    "@keyframes rdSwipe{0%{transform:translateX(62px);opacity:0}15%{opacity:1}75%{opacity:1}100%{transform:translateX(-62px);opacity:0}}",
+    ".rd-p1{top:12px;left:36px;animation:rdP1 2s ease-in-out infinite}",
+    ".rd-p2{top:80px;left:126px;animation:rdP2 2s ease-in-out infinite}",
+    "@keyframes rdP1{0%,100%{transform:translate(18px,18px)}50%{transform:translate(-10px,-10px)}}",
+    "@keyframes rdP2{0%,100%{transform:translate(-18px,-18px)}50%{transform:translate(10px,10px)}}",
+    ".rd-letters{position:absolute;bottom:-44px;left:0;right:0;display:flex;direction:rtl;justify-content:center;align-items:baseline;gap:14px;color:#e6f4f1;line-height:1}",
+    ".rd-letters span{display:inline-block;animation:rdPulse 2s ease-in-out infinite}",
+    ".rd-letters span:nth-child(2){animation-delay:.15s}.rd-letters span:nth-child(3){animation-delay:.3s}",
+    "@keyframes rdPulse{0%,100%{opacity:.6}50%{opacity:1}}"
+  ].join("");
+  var st = document.createElement("style");
+  st.textContent = css;
+  document.head.appendChild(st);
+
+  var d = document.createElement("div");
+  d.className = "rd-demo";
+  d.setAttribute("aria-hidden", "true");
+  d.innerHTML =
+    '<div class="rd-box"><div class="rd-page"></div><div class="rd-dot rd-swipe"></div></div>' +
+    '<div class="rd-box"><div class="rd-dot rd-p1"></div><div class="rd-dot rd-p2"></div>' +
+    '<div class="rd-letters"><span style="font-size:18px">\u0780</span><span style="font-size:28px">\u0781</span><span style="font-size:40px">\u0782</span></div></div>';
+
+  function close() {
+    try { localStorage.setItem(KEY, "1"); } catch (e) {}
+    if (d.parentNode) { d.parentNode.removeChild(d); }
+  }
+  ["touchstart", "touchmove", "touchend", "mousedown", "wheel"].forEach(function (ev) {
+    d.addEventListener(ev, function (e) { e.stopPropagation(); }, { passive: true });
+  });
+  d.addEventListener("pointerup", function (e) { e.stopPropagation(); close(); });
+  d.addEventListener("click", function (e) { e.stopPropagation(); close(); });
+
+  setTimeout(function () { document.body.appendChild(d); }, 700);
+})();
