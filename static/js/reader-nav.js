@@ -125,7 +125,7 @@
     else if (++tries > 80) { clearInterval(iv); }
   }, 100);
 })();
-/* First-visit demo v7: traced icons. Tap anywhere to close. */
+/* First-visit demo v8: swipe and zoom icons in the same line style. Tap anywhere to close. */
 (function () {
   "use strict";
   var KEY = "rd-demo-seen";
@@ -141,13 +141,13 @@
     "@keyframes rdS1{0%{opacity:0}5%,45%{opacity:1}50%,100%{opacity:0}}",
     "@keyframes rdS2{0%,50%{opacity:0}55%,95%{opacity:1}100%{opacity:0}}",
     ".rd-stage{position:relative;width:300px;height:150px}",
-    ".rd-sw{position:absolute;left:75px;top:2px;opacity:0;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}",
+    ".rd-sw{position:absolute;left:80px;top:0;opacity:0}",
     ".rd-a{animation:rdL 3.6s ease-in-out infinite}",
     ".rd-b{animation:rdR 3.6s ease-in-out infinite}",
     ".rd-b svg{transform:scaleX(-1)}",
     "@keyframes rdL{0%{transform:translateX(70px);opacity:0}8%{opacity:1}40%{transform:translateX(-70px);opacity:1}48%,100%{transform:translateX(-70px);opacity:0}}",
     "@keyframes rdR{0%,50%{transform:translateX(-70px);opacity:0}58%{opacity:1}90%{transform:translateX(70px);opacity:1}98%,100%{transform:translateX(70px);opacity:0}}",
-    ".rd-zoom{display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}",
+    ".rd-ico{display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.6))}",
     ".rd-letters{display:flex;direction:rtl;align-items:baseline;gap:16px;color:#fff;line-height:1;text-shadow:0 2px 10px rgba(0,0,0,.7);animation:rdGrow 1.8s ease-in-out infinite}",
     "@keyframes rdGrow{0%,100%{transform:scale(1.25)}50%{transform:scale(.85)}}"
   ].join("");
@@ -155,22 +155,22 @@
   st.textContent = css;
   document.head.appendChild(st);
 
-  var SWIPE =
-    '<svg viewBox="120 90 460 450" width="150" height="147">' +
-    '<path d="M560 275C470 215 380 175 270 162L270 128C380 128 480 190 560 275Z" fill="#000"/>' +
-    '<g fill="#fff" stroke="#000" stroke-width="22" stroke-linejoin="round" stroke-linecap="round">' +
-    '<path d="M212 340L172 296Q146 296 142 326Q146 348 196 420Q245 515 320 515Q412 508 412 400V318Q408 286 380 286Q362 268 336 268Q312 248 288 248Q262 250 262 272V170H212Z"/>' +
-    '<rect x="210" y="130" width="55" height="215" rx="27"/>' +
-    '<circle cx="232" cy="150" r="44"/>' +
-    '</g><circle cx="232" cy="150" r="24" fill="#e8e8e8"/></svg>';
-
-  var ZOOM =
-    '<svg class="rd-zoom" viewBox="190 140 560 600" width="140" height="150">' +
-    '<g fill="none" stroke="#fff" stroke-width="26" stroke-linecap="round" stroke-linejoin="round">' +
+  var HAND =
     '<path d="M425 432V205A35 45 0 0 1 495 205V405"/>' +
     '<path d="M495 405V340Q495 295 540 295Q580 295 580 335V405"/>' +
     '<path d="M580 345Q580 315 615 315Q650 315 650 350V405"/>' +
-    '<path d="M650 370Q650 345 690 345Q722 350 722 385V540C722 640 650 715 555 715C500 715 460 690 430 660L228 458Q205 432 238 418Q282 402 322 437L350 462Q385 490 415 462Q425 450 425 432"/>' +
+    '<path d="M650 370Q650 345 690 345Q722 350 722 385V540C722 640 650 715 555 715C500 715 460 690 430 660L228 458Q205 432 238 418Q282 402 322 437L350 462Q385 490 415 462Q425 450 425 432"/>';
+
+  var G = '<g fill="none" stroke="#fff" stroke-width="26" stroke-linecap="round" stroke-linejoin="round">';
+  var VB = 'viewBox="190 140 560 600" width="140" height="150"';
+
+  var SWIPE =
+    '<svg class="rd-ico" ' + VB + '>' + G + HAND +
+    '<path d="M222 290H388"/><path d="M262 250L222 290L262 330"/><path d="M348 250L388 290L348 330"/>' +
+    '</g></svg>';
+
+  var ZOOM =
+    '<svg class="rd-ico" ' + VB + '>' + G + HAND +
     '<path d="M222 350L355 217"/><path d="M280 212H360V292"/><path d="M212 280V358H292"/>' +
     '</g></svg>';
 
