@@ -377,6 +377,15 @@
   }
   bmBtn.addEventListener("click", function () {
     var topEdge = tools.getBoundingClientRect().bottom + 4;
+    var existing = document.querySelector("#reader-content .bookmarked");
+    if (existing) {
+      var br = existing.getBoundingClientRect();
+      if (br.bottom > topEdge && br.top < window.innerHeight) {
+        window.getSelection().removeAllRanges();
+        existing.click();
+        return;
+      }
+    }
     var els = document.querySelectorAll("#reader-content p, #reader-content li, #reader-content blockquote");
     for (var i = 0; i < els.length; i++) {
       var r = els[i].getBoundingClientRect();
