@@ -377,7 +377,7 @@
   }
   bmBtn.addEventListener("click", function () {
     var topEdge = tools.getBoundingClientRect().bottom + 4;
-    var els = document.querySelectorAll("#reader-content p, #reader-content li, #reader-content blockquote, #reader-content h2, #reader-content h3, #reader-content h4");
+    var els = document.querySelectorAll("#reader-content p, #reader-content li, #reader-content blockquote");
     for (var i = 0; i < els.length; i++) {
       var r = els[i].getBoundingClientRect();
       if (r.height > 0 && r.bottom > topEdge + 10) {
