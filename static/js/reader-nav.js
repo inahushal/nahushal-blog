@@ -125,7 +125,7 @@
     else if (++tries > 80) { clearInterval(iv); }
   }, 100);
 })();
-/* First-visit demo v3: realistic hands. Tap anywhere to close. */
+/* First-visit demo v4: icon-style hands. Tap anywhere to close. */
 (function () {
   "use strict";
   var KEY = "rd-demo-seen";
@@ -140,15 +140,19 @@
     ".rd-s2{animation:rdS2 7s infinite}",
     "@keyframes rdS1{0%{opacity:0}5%,45%{opacity:1}50%,100%{opacity:0}}",
     "@keyframes rdS2{0%,50%{opacity:0}55%,95%{opacity:1}100%{opacity:0}}",
-    ".rd-arrows{display:flex;gap:150px;font-size:54px;line-height:1;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.7);direction:ltr}",
-    ".rd-hand{filter:drop-shadow(0 6px 10px rgba(0,0,0,.5));display:block}",
-    ".rd-move{animation:rdMove 1.75s ease-in-out infinite}",
-    "@keyframes rdMove{0%,100%{transform:translateX(100px) rotate(14deg)}50%{transform:translateX(-100px) rotate(-14deg)}}",
+    ".rd-stage{position:relative;width:280px;height:140px}",
+    ".rd-sw{position:absolute;left:65px;top:5px;opacity:0;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}",
+    ".rd-a{animation:rdL 3.6s ease-in-out infinite}",
+    ".rd-b{animation:rdR 3.6s ease-in-out infinite}",
+    ".rd-b svg{transform:scaleX(-1)}",
+    "@keyframes rdL{0%{transform:translateX(70px);opacity:0}8%{opacity:1}40%{transform:translateX(-70px);opacity:1}48%,100%{transform:translateX(-70px);opacity:0}}",
+    "@keyframes rdR{0%,50%{transform:translateX(-70px);opacity:0}58%{opacity:1}90%{transform:translateX(70px);opacity:1}98%,100%{transform:translateX(70px);opacity:0}}",
+    ".rd-hand{display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.5))}",
     ".rd-idx,.rd-thumb{transform-box:fill-box;transform-origin:50% 100%}",
     ".rd-idx{animation:rdIdx 1.8s ease-in-out infinite}",
     ".rd-thumb{animation:rdThumb 1.8s ease-in-out infinite}",
-    "@keyframes rdIdx{0%,100%{transform:rotate(10deg)}50%{transform:rotate(-14deg)}}",
-    "@keyframes rdThumb{0%,100%{transform:rotate(-12deg)}50%{transform:rotate(30deg)}}",
+    "@keyframes rdIdx{0%,100%{transform:rotate(6deg)}50%{transform:rotate(-16deg)}}",
+    "@keyframes rdThumb{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(26deg)}}",
     ".rd-letters{display:flex;direction:rtl;align-items:baseline;gap:16px;color:#fff;line-height:1;text-shadow:0 2px 10px rgba(0,0,0,.7);animation:rdGrow 1.8s ease-in-out infinite}",
     "@keyframes rdGrow{0%,100%{transform:scale(1.25)}50%{transform:scale(.85)}}"
   ].join("");
@@ -156,41 +160,40 @@
   st.textContent = css;
   document.head.appendChild(st);
 
-  function defs(id) {
-    return '<defs><linearGradient id="' + id + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8dcc2"/><stop offset="1" stop-color="#deaa84"/></linearGradient></defs>';
+  var S = 'fill="#fff" stroke="#000" stroke-width="5" stroke-linejoin="round"';
+  function tip(cx, cy, r) {
+    return '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" ' + S + '/><circle cx="' + cx + '" cy="' + cy + '" r="' + (r - 6) + '" fill="#e6e6e6"/>';
   }
-  var G = 'fill="url(#ID)" stroke="#b07c5b" stroke-width="1.6" stroke-linejoin="round"';
-  var NAIL = '<rect x="NX" y="NY" width="13" height="14" rx="6" fill="#fff" opacity=".35"/>';
 
   var HAND1 =
-    '<svg class="rd-hand rd-move" viewBox="0 0 90 130" width="90" height="130">' + defs("rdg1") +
-    '<g ' + G.replace("ID", "rdg1") + '>' +
-    '<rect x="16" y="50" width="62" height="70" rx="24"/>' +
-    '<rect x="34" y="4" width="21" height="74" rx="10.5"/>' +
-    '<rect x="42" y="62" width="38" height="15" rx="7.5"/>' +
-    '<rect x="42" y="77" width="38" height="15" rx="7.5"/>' +
-    '<rect x="42" y="92" width="36" height="15" rx="7.5"/>' +
-    '<rect x="6" y="66" width="22" height="46" rx="11" transform="rotate(-18 17 90)"/>' +
-    '</g>' + NAIL.replace("NX", "38").replace("NY", "9") +
-    '<path d="M36 40h17M36 56h17" stroke="#b07c5b" stroke-width="1" opacity=".5" fill="none"/>' +
-    '</svg>';
+    '<svg viewBox="0 0 150 130" width="150" height="130">' +
+    '<path d="M54 12C95 10 125 35 142 58C118 40 90 28 54 24Z" fill="#000"/>' +
+    '<g ' + S + '>' +
+    '<rect x="8" y="64" width="22" height="46" rx="11" transform="rotate(32 19 87)"/>' +
+    '<rect x="30" y="50" width="60" height="72" rx="26"/>' +
+    '<rect x="50" y="44" width="14" height="30" rx="7"/>' +
+    '<rect x="64" y="42" width="14" height="30" rx="7"/>' +
+    '<rect x="78" y="46" width="14" height="30" rx="7"/>' +
+    '<rect x="32" y="16" width="18" height="76" rx="9"/>' +
+    tip(41, 18, 13) +
+    '</g></svg>';
 
   var HAND2 =
-    '<svg class="rd-hand" viewBox="0 0 120 150" width="120" height="150">' + defs("rdg2") +
-    '<g ' + G.replace("ID", "rdg2") + '>' +
-    '<g class="rd-idx"><rect x="62" y="12" width="20" height="82" rx="10"/>' + NAIL.replace("NX", "65.5").replace("NY", "17") + '</g>' +
-    '<g class="rd-thumb"><rect x="22" y="44" width="20" height="62" rx="10"/>' + NAIL.replace("NX", "25.5").replace("NY", "49") + '</g>' +
-    '<rect x="30" y="76" width="62" height="68" rx="24"/>' +
-    '<rect x="60" y="88" width="32" height="14" rx="7"/>' +
-    '<rect x="60" y="102" width="32" height="14" rx="7"/>' +
-    '<rect x="60" y="116" width="30" height="14" rx="7"/>' +
+    '<svg class="rd-hand" viewBox="0 0 130 150" width="130" height="150"><g ' + S + '>' +
+    '<rect x="36" y="82" width="62" height="62" rx="26"/>' +
+    '<rect x="62" y="74" width="12" height="26" rx="6"/>' +
+    '<rect x="74" y="76" width="12" height="26" rx="6"/>' +
+    '<rect x="86" y="80" width="12" height="26" rx="6"/>' +
+    '<g class="rd-idx"><rect x="66" y="16" width="18" height="90" rx="9"/>' + tip(75, 20, 13) + '</g>' +
+    '<g class="rd-thumb"><rect x="26" y="52" width="18" height="66" rx="9"/>' + tip(35, 56, 12) + '</g>' +
     '</g></svg>';
 
   var d = document.createElement("div");
   d.className = "rd-demo";
   d.setAttribute("aria-hidden", "true");
   d.innerHTML =
-    '<div class="rd-scene rd-s1"><div class="rd-arrows"><span>\u2039</span><span>\u203A</span></div>' + HAND1 + '</div>' +
+    '<div class="rd-scene rd-s1"><div class="rd-stage">' +
+    '<div class="rd-sw rd-a">' + HAND1 + '</div><div class="rd-sw rd-b">' + HAND1 + '</div></div></div>' +
     '<div class="rd-scene rd-s2"><div class="rd-letters"><span style="font-size:20px">\u0780</span><span style="font-size:30px">\u0781</span><span style="font-size:42px">\u0782</span></div>' + HAND2 + '</div>';
 
   function close() {
