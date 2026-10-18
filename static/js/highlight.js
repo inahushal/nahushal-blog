@@ -377,15 +377,14 @@
   }
   bmBtn.addEventListener("click", function () {
     var topEdge = tools.getBoundingClientRect().bottom + 4;
-    var existing = root.querySelector(".bookmarked");
-    if (existing) {
-      var br = existing.getBoundingClientRect();
-      if (br.bottom > topEdge && br.top < window.innerHeight) { existing.click(); return; }
-    }
     var els = document.querySelectorAll("#reader-content p, #reader-content li, #reader-content blockquote, #reader-content h2, #reader-content h3, #reader-content h4");
     for (var i = 0; i < els.length; i++) {
       var r = els[i].getBoundingClientRect();
-      if (r.height > 0 && r.bottom > topEdge + 10) { els[i].click(); return; }
+      if (r.height > 0 && r.bottom > topEdge + 10) {
+        window.getSelection().removeAllRanges();
+        if (!els[i].classList.contains("bookmarked")) { els[i].click(); }
+        return;
+      }
     }
   });
   new MutationObserver(bmState).observe(root, { attributes: true, attributeFilter: ["class"], subtree: true });
