@@ -171,7 +171,7 @@
   nextBtn.addEventListener("click", function () { step(1); });
 
   function refresh() {
-    listBtn.textContent = L.list + " (" + items.length + ")";
+    listBtn.textContent = String(items.length); listBtn.setAttribute("aria-label", L.list);
     panel.textContent = "";
     if (!items.length) { return; }
     sorted().forEach(function (h) {
