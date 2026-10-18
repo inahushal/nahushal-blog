@@ -5,10 +5,10 @@
 {{- $rh := eq .RelPermalink "/read/" -}}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
-<meta name="description" content="{{ if $rh }}ޑިޖިޓަލް ފޮތް ކިޔުމަށް ޑިޒައިންކުރެވިފައި{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}">
+<meta name="description" content="{{ if $rh }}ޑިޖިޓަލް ފޮތް ކިޔުމަށް ފަރުމާކުރެވިފައި{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}">
 <link rel="canonical" href="{{ if $rh }}https://kiyeveshi.nahushal.com/{{ else }}{{ .Permalink }}{{ end }}">
-<meta property="og:title" content="{{ if $rh }}ކިޔެވެށި - ޑިޖިޓަލް ފޮތް ކިޔުމަށް ޑިޒައިންކުރެވިފައި{{ else }}{{ .Title }}{{ end }}">
-<meta property="og:description" content="{{ if $rh }}ޑިޖިޓަލް ފޮތް ކިޔުމަށް ޑިޒައިންކުރެވިފައި{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}">
+<meta property="og:title" content="{{ if $rh }}ކިޔެވެށި - ޑިޖިޓަލް ފޮތް ކިޔުމަށް ފަރުމާކުރެވިފައި{{ else }}{{ .Title }}{{ end }}">
+<meta property="og:description" content="{{ if $rh }}ޑިޖިޓަލް ފޮތް ކިޔުމަށް ފަރުމާކުރެވިފައި{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}{{ end }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ if $rh }}https://kiyeveshi.nahushal.com/{{ else }}{{ .Permalink }}{{ end }}">
 {{- $img := .Params.image -}}
@@ -37,7 +37,7 @@
 </head>
 <body>
 <header>
-  <a class="site-title" href="{{ site.Home.Permalink }}"><h1><span class="t-main">{{ site.Title }}</span><span class="t-reader">ކިޔެވެށި</span></h1><span class="t-by">by Nahushal</span><span class="t-tag">ޑިޖިޓަލް ފޮތް ކިޔުމަށް ޑިޒައިންކުރެވިފައި</span></a>
+  <a class="site-title" href="{{ site.Home.Permalink }}"><h1><span class="t-main">{{ site.Title }}</span><span class="t-reader">ކިޔެވެށި</span></h1><span class="t-by">by Nahushal</span><span class="t-tag">ޑިޖިޓަލް ފޮތް ކިޔުމަށް ފަރުމާކުރެވިފައި</span></a>
   <a class="library-btn" href="https://kiyeveshi.nahushal.com">ކިޔެވެށި</a>
   <nav class="nav">
     {{ $page := . }}
