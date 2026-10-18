@@ -215,7 +215,18 @@
     try {
       var u = new URL(href, location.href);
       u.hash = dir < 0 ? "#last" : "";
-      location.href = u.href;
+      var navDone = false;
+      var go = function () { if (navDone) { return; } navDone = true; location.href = u.href; };
+      if (reduce || !view.animate) { go(); return; }
+      busy = true;
+      try { sessionStorage.setItem("flip-enter", String(dir)); } catch (e2) {}
+      var PP = "perspective(1400px) rotateY(";
+      var outA = view.animate(
+        [{ transform: PP + "0deg)", opacity: 1 },
+         { transform: PP + (dir > 0 ? 75 : -30) + "deg)", opacity: 0 }],
+        { duration: 220, easing: "ease-in", fill: "forwards" });
+      outA.onfinish = go;
+      setTimeout(go, 900);
     } catch (e) {}
   }
   function goTo(n) {
@@ -734,13 +745,33 @@
   // ----- start -----
   var savedIdx = -1;
   try { var sv = parseInt(localStorage.getItem(KEY), 10); if (sv >= 0) { savedIdx = sv; } } catch (e) {}
-  var h = location.hash, startB = null;
+  var h = location.hash, startB = null, enterDir = 0;
+  try { enterDir = parseInt(sessionStorage.getItem("flip-enter"), 10) || 0; sessionStorage.removeItem("flip-enter"); } catch (e) {}
+  if (enterDir && !reduce && view.animate) { view.style.opacity = "0"; } else { enterDir = 0; }
+  window.addEventListener("pageshow", function (ev) {
+    if (ev.persisted) {
+      try { view.getAnimations().forEach(function (an) { an.cancel(); }); } catch (e3) {}
+      view.style.opacity = "";
+      busy = false;
+    }
+  });
   if (h === "#bookmark") { startB = root.querySelector(".bookmarked"); }
   else if (h === "#resume" && savedIdx >= 0 && savedIdx < blocks.length) { startB = blocks[savedIdx]; }
 
   layout();
   if (startB) { gotoBlock(startB); } else if (h === "#last") { show(total - 1); } else { show(0); }
   if (cur > 0 || ALIGN_ON_LOAD) { setTimeout(align, 60); }
+  if (enterDir) {
+    busy = true;
+    var P2 = "perspective(1400px) rotateY(";
+    var inA = view.animate(
+      [{ transform: P2 + (enterDir > 0 ? -30 : 75) + "deg)", opacity: 0 },
+       { transform: P2 + "0deg)", opacity: 1 }],
+      { duration: 260, easing: "ease-out" });
+    view.style.opacity = "";
+    inA.onfinish = function () { busy = false; };
+    setTimeout(function () { busy = false; }, 900);
+  }
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(relayout); }
   window.addEventListener("load", function () { setTimeout(relayout, 150); });
 
