@@ -1321,3 +1321,19 @@ html body nav.reader-pager > a {
 /* Chapter title: full style on page 1, smaller and faded on later pages */
 #reader > .post-title { transition: font-size 0.3s ease, opacity 0.3s ease; }
 #reader > .post-title.title-dim { font-size: 1rem !important; line-height: 1.5 !important; opacity: 0.4; }
+
+/* Small faded running title on pages after the first */
+#rd-runhead {
+  visibility: hidden;
+  text-align: center;
+  direction: rtl;
+  font-family: 'MV Waheed', 'MV Funa', 'MV Izyan', 'Noto Sans Thaana', system-ui, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--turquoise-soft);
+  opacity: 0.45;
+  margin: 0 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

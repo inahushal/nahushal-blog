@@ -64,11 +64,11 @@
   var blocks = Array.prototype.slice.call(root.querySelectorAll(BLOCKS));
   // FLIP-TITLE: the chapter title lives inside the text, so only page 1 shows it
   var origTitle = document.querySelector("#reader > .post-title");
-  if (false && origTitle && !root.querySelector(".flip-title")) {
+  if (origTitle && !root.querySelector(".flip-title")) {
     var tc = origTitle.cloneNode(true);
     tc.classList.add("flip-title");
     tc.removeAttribute("id");
-    root.insertBefore(tc, root.firstChild);
+    root.insertBefore(tc, root.firstChild); var rh = document.createElement("div"); rh.id = "rd-runhead"; rh.textContent = origTitle.textContent.trim(); root.parentNode.insertBefore(rh, root);
     var tst = document.createElement("style");
     tst.textContent = "#reader > .post-title{display:none !important}#reader-content .flip-title{margin-top:0}";
     document.head.appendChild(tst);
@@ -136,7 +136,7 @@
   }
 
   function show(n) {
-    cur = Math.max(0, Math.min(total - 1, n)); var _ttl = document.querySelector("#reader > .post-title"); if (_ttl) { if (!_ttl.dataset.h) { _ttl.dataset.h = "1"; _ttl.style.minHeight = _ttl.offsetHeight + "px"; } _ttl.classList.toggle("title-dim", cur > 0); }
+    cur = Math.max(0, Math.min(total - 1, n)); var _rh = document.getElementById("rd-runhead"); if (_rh) { _rh.style.visibility = cur > 0 ? "visible" : "hidden"; }
     root.style.transform = "translateX(" + (cur * step) + "px)";
     pg.textContent = (cur + 1) + " / " + total; pageNo.textContent = "\u0790\u07A6\u078A\u07AA\u0780\u07A7 " + (cur + 1);
     prevB.disabled = (cur === 0);
