@@ -140,8 +140,8 @@
     cur = Math.max(0, Math.min(total - 1, n)); var _rh = document.getElementById("rd-runhead"); if (_rh) { _rh.style.visibility = cur > 0 ? "visible" : "hidden"; }
     root.style.transform = "translateX(" + (cur * step) + "px)";
     pg.textContent = (cur + 1) + " / " + total; pageNo.textContent = "\u0790\u07A6\u078A\u07AA\u0780\u07A7 " + (cur + 1);
-    prevB.disabled = (cur === 0);
-    nextB.disabled = (cur === total - 1);
+    prevB.disabled = (cur === 0 && !chapterHref(-1));
+    nextB.disabled = (cur === total - 1 && !chapterHref(1));
     togglePager();
     saveAnchor();
   }
@@ -199,7 +199,28 @@
     return c;
   }
 
+  function chapterHref(dir) {
+    var as = document.querySelectorAll("nav.reader-bar details.reader-menu ul a");
+    for (var i = 0; i < as.length; i++) {
+      if (as[i].className.indexOf("current") > -1) {
+        var o = as[i + dir];
+        return o ? o.getAttribute("href") : null;
+      }
+    }
+    return null;
+  }
+  function gotoChapter(dir) {
+    var href = chapterHref(dir);
+    if (!href) { return; }
+    try {
+      var u = new URL(href, location.href);
+      u.hash = dir < 0 ? "#last" : "";
+      location.href = u.href;
+    } catch (e) {}
+  }
   function goTo(n) {
+    if (!busy && n < 0) { gotoChapter(-1); return; }
+    if (!busy && n > total - 1) { gotoChapter(1); return; }
     n = Math.max(0, Math.min(total - 1, n));
     if (n === cur || busy) { return; }
     var dir = n > cur ? 1 : -1;
@@ -718,7 +739,7 @@
   else if (h === "#resume" && savedIdx >= 0 && savedIdx < blocks.length) { startB = blocks[savedIdx]; }
 
   layout();
-  if (startB) { gotoBlock(startB); } else { show(0); }
+  if (startB) { gotoBlock(startB); } else if (h === "#last") { show(total - 1); } else { show(0); }
   if (cur > 0 || ALIGN_ON_LOAD) { setTimeout(align, 60); }
   if (document.fonts && document.fonts.ready) { document.fonts.ready.then(relayout); }
   window.addEventListener("load", function () { setTimeout(relayout, 150); });
