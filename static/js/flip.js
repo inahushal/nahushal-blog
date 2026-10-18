@@ -136,7 +136,7 @@
   }
 
   function show(n) {
-    cur = Math.max(0, Math.min(total - 1, n));
+    cur = Math.max(0, Math.min(total - 1, n)); var _ttl = document.querySelector("#reader > .post-title"); if (_ttl) { if (!_ttl.dataset.h) { _ttl.dataset.h = "1"; _ttl.style.minHeight = _ttl.offsetHeight + "px"; } _ttl.classList.toggle("title-dim", cur > 0); }
     root.style.transform = "translateX(" + (cur * step) + "px)";
     pg.textContent = (cur + 1) + " / " + total; pageNo.textContent = "\u0790\u07A6\u078A\u07AA\u0780\u07A7 " + (cur + 1);
     prevB.disabled = (cur === 0);

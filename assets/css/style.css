@@ -1308,4 +1308,16 @@ html body nav.reader-pager {
 html body nav.reader-pager > a {
   font-size: 14px !important;
   line-height: 1.5 !important;
+}/* Chapter title: full style on page 1, smaller and faded on later pages */
+#reader > .post-title {
+  transition: font-size 0.3s ease, opacity 0.3s ease;
 }
+#reader > .post-title.title-dim {
+  font-size: 1rem !important;
+  line-height: 1.5 !important;
+  opacity: 0.4;
+}
+
+/* Chapter title: full style on page 1, smaller and faded on later pages */
+#reader > .post-title { transition: font-size 0.3s ease, opacity 0.3s ease; }
+#reader > .post-title.title-dim { font-size: 1rem !important; line-height: 1.5 !important; opacity: 0.4; }
