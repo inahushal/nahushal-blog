@@ -1,4 +1,4 @@
-@font-face {
+﻿@font-face {
   font-family: 'Faruma';
   src: local('Faruma'), url('/fonts/Faruma.woff2') format('woff2');
   font-weight: 400;
@@ -1264,4 +1264,6 @@ html, body { overflow-x: hidden; }
 
 /* reader strict justify */
 #reader-content p, #reader-content li, #reader-content blockquote, #reader-content td { text-align: justify !important; text-align-last: right !important; text-justify: inter-word; hyphens: manual; word-spacing: normal; letter-spacing: 0; text-wrap: wrap; }
-#reader-content h2, #reader-content h3, #reader-content h4 { text-align: right; text-align-last: right; }
+#reader-content h2, #reader-content h3, #reader-content h4 { text-align: right; text-align-last: right; }/* Old top chapter dropdown is hidden; chapters open from the toolbar three-dots button */
+details.reader-menu { display: none !important; }
+nav.reader-bar:has(details.reader-menu) { display: none !important; }
