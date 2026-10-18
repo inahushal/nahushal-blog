@@ -1266,4 +1266,35 @@ html, body { overflow-x: hidden; }
 #reader-content p, #reader-content li, #reader-content blockquote, #reader-content td { text-align: justify !important; text-align-last: right !important; text-justify: inter-word; hyphens: manual; word-spacing: normal; letter-spacing: 0; text-wrap: wrap; }
 #reader-content h2, #reader-content h3, #reader-content h4 { text-align: right; text-align-last: right; }/* Old top chapter dropdown is hidden; chapters open from the toolbar three-dots button */
 details.reader-menu { display: none !important; }
-nav.reader-bar:has(details.reader-menu) { display: none !important; }
+nav.reader-bar:has(details.reader-menu) { display: none !important; }/* Chapter pager on the last page: one clean row, lower, with space between previous and next */
+html body nav.reader-pager {
+  width: min(94vw, 560px) !important;
+  box-sizing: border-box !important;
+  max-height: none !important;
+  overflow: hidden !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 28px !important;
+  padding: 8px 16px !important;
+  bottom: 62px !important;
+  border-radius: 18px !important;
+}
+html body nav.reader-pager > a,
+html body nav.reader-pager > span {
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
+}
+html body nav.reader-pager > a {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+html body nav.reader-pager > :first-child { text-align: start !important; }
+html body nav.reader-pager > :last-child { text-align: end !important; }
+html body nav.reader-pager > a + a {
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.18) !important;
+  padding-inline-start: 16px !important;
+}
