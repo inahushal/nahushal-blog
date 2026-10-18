@@ -1297,4 +1297,15 @@ html body nav.reader-pager > :last-child { text-align: end !important; }
 html body nav.reader-pager > a + a {
   border-inline-start: 1px solid rgba(255, 255, 255, 0.18) !important;
   padding-inline-start: 16px !important;
+}/* Pager: only on the last page, lower, compact */
+html body nav.reader-pager[style*="display: none"] {
+  display: none !important;
+}
+html body nav.reader-pager {
+  bottom: 54px !important;
+  padding: 4px 16px !important;
+}
+html body nav.reader-pager > a {
+  font-size: 14px !important;
+  line-height: 1.5 !important;
 }
