@@ -198,14 +198,14 @@
 (function () {
   "use strict";
   var MSG_ON = "\u078A\u07A7\u0780\u07A6\u078E\u07A6\u0786\u07AA\u0783\u07AC\u0788\u07A8\u0787\u07B0\u0796\u07AC";
-  var MSG_OFF = "\u0784\u07AA\u0786\u07B0\u0789\u07A7\u0786\u07B0 \u078A\u07A8\u078D\u07AA\u0788\u07A8\u0787\u07B0\u0796\u07AC";
+  var MSG_OFF = "\u078A\u07A7\u0780\u07A6 \u078A\u07A8\u078D\u07AA\u0788\u07A8\u0787\u07B0\u0796\u07AC";
   var SHOW_MS = 1800;
   var FADE_MS = 600;
   var root = document.getElementById("reader-content");
   if (!root) { return; }
   var st = document.createElement("style");
   st.textContent =
-    ".rd-toast{position:fixed;left:50%;bottom:108px;transform:translateX(-50%);z-index:2147483200;" +
+    ".rd-toast{position:fixed;left:50%;top:40%;transform:translate(-50%,-50%);z-index:2147483200;" +
     "max-width:86vw;box-sizing:border-box;padding:.65rem 1.4rem;border-radius:999px;direction:rtl;text-align:center;" +
     "background:rgba(8,38,46,.96);color:#e6f4f1;border:1px solid rgba(94,234,212,.45);" +
     "box-shadow:0 6px 20px rgba(0,0,0,.45);font-size:1rem;line-height:1.6;pointer-events:none;" +
