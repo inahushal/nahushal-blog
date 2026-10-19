@@ -194,3 +194,56 @@
 
   setTimeout(function () { document.body.appendChild(d); }, 700);
 })();
+/* Bookmark toast: short message when a page is marked, then it dims away. */
+(function () {
+  "use strict";
+  var MSG_ON = "\u0784\u07AA\u0786\u07B0\u0789\u07A7\u0786\u07B0 \u0786\u07AA\u0783\u07AC\u0788\u07A8\u0787\u07B0\u0796\u07AC";
+  var MSG_OFF = "\u0784\u07AA\u0786\u07B0\u0789\u07A7\u0786\u07B0 \u078A\u07A8\u078D\u07AA\u0788\u07A8\u0787\u07B0\u0796\u07AC";
+  var SHOW_MS = 1800;
+  var FADE_MS = 600;
+  var root = document.getElementById("reader-content");
+  if (!root) { return; }
+  var st = document.createElement("style");
+  st.textContent =
+    ".rd-toast{position:fixed;left:50%;bottom:108px;transform:translateX(-50%);z-index:2147483200;" +
+    "max-width:86vw;box-sizing:border-box;padding:.65rem 1.4rem;border-radius:999px;direction:rtl;text-align:center;" +
+    "background:rgba(8,38,46,.96);color:#e6f4f1;border:1px solid rgba(94,234,212,.45);" +
+    "box-shadow:0 6px 20px rgba(0,0,0,.45);font-size:1rem;line-height:1.6;pointer-events:none;" +
+    "opacity:0;transition:opacity " + (FADE_MS / 1000) + "s ease}" +
+    ".rd-toast.on{opacity:1}";
+  document.head.appendChild(st);
+  var toast = null, tHide = null, tKill = null;
+  function show(msg) {
+    clearTimeout(tHide); clearTimeout(tKill);
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.className = "rd-toast";
+      toast.setAttribute("role", "status");
+      document.body.appendChild(toast);
+    }
+    toast.textContent = msg;
+    void toast.offsetWidth;
+    toast.classList.add("on");
+    tHide = setTimeout(function () {
+      toast.classList.remove("on");
+      tKill = setTimeout(function () {
+        if (toast && toast.parentNode) { toast.parentNode.removeChild(toast); }
+        toast = null;
+      }, FADE_MS + 50);
+    }, SHOW_MS);
+  }
+  var t0 = Date.now();
+  var last = root.querySelector(".bookmarked");
+  var timer = null;
+  function check() {
+    var now = root.querySelector(".bookmarked");
+    if (now === last) { return; }
+    last = now;
+    if (Date.now() - t0 < 2000) { return; }
+    show(now ? MSG_ON : MSG_OFF);
+  }
+  new MutationObserver(function () {
+    clearTimeout(timer);
+    timer = setTimeout(check, 60);
+  }).observe(root, { attributes: true, attributeFilter: ["class"], subtree: true });
+})();
