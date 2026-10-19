@@ -1,6 +1,6 @@
 (function () {
   if (!/^\/posts\/[^\/]+\/?$/.test(location.pathname)) return;
-  var el = document.querySelector('.post-content, .post-body, article, main');
+  var el = document.getElementById('article-content');
   if (!el) return;
   var MIN = 0.8, MAX = 2.5, z = 1, startDist = 0, startZ = 1;
   document.body.style.touchAction = 'pan-x pan-y';
