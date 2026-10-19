@@ -197,7 +197,7 @@
 /* Bookmark toast: short message when a page is marked, then it dims away. */
 (function () {
   "use strict";
-  var MSG_ON = "\u0784\u07AA\u0786\u07B0\u0789\u07A7\u0786\u07B0 \u0786\u07AA\u0783\u07AC\u0788\u07A8\u0787\u07B0\u0796\u07AC";
+  var MSG_ON = "\u078A\u07A7\u0780\u07A6\u078E\u07A6\u0786\u07AA\u0783\u07AC\u0788\u07A8\u0787\u07B0\u0796\u07AC";
   var MSG_OFF = "\u0784\u07AA\u0786\u07B0\u0789\u07A7\u0786\u07B0 \u078A\u07A8\u078D\u07AA\u0788\u07A8\u0787\u07B0\u0796\u07AC";
   var SHOW_MS = 1800;
   var FADE_MS = 600;
