@@ -112,7 +112,8 @@
       order(a.left > b.left);
     }
     order(false);
-    requestAnimationFrame(fix);
+    exit.style.visibility = "hidden"; if (more) { more.style.visibility = "hidden"; }
+    requestAnimationFrame(function () { fix(); exit.style.visibility = ""; if (more) { more.style.visibility = ""; } });
     setTimeout(fix, 300);
     setTimeout(fix, 1200);
     window.addEventListener("resize", fix);
