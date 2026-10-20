@@ -172,7 +172,7 @@
 
   function refresh() {
     listBtn.textContent = String(items.length); listBtn.setAttribute("aria-label", L.list);
-    panel.textContent = "";
+    panel.textContent = ""; if (!items.length) { panel.style.display = "none"; listBtn.classList.remove("on"); try { window.dispatchEvent(new Event("resize")); } catch (e9) {} }
     if (!items.length) { return; }
     sorted().forEach(function (h) {
       var row = mk("div", "hl-row");
