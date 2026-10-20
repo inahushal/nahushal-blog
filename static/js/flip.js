@@ -764,6 +764,10 @@
   if (h === "#bookmark") { startB = root.querySelector(".bookmarked"); }
   else if (h === "#resume" && savedIdx >= 0 && savedIdx < blocks.length) { startB = blocks[savedIdx]; }
 
+  Array.prototype.forEach.call(root.querySelectorAll("img"), function (im) {
+    im.loading = "eager";
+    if (!im.complete) { im.addEventListener("load", function () { relayout(); keepLast(); }); }
+  });
   layout();
   if (startB) { gotoBlock(startB); } else if (wantLast) { show(total - 1); } else { show(0); }
   if (cur > 0 || ALIGN_ON_LOAD) { setTimeout(align, 60); }
