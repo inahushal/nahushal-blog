@@ -101,7 +101,9 @@
     tools.appendChild(exit);
     if (more) { tools.appendChild(more); }
 
+    var flipped = false;
     function order(flip) {
+      flipped = flip;
       exit.style.order = flip ? "9" : "-9";
       if (more) { more.style.order = flip ? "-9" : "9"; }
     }
@@ -109,11 +111,11 @@
       if (!more) { return; }
       var a = exit.getBoundingClientRect(), b = more.getBoundingClientRect();
       if (!a.width || !b.width) { return; }
-      order(a.left > b.left);
+      if (a.left > b.left) { order(!flipped); }
     }
     order(false);
-    exit.style.visibility = "hidden"; if (more) { more.style.visibility = "hidden"; }
-    requestAnimationFrame(function () { fix(); exit.style.visibility = ""; if (more) { more.style.visibility = ""; } });
+    fix();
+    requestAnimationFrame(fix);
     setTimeout(fix, 300);
     setTimeout(fix, 1200);
     window.addEventListener("resize", fix);
