@@ -86,6 +86,8 @@
     root.style.columnWidth = W + "px";
     root.style.columnGap = GAP + "px";
     imgSt.textContent = "#reader-content img{max-height:" + (H - 10) + "px;width:auto;max-width:100%}";
+    var fi = root.querySelector("img");
+    if (fi) { var ft = root.querySelector(".flip-title"); var th = ft ? Math.ceil(ft.getBoundingClientRect().height) + 60 : 0; fi.style.maxHeight = Math.max(120, H - SAFE - 10 - th) + "px"; }
     step = W + GAP;
     var rr = root.getBoundingClientRect().right;
     var range = document.createRange();
