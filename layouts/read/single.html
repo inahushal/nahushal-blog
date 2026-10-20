@@ -148,6 +148,7 @@ setTimeout(function () { document.documentElement.classList.remove("flip-pending
         title: t ? t.textContent.trim() : ""
       }));
       mark(idx);
+      try { if (window.gtag) { gtag('event', 'bookmark_add', { chapter_path: here, paragraph: idx }); } } catch (e2) {}
     } catch (err) {}
   });
 })();
