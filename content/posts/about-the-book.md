@@ -1,4 +1,5 @@
 ---
+category: [politics, legal]
 title: "ފޮތުގެ ތާރަފު"
 date: 2026-10-03T12:41:22+02:00
 description: ""

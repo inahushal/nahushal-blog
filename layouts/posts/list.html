@@ -9,7 +9,7 @@
 </div>
 
 {{ range (where .Pages "Params.unlisted" "ne" true).ByDate.Reverse }}
-<article class="post-card" data-cat="{{ .Params.category }}">
+<article class="post-card" data-cat="{{ $c := .Params.category }}{{ if reflect.IsSlice $c }}{{ delimit $c " " }}{{ else }}{{ $c }}{{ end }}">
   <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
   <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "date.html" .Date }}</time>
   <p class="post-content">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 200 }}{{ end }}</p>
@@ -31,7 +31,7 @@
   function show(c) {
     var all = !c || c === "all";
     for (var i = 0; i < posts.length; i++) {
-      posts[i].style.display = (all || posts[i].getAttribute("data-cat") === c) ? "" : "none";
+      posts[i].style.display = (all || (" " + posts[i].getAttribute("data-cat") + " ").indexOf(" " + c + " ") > -1) ? "" : "none";
     }
     for (var j = 0; j < cards.length; j++) {
       cards[j].classList.toggle("active", cards[j].getAttribute("data-cat") === (all ? "all" : c));
