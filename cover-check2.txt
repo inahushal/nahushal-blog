@@ -1,0 +1,140 @@
+=== render-image.html ===
+<figure>
+  <img
+    src="{{ .Destination | safeURL }}"
+    alt="{{ .Text }}"
+    loading="lazy"
+  >
+  {{ with .Title }}
+    <figcaption>{{ . }}</figcaption>
+  {{ end }}
+</figure>
+=== flip.js: image handling ===
+47: var imgSt = document.createElement("style");
+48: document.head.appendChild(imgSt);
+88: imgSt.textContent = "#reader-content img{max-height:" + (H - 10) + "px;width:auto;max-width:100%}";
+382: try { id = decodeURIComponent(id); } catch (err) {}
+789: window.addEventListener("load", function () { setTimeout(function () { relayout(); keepLast(); }, 150); setTimeout(keepLast, 900); setTimeout(reveal, 200); });
+=== flip.js lines 60-130 ===
+  nav.appendChild(prevB);
+  nav.appendChild(pg);
+  nav.appendChild(nextB);
+  document.body.appendChild(nav);
+
+  var blocks = Array.prototype.slice.call(root.querySelectorAll(BLOCKS));
+  // FLIP-TITLE: the chapter title lives inside the text, so only page 1 shows it
+  var origTitle = document.querySelector("#reader > .post-title");
+  if (origTitle && !root.querySelector(".flip-title")) {
+    var tc = origTitle.cloneNode(true);
+    tc.classList.add("flip-title");
+    tc.removeAttribute("id");
+    root.insertBefore(tc, root.firstChild); var rh = document.createElement("div"); rh.id = "rd-runhead"; rh.textContent = origTitle.textContent.trim(); root.parentNode.insertBefore(rh, root);
+    var tst = document.createElement("style");
+    tst.textContent = "#reader > .post-title{display:none !important}#reader-content .flip-title{margin-top:0}";
+    document.head.appendChild(tst);
+  }
+  var H = 0, W = 0, step = 1, total = 1, cur = 0, busy = false, lastVH = 0;
+
+  function layout() {
+    lastVH = window.innerHeight;
+    H = Math.max(240, Math.floor(window.__flipFocus ? (lastVH - Math.max(0, view.getBoundingClientRect().top) - 82) : (lastVH - TOP - BOTTOM)));
+    view.style.height = H + "px";
+    W = Math.floor(view.clientWidth);
+    root.style.width = W + "px";
+    root.style.height = (H - SAFE) + "px";
+    root.style.columnWidth = W + "px";
+    root.style.columnGap = GAP + "px";
+    imgSt.textContent = "#reader-content img{max-height:" + (H - 10) + "px;width:auto;max-width:100%}";
+    step = W + GAP;
+    var rr = root.getBoundingClientRect().right;
+    var range = document.createRange();
+    range.selectNodeContents(root);
+    var rects = range.getClientRects();
+    var maxD = 0;
+    for (var i = 0; i < rects.length; i++) {
+      var r = rects[i];
+      if (r.width > 0 && r.height > 0) {
+        var d = rr - r.left;
+        if (d > maxD) { maxD = d; }
+      }
+    }
+    total = Math.max(1, Math.floor(maxD / step) + 1);
+  }
+
+  function pageOfRect(r) {
+    var rr = root.getBoundingClientRect().right;
+    var cx = (r.left + r.right) / 2;
+    return Math.max(0, Math.floor((rr - cx) / step));
+  }
+  function usable(el) {
+    var rs = el.getClientRects(), out = [];
+    for (var i = 0; i < rs.length; i++) { if (rs[i].width > 0 && rs[i].height > 0) { out.push(rs[i]); } }
+    return out;
+  }
+  function firstPage(el) { var u = usable(el); return u.length ? pageOfRect(u[0]) : null; }
+  function lastPage(el) { var u = usable(el); return u.length ? pageOfRect(u[u.length - 1]) : null; }
+
+  function anchorBlock() {
+    for (var i = 0; i < blocks.length; i++) {
+      var lp = lastPage(blocks[i]);
+      if (lp !== null && lp >= cur) { return blocks[i]; }
+    }
+    return blocks.length ? blocks[blocks.length - 1] : null;
+  }
+  function saveAnchor() {
+    var b = anchorBlock();
+    if (!b) { return; }
+    try { localStorage.setItem(KEY, String(blocks.indexOf(b))); } catch (e) {}
+  }
+
+=== flip.js end (startup) ===
+        }
+      };
+      setTimeout(function () { relayout(); }, 700);
+    })();
+  }
+
+  // ----- start -----
+  var savedIdx = -1;
+  try { var sv = parseInt(localStorage.getItem(KEY), 10); if (sv >= 0) { savedIdx = sv; } } catch (e) {}
+  var h = location.hash, startB = null, enterDir = 0;
+  try { enterDir = parseInt(sessionStorage.getItem("flip-enter"), 10) || 0; sessionStorage.removeItem("flip-enter"); } catch (e) {}
+  if (enterDir && !reduce && view.animate) { view.style.opacity = "0"; } else { enterDir = 0; }
+  window.addEventListener("pageshow", function (ev) {
+    if (ev.persisted) {
+      try { view.getAnimations().forEach(function (an) { an.cancel(); }); } catch (e3) {}
+      view.style.opacity = "";
+      busy = false;
+    }
+  });
+  var wantLast = (h === "#last") || enterDir < 0, lastT0 = Date.now();
+  function keepLast() { if (wantLast && !startB && Date.now() - lastT0 < 3500) { layout(); if (cur !== total - 1) { show(total - 1); } } }
+  var klTimer = setInterval(function () { if (!wantLast || Date.now() - lastT0 > 3500) { clearInterval(klTimer); } else { keepLast(); } }, 120);
+  document.addEventListener("pointerdown", function () { wantLast = false; }, { once: true, capture: true });
+  if (h === "#bookmark") { startB = root.querySelector(".bookmarked"); }
+  else if (h === "#resume" && savedIdx >= 0 && savedIdx < blocks.length) { startB = blocks[savedIdx]; }
+
+  layout();
+  if (startB) { gotoBlock(startB); } else if (wantLast) { show(total - 1); } else { show(0); }
+  if (cur > 0 || ALIGN_ON_LOAD) { setTimeout(align, 60); }
+  var revealed = false;
+  function reveal() {
+    if (revealed) { return; }
+    revealed = true;
+    document.documentElement.classList.remove("flip-pending");
+    playEnter();
+  }
+  function playEnter() { if (!enterDir) { return; }
+    busy = true;
+    var P2 = "perspective(1400px) rotateY(";
+    var inA = view.animate(
+      [{ transform: P2 + (enterDir > 0 ? -30 : 75) + "deg)", opacity: 0 },
+       { transform: P2 + "0deg)", opacity: 1 }],
+      { duration: 260, easing: "ease-out" });
+    view.style.opacity = "";
+    inA.onfinish = function () { busy = false; };
+    setTimeout(function () { busy = false; }, 900);
+  }
+  if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { relayout(); keepLast(); reveal(); }); }
+  window.addEventListener("load", function () { setTimeout(function () { relayout(); keepLast(); }, 150); setTimeout(keepLast, 900); setTimeout(reveal, 200); });
+

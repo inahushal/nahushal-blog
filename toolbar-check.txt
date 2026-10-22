@@ -1,0 +1,149 @@
+=== flip-pending ===
+flip.js:774: document.documentElement.classList.remove("flip-pending");
+single.html:13: document.documentElement.classList.add("flip-pending");
+single.html:14: setTimeout(function () { document.documentElement.classList.remove("flip-pending"); }, 3000);
+style.css:1343: html.flip-pending #reader { opacity: 0; }
+=== button-like elements ===
+reader-nav.js:10: ".bk-cover{position:absolute;inset:0;transform-origin:right center;transform-style:preserve-3d;transform:rotateY(168deg);animation:bkClose 1.2s cubic-bezier(.45,.05,.25,1) .25s forwards}",
+reader-nav.js:16: "@keyframes bkClose{from{transform:rotateY(168deg)}to{transform:rotateY(0deg)}}",
+reader-nav.js:17: ".rd-menu{position:fixed;z-index:2147483100;left:50%;transform:translateX(-50%);width:min(92vw,380px);overflow-y:auto;box-sizing:border-box;margin:0;padding:.3rem;direction:rtl;background:#08262e;border:1px solid rgba(94,234,212,.35);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.45);display:none;-webkit-overflow-scrolling:touch}",
+reader-nav.js:18: ".rd-menu.open{display:block}",
+reader-nav.js:19: ".rd-menu a{display:block;padding:.7rem .9rem;color:#e6f4f1;text-decoration:none;border-radius:8px;line-height:1.6;font-size:1rem}",
+reader-nav.js:20: ".rd-menu a:hover,.rd-menu a.current{background:rgba(94,234,212,.15);color:#5eead4}"
+reader-nav.js:26: function closeBook() {
+reader-nav.js:29: location.href = HOME;
+reader-nav.js:37: setTimeout(function () { location.href = HOME; }, 1750);
+reader-nav.js:55: var EXIT = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="display:block"><path d="M10 4H6a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4M15 8l4 4-4 4M19 12H9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+reader-nav.js:56: var DOTS = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="display:block"><circle cx="12" cy="5" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="19" r="2" fill="currentColor"/></svg>';
+reader-nav.js:59: var src = document.querySelectorAll("nav.reader-bar details.reader-menu ul a");
+reader-nav.js:62: p.className = "rd-menu";
+reader-nav.js:79: var exit = mkBtn("Close book", EXIT, closeBook);
+reader-nav.js:84: var closeMenu = function () { panel.classList.remove("open"); if (more) { more.classList.remove("on"); } };
+reader-nav.js:85: more = mkBtn("Chapters", DOTS, function () {
+reader-nav.js:86: if (panel.classList.contains("open")) { closeMenu(); return; }
+reader-nav.js:96: if (panel.classList.contains("open") && !panel.contains(e.target) && !more.contains(e.target)) { closeMenu(); }
+reader-nav.js:98: document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeMenu(); } });
+reader-nav.js:101: tools.appendChild(exit);
+reader-nav.js:105: exit.style.order = flip ? "9" : "-9";
+reader-nav.js:110: var a = exit.getBoundingClientRect(), b = more.getBoundingClientRect();
+reader-nav.js:128: /* First-visit demo v8: swipe and zoom icons in the same line style. Tap anywhere to close. */
+reader-nav.js:185: function close() {
+reader-nav.js:192: d.addEventListener("pointerup", function (e) { e.stopPropagation(); close(); });
+reader-nav.js:193: d.addEventListener("click", function (e) { e.stopPropagation(); close(); });
+highlight.js:55: !(n.parentNode.closest && n.parentNode.closest(".reader-divider"))) {
+highlight.js:119: var dots = {};
+highlight.js:131: dots[c] = d;
+highlight.js:141: Object.keys(dots).forEach(function (c) {
+highlight.js:142: dots[c].classList.toggle("on", on && c === activeColor);
+highlight.js:184: var sh = m && m.closest(".reader-sheet");
+highlight.js:267: var m = e.target.closest ? e.target.closest("mark.hl") : null;
+highlight.js:335: // MENU-HIDE: hide the toolbar while the chapter menu is open
+highlight.js:336: function syncMenu() {
+highlight.js:337: var openMenu = document.querySelector("details.reader-menu[open]");
+highlight.js:338: var sel = document.getElementById("reader-menu");
+highlight.js:340: if (openMenu || selOpen) {
+highlight.js:347: document.addEventListener("toggle", syncMenu, true);
+highlight.js:348: document.addEventListener("click", function () { setTimeout(syncMenu, 0); }, true);
+=== flip.js 545-575 ===
+    pendScale = s;
+    zl.textContent = Math.round(s * 100) + "%";
+    clearTimeout(zt);
+    zt = setTimeout(commitZoom, eink ? 600 : 220);
+  }
+
+  // ----- controls: Aa button + small panel -----
+  function zbtn(t, fn) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = t;
+    b.style.cssText = "font:inherit;color:inherit;background:transparent;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:3px 12px;cursor:pointer;white-space:nowrap";
+    b.addEventListener("click", function (e) { e.stopPropagation(); fn(); });
+    return b;
+  }
+  var pop = document.createElement("div");
+  pop.style.cssText = "position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);display:none;direction:ltr;gap:6px;align-items:center;padding:5px 8px;border-radius:16px;background:rgba(30,30,30,.97);color:#fff;white-space:nowrap";
+  var zl = zbtn(Math.round(scale * 100) + "%", function () {
+    zoom(1 - (pendScale === null ? scale : pendScale));
+  });
+  var eB = zbtn("E-ink", function () {
+    eink = !eink;
+    reduce = baseReduce || eink;
+    try { localStorage.setItem(E_KEY, eink ? "1" : "0"); } catch (e) {}
+    einkCss();
+    eB.style.background = eink ? "rgba(255,255,255,.28)" : "transparent";
+  });
+  eB.style.background = eink ? "rgba(255,255,255,.28)" : "transparent";
+  pop.appendChild((function () { var b = zbtn("\u2212", function () { zoom(-Z_STEP); }); b.style.fontSize = "16px"; b.style.padding = "1px 14px"; return b; })());
+  pop.appendChild(zl);
+  pop.appendChild((function () { var b = zbtn("+", function () { zoom(Z_STEP); }); b.style.fontSize = "16px"; b.style.padding = "1px 14px"; return b; })());
+=== reader-nav.js top ===
+(function () {
+  "use strict";
+  var HOME = /(^|\.)nahushal\.com$/.test(location.hostname) ? "https://kiyeveshi.nahushal.com/" : "/";
+
+  var css = [
+    ".hl-nav{display:inline-flex;align-items:center;justify-content:center;line-height:1}",
+    ".bk-stage{position:fixed;inset:0;z-index:2147483600;display:flex;align-items:center;justify-content:center;background:rgba(12,12,12,.94);perspective:1500px;opacity:0;animation:bkFade .35s ease forwards}",
+    ".bk-book{position:relative;width:min(42vw,260px);aspect-ratio:2/3;transform-style:preserve-3d;transform:translateX(-50%);animation:bkSlide 1.2s cubic-bezier(.45,.05,.25,1) .25s forwards}",
+    ".bk-pages{position:absolute;inset:0;border-radius:6px 2px 2px 6px;background:#f4efe3;box-shadow:-3px 0 0 #e4dccb,-5px 0 0 #cfc6b2,0 18px 40px rgba(0,0,0,.55)}",
+    ".bk-cover{position:absolute;inset:0;transform-origin:right center;transform-style:preserve-3d;transform:rotateY(168deg);animation:bkClose 1.2s cubic-bezier(.45,.05,.25,1) .25s forwards}",
+    ".bk-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:6px 2px 2px 6px}",
+    ".bk-front{background:#1d2b3a url(/images/book-cover.png) center/cover no-repeat;box-shadow:inset -6px 0 10px -6px rgba(0,0,0,.6)}",
+    ".bk-back{transform:rotateY(180deg);background:#e9e0cc}",
+    "@keyframes bkFade{to{opacity:1}}",
+    "@keyframes bkSlide{from{transform:translateX(-50%)}to{transform:translateX(0)}}",
+    "@keyframes bkClose{from{transform:rotateY(168deg)}to{transform:rotateY(0deg)}}",
+    ".rd-menu{position:fixed;z-index:2147483100;left:50%;transform:translateX(-50%);width:min(92vw,380px);overflow-y:auto;box-sizing:border-box;margin:0;padding:.3rem;direction:rtl;background:#08262e;border:1px solid rgba(94,234,212,.35);border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.45);display:none;-webkit-overflow-scrolling:touch}",
+    ".rd-menu.open{display:block}",
+    ".rd-menu a{display:block;padding:.7rem .9rem;color:#e6f4f1;text-decoration:none;border-radius:8px;line-height:1.6;font-size:1rem}",
+    ".rd-menu a:hover,.rd-menu a.current{background:rgba(94,234,212,.15);color:#5eead4}"
+  ].join("");
+  var st = document.createElement("style");
+  st.textContent = css;
+  document.head.appendChild(st);
+
+  function closeBook() {
+    if (document.querySelector(".bk-stage")) { return; }
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      location.href = HOME;
+      return;
+    }
+    var s = document.createElement("div");
+    s.className = "bk-stage";
+    s.setAttribute("aria-hidden", "true");
+    s.innerHTML = '<div class="bk-book"><div class="bk-pages"></div><div class="bk-cover"><div class="bk-face bk-front"></div><div class="bk-face bk-back"></div></div></div>';
+    document.body.appendChild(s);
+    setTimeout(function () { location.href = HOME; }, 1750);
+  }
+  window.addEventListener("pageshow", function () {
+    var s = document.querySelector(".bk-stage");
+    if (s && s.parentNode) { s.parentNode.removeChild(s); }
+  });
+
+  function mkBtn(label, svg, onClick) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "hl-btn hl-nav";
+    b.setAttribute("aria-label", label);
+    b.title = label;
+    b.innerHTML = svg;
+    b.addEventListener("click", onClick);
+    return b;
+  }
+
+  var EXIT = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="display:block"><path d="M10 4H6a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4M15 8l4 4-4 4M19 12H9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var DOTS = '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true" style="display:block"><circle cx="12" cy="5" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="19" r="2" fill="currentColor"/></svg>';
+
+  function buildPanel() {
+    var src = document.querySelectorAll("nav.reader-bar details.reader-menu ul a");
+    if (!src.length) { return null; }
+    var p = document.createElement("div");
+    p.className = "rd-menu";
+    for (var i = 0; i < src.length; i++) {
+      var a = document.createElement("a");
+      a.href = src[i].getAttribute("href");
+      a.textContent = src[i].textContent.trim();
+      if (src[i].className.indexOf("current") > -1) { a.className = "current"; }
+      p.appendChild(a);
+    }
+    ["touchstart", "touchmove", "touchend", "pointerdown", "pointermove", "pointerup", "wheel", "mousedown", "click"].forEach(function (ev) {

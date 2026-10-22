@@ -1,0 +1,80 @@
+=== highlight.js: panel / list / count ===
+9: list: "\u0780\u07A6\u0787\u07A8\u078D\u07A6\u0787\u07A8\u0793\u07B0\u078C\u07A6\u0787\u07B0",
+12: empty: "\u0780\u07A6\u0787\u07A8\u078D\u07A6\u0787\u07A8\u0793\u07B0 \u0786\u07AA\u0783\u07AC\u0788\u07A8\u078A\u07A6\u0787\u07AC\u0787\u07B0 \u0782\u07AC\u078C\u07B0"
+24: "#hl-bar{position:absolute;z-index:9999;display:none;gap:8px;align-items:center;padding:6px 10px;background:#222;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.25)}" +
+25: "#hl-bar button{all:unset;cursor:pointer;width:22px;height:22px;border-radius:50%;border:2px solid #fff}" +
+26: "#hl-bar button.del{width:auto;height:auto;border:0;border-radius:0;color:#fff;font-size:14px;padding:0 4px}" +
+27: ".hl-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;padding:8px;border:1px solid rgba(128,128,128,.4);border-radius:10px}" +
+32: ".hl-panel{flex-basis:100%;max-height:40vh;overflow:auto;border-top:1px solid rgba(128,128,128,.3);padding-top:6px;display:none}" +
+33: ".hl-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(128,128,128,.15)}" +
+38: ".hl-empty{opacity:.6;padding:6px 0}";
+39: var st = document.createElement("style");
+65: var m = document.createElement("mark");
+110: var e = document.createElement(tag);
+117: var tools = mk("div", "hl-tools");
+120: var listBtn = mk("button", "hl-btn", L.list + " (0)");
+123: var panel = mk("div", "hl-panel");
+130: d.addEventListener("click", function () { activeColor = c; setMode(true); });
+134: tools.appendChild(listBtn);
+135: tools.appendChild(panel);
+140: modeBtn.classList.toggle("on", on);
+142: dots[c].classList.toggle("on", on && c === activeColor);
+145: modeBtn.addEventListener("click", function () { setMode(!mode); });
+146: listBtn.addEventListener("click", function () {
+147: var open = panel.style.display === "block" || !items.length;
+148: panel.style.display = open ? "none" : "block";
+149: listBtn.classList.toggle("on", !open);
+158: marks.forEach(function (m) { m.classList.add("flash"); });
+159: setTimeout(function () { marks.forEach(function (m) { m.classList.remove("flash"); }); }, 1600);
+170: prevBtn.addEventListener("click", function () { step(-1); });
+171: nextBtn.addEventListener("click", function () { step(1); });
+174: listBtn.textContent = String(items.length); listBtn.setAttribute("aria-label", L.list);
+175: panel.textContent = "";
+182: t.addEventListener("click", function () { jump(h.id); });
+188: x.addEventListener("click", function () { removeItem(h.id); });
+190: panel.appendChild(row);
+195: var bar = document.createElement("div");
+196: bar.id = "hl-bar";
+199: var b = document.createElement("button");
+202: b.addEventListener("mousedown", function (e) { e.preventDefault(); });
+203: b.addEventListener("click", function () { apply(c); });
+206: var delBtn = document.createElement("button");
+209: delBtn.addEventListener("mousedown", function (e) { e.preventDefault(); });
+210: delBtn.addEventListener("click", function () {
+218: delBtn.style.display = withDelete ? "" : "none";
+219: bar.style.display = "flex";
+225: function hide() { bar.style.display = "none"; current = null; }
+251: if (!sel.rangeCount || sel.isCollapsed) return;
+259: document.addEventListener("selectionchange", function () {
+265: root.addEventListener("click", function (e) {
+279: document.addEventListener("click", function (e) {
+284: var st2 = document.createElement("style");
+287: .hl-tools{position:sticky;top:6px;z-index:1000;gap:6px;margin:8px 0;padding:4px 8px;
+294: .hl-panel{max-height:30vh;font-size:12px;border-top:1px solid rgba(255,255,255,.2)}
+301: var st4 = document.createElement("style");
+303: .hl-tools{position:fixed !important;top:8px !important;left:50% !important;
+309: var slot = document.createElement("div");
+314: if (panel.style.display !== "block") {
+322: window.addEventListener("scroll", place, { passive: true });
+323: window.addEventListener("resize", place);
+324: listBtn.addEventListener("click", function () { setTimeout(place, 0); });
+328: var st5 = document.createElement("style");
+330: .hl-tools{gap:5px !important;padding:4px 7px !important}
+341: tools.style.setProperty("display", "none", "important");
+344: tools.style.removeProperty("display");
+347: document.addEventListener("toggle", syncMenu, true);
+348: document.addEventListener("click", function () { setTimeout(syncMenu, 0); }, true);
+349: document.addEventListener("focusin", syncMenu);
+350: document.addEventListener("focusout", function () { setTimeout(syncMenu, 0); });
+351: document.addEventListener("keydown", function (e) { if (e.key === "Escape") setTimeout(syncMenu, 0); });
+353: // ONE-LINE-2: always a single row; the list opens as a panel under the bar
+356: var st6 = document.createElement("style");
+=== highlight CSS ===
+highlight.js:27: ".hl-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:14px 0;padding:8px;border:1px solid rgba(128,128,128,.4);border-radius:10px}" +
+highlight.js:32: ".hl-panel{flex-basis:100%;max-height:40vh;overflow:auto;border-top:1px solid rgba(128,128,128,.3);padding-top:6px;display:none}" +
+highlight.js:287: .hl-tools{position:sticky;top:6px;z-index:1000;gap:6px;margin:8px 0;padding:4px 8px;
+highlight.js:294: .hl-panel{max-height:30vh;font-size:12px;border-top:1px solid rgba(255,255,255,.2)}
+highlight.js:303: .hl-tools{position:fixed !important;top:8px !important;left:50% !important;
+highlight.js:330: .hl-tools{gap:5px !important;padding:4px 7px !important}
+highlight.js:358: .hl-tools{flex-wrap:nowrap !important;width:max-content !important;max-width:96vw !important;
+highlight.js:362: .hl-panel{position:absolute !important;top:100% !important;left:0 !important;right:0 !important;

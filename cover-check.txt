@@ -1,0 +1,53 @@
+=== chapter files ===
+content\read\_index.md
+content\read\presidential-system\00.md
+content\read\presidential-system\01.md
+content\read\presidential-system\02.md
+content\read\presidential-system\03.md
+content\read\presidential-system\04.md
+content\read\presidential-system\05.md
+content\read\presidential-system\06.md
+content\read\presidential-system\07.md
+content\read\presidential-system\08.md
+content\read\presidential-system\09.md
+content\read\presidential-system\10.md
+content\read\presidential-system\11.md
+content\read\presidential-system\12.md
+content\read\presidential-system\_index.md
+=== top of the first chapter file ===
+D:\nahushal-blog\content\read\presidential-system\00.md
+---
+title: "Þ„Þ­ÞƒÞª ÞŽÞ¦Þ‚Þ‘Þ§Þ‡Þ¨ Þ†Þ®Þ•Þ©ÞƒÞ¦Þ‡Þ¨Þ“Þ°"
+weight: 1
+draft: false
+---
+![ÞŠÞ®ÞŒÞªÞŽÞ¬ Þ†Þ¦ÞˆÞ¦ÞƒÞª](/images/book-cover.png)
+
+Þ‡Þ¨Þ„Þ°ÞƒÞ§Þ€Þ©Þ‰Þ° Þ‚Þ¦Þ€ÞªÞÞ¦ÞÞ°
+
+
+
+
+**Þ†Þ®Þ•Þ©ÞƒÞ¦Þ‡Þ¨Þ“Þ° @ Þ‡Þ¨Þ„Þ°ÞƒÞ§Þ€Þ©Þ‰Þ° Þ‚Þ¦Þ€ÞªÞÞ¦ÞÞ° 2026**
+
+Þ‰Þ¨ ÞŠÞ®ÞŒÞªÞŽÞ¬ Þ€ÞªÞƒÞ¨Þ€Þ§ Þ„Þ¦Þ‡Þ¨ÞŒÞ¦Þ†Þ¬Þ‡Þ° Þ‰Þ¨ÞÞ°Þ†ÞªÞˆÞ¬ÞŽÞ¬Þ‚Þ°ÞˆÞ¦Þ‚Þ© Þ™Þ¦Þ‡Þ°Þ¤ÞªÞˆÞ¬ÞƒÞ¨ÞŠÞ¦ÞƒÞ§ÞŒÞ¦ÞÞ¬ÞˆÞ¬. Þ‡Þ¦Þ‹Þ¨ Þ‰Þ¨ ÞŠÞ®ÞŒÞªÞŽÞ¬ Þ‡Þ¬Þ‡Þ°ÞˆÞ¬ÞÞ° Þ„Þ¦Þ‡Þ¬Þ‡Þ° Þ‡Þ¦ÞÞªÞ‚Þ° Þ‡ÞªÞŠÞ¬Þ‡Þ°Þ‹ÞªÞ‰Þ§Þ‡Þ¨ØŒ ÞƒÞ¦Þ‡Þ°Þ†Þ§Þ†ÞªÞƒÞªÞ‰ÞªÞŽÞ¬ Þ‚Þ¨Þ’Þ§Þ‰Þ¬Þ‡Þ°ÞŽÞ¦Þ‡Þ¨ ÞƒÞ¦Þ‡Þ°Þ†Þ§Þ†ÞªÞƒÞªÞ‰Þ§Þ‡Þ¨ØŒ Þ‡Þ¬Þ‡Þ°ÞˆÞ¬ÞÞ° ÞˆÞ¨Þ”Þ¦ÞŠÞ§ÞƒÞ©ÞŽÞ¬ Þ„Þ­Þ‚ÞªÞ‰Þ¦Þ†Þ¦ÞÞ°ØŒ Þ‡Þ¬Þ‡Þ°ÞˆÞ¬ÞÞ° ÞÞ¨ÞŠÞ¦Þ‡Þ¬Þ‡Þ°ÞŽÞ¦Þ‡Þ¨ØŒ Þ‡Þ¨Þ„Þ°ÞƒÞ§Þ€Þ©Þ‰Þ° Þ‚Þ¦Þ€ÞªÞÞ¦ÞÞ°ÞŽÞ¬ Þ€ÞªÞ‡Þ°Þ‹Þ¦Þ‡Þ¦Þ†Þ§ Þ‚ÞªÞÞ¦Þ‡Þ¨ Þ„Þ­Þ‚ÞªÞ‚Þ°Þ†ÞªÞƒÞªÞ‰Þ¦Þ†Þ© Þ‰Þ¦Þ‚Þ§Þ†Þ¦Þ‰Þ¬Þ†Þ¬ÞˆÞ¬. Þ‰Þ¨ Þ™Þ¦Þ‡Þ°Þ¤ÞªÞŒÞ¦Þ‡Þ° ÞƒÞ¦Þ‡Þ°Þ†Þ§ÞŒÞ¬ÞƒÞ¨Þ†ÞªÞƒÞ¬ÞˆÞ¨ Þ‡Þ¦Þ‹Þ¨ ÞŒÞ¦Þ‚Þ°ÞŠÞ©Þ’ÞªÞ†ÞªÞƒÞ¬ÞˆÞ¬Þ‚Þ© Þ‹Þ¨ÞˆÞ¬Þ€Þ¨ÞƒÞ§Þ‡Þ°Þ–Þ­ÞŽÞ¬ Þ¤Þ§Þ‚Þ«Þ‚ÞªÞŒÞ¦Þ†ÞªÞŽÞ¬ Þ‹Þ¦ÞÞªÞ‚Þ°Þ‚Þ¬ÞˆÞ¬.
+
+ÞŠÞªÞƒÞ¦ÞŒÞ¦Þ‰Þ¦ ÞÞ§Þ‡Þ¨Þ¢ÞªÞ†ÞªÞƒÞ¬ÞˆÞ¨ÞŠÞ¦Þ‡Þ¨ÞˆÞ¦Þ‚Þ© Þ‘Þ¨Þ–Þ¨Þ“Þ¦ÞÞ°Þ†Þ®ÞÞ° 2026ÞŽÞ¦Þ‡Þ¨
+
+**Þ‡Þ¦Þ‡Þ¨.Þ‡Þ¬ÞÞ°.Þ„Þ©.Þ‡Þ¬Þ‚Þ°:**
+
+**978-99915-813-7-8**
+
+Þ†Þ¦ÞˆÞ¦ÞƒÞª ÞŠÞ¦ÞƒÞªÞ‰Þ§Þ†ÞªÞƒÞ©: Þ‘Þƒ. ÞÞ¦Þ‰Þ°ÞÞªÞÞ° ÞŠÞ¦ÞÞ§Þ™Þª
+=== cover mentions ===
+list.html:5: {{ if .Sections }}<div class="reader-library">{{ range .Sections }}<a class="reader-book" href="{{ .RelPermalink }}">{{ with .Params.cover }}<img src="{{ . }}" alt="">{{ else }}<div class="reader-book-blank"></div>{{ end }}<span>{{ .Title }}</span></a>{{ end }}</div>{{ else }}<ul class="reader-toc">
+baseof.html:19: {{- $img = $img | default "/images/book-cover.png" -}}
+style.css:234: /* Book card with cover */
+style.css:242: .book-cover {
+style.css:246: .book-cover img {
+style.css:263: .book-cover {
+=== flip.js: how pages are built ===
+1: /* FLIP-FIT: pages sized to the screen, no scrolling inside a page */
+35: ".reader-sheet{display:contents}",
+66: // FLIP-TITLE: the chapter title lives inside the text, so only page 1 shows it
+72: root.insertBefore(tc, root.firstChild); var rh = document.createElement("div"); rh.id = "rd-runhead"; rh.textContent = origTitle.textContent.trim(); root.parentNode.insertBefore(rh, root);

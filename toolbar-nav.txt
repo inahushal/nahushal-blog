@@ -1,0 +1,55 @@
+﻿
+  function build(tools) {
+    if (tools.querySelector(".hl-nav")) { return; }
+    var exit = mkBtn("Close book", EXIT, closeBook);
+    var panel = buildPanel();
+    var more = null;
+
+    if (panel) {
+      var closeMenu = function () { panel.classList.remove("open"); if (more) { more.classList.remove("on"); } };
+      more = mkBtn("Chapters", DOTS, function () {
+        if (panel.classList.contains("open")) { closeMenu(); return; }
+        var top = tools.getBoundingClientRect().bottom + 8;
+        panel.style.top = top + "px";
+        panel.style.maxHeight = Math.max(160, window.innerHeight - top - 80) + "px";
+        panel.classList.add("open");
+        more.classList.add("on");
+        var cur = panel.querySelector("a.current");
+        if (cur) { panel.scrollTop = Math.max(0, cur.offsetTop - panel.clientHeight / 2 + cur.offsetHeight / 2); }
+      });
+      document.addEventListener("click", function (e) {
+        if (panel.classList.contains("open") && !panel.contains(e.target) && !more.contains(e.target)) { closeMenu(); }
+      });
+      document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeMenu(); } });
+    }
+
+    tools.appendChild(exit);
+    if (more) { tools.appendChild(more); }
+
+    function order(flip) {
+      exit.style.order = flip ? "9" : "-9";
+      if (more) { more.style.order = flip ? "-9" : "9"; }
+    }
+    function fix() {
+      if (!more) { return; }
+      var a = exit.getBoundingClientRect(), b = more.getBoundingClientRect();
+      if (!a.width || !b.width) { return; }
+      order(a.left > b.left);
+    }
+    order(false);
+    requestAnimationFrame(fix);
+    setTimeout(fix, 300);
+    setTimeout(fix, 1200);
+    window.addEventListener("resize", fix);
+  }
+
+  var tries = 0;
+  var iv = setInterval(function () {
+    var t = document.querySelector(".hl-tools");
+    if (t && t.querySelector(".hl-bm")) { clearInterval(iv); build(t); }
+    else if (++tries > 80) { clearInterval(iv); }
+  }, 100);
+})();
+/* First-visit demo v8: swipe and zoom icons in the same line style. Tap anywhere to close. */
+(function () {
+  "use strict";
