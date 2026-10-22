@@ -6,7 +6,7 @@ description: ""
 draft: false
 ---
 
-![Underwater cabinet meeting](/images/vazeerun-zinmaadhaarukurun.jpg "Underwater cabinet meeting")
+![ކަނޑުއަޑީގައި ބޭއްވުނު ވަޒީރުންގެ މަޖިލީހުގެ ބައްދުލުވުމަށް ތައްޔާރުކުރެވިފައި](/images/vazeerun-zinmaadhaarukurun.jpg "ކަނޑުއަޑީގައި ބޭއްވުނު ވަޒީރުންގެ މަޖިލީހުގެ ބައްދުލުވުމަށް ތައްޔާރުކުރެވިފައި")
 
 
 
