@@ -1,7 +1,7 @@
 ---
 image: /images/testkurun-mvjyyznt.jpg
 title: "ޓެސްޓުކުރުން"
-date: 2026-10-22T22:04:35+02:00
+date: 2026-10-22T22:04:37+02:00
 description: ""
 draft: false
 category: politics
