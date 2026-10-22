@@ -1,9 +1,13 @@
 ---
+image: /images/vazeerun-zinmaadhaarukurun.jpg
 title: "ޒިންމާދާރުކަމުން ސިޔާސީ ލޮޓަރީއަކަށް: 1932ގެ ޤާނޫނުއަސާސީން 2008 އަށް"
 date: 2026-10-22T13:27:57+02:00
 description: ""
 draft: false
 ---
+
+![Underwater cabinet meeting](/images/vazeerun-zinmaadhaarukurun.jpg "Underwater cabinet meeting")
+
 
 
 
