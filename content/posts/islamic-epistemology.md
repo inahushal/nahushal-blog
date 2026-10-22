@@ -1,4 +1,5 @@
 ---
+category: religion
 title: "އިލާހީ މަސްދަރާއި ޤާނޫނުގެ ސިޔާދަތު"
 date: 2026-10-03T13:34:48+02:00
 description: ""
