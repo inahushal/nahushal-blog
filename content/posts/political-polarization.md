@@ -1,6 +1,7 @@
 ---
+image: /images/political-polarization-mvmtgpwh.jpg
 title: "ނުރައްކާ ސިޔާސީ ދެ ފިކުރު: ސަރުކާރު ފިކުރާއި އިދިކޮޅު ފިކުރު"
-date: 2026-10-24T21:50:03+02:00
+date: 2026-10-24T21:53:35+02:00
 description: ""
 draft: false
 category: politics
