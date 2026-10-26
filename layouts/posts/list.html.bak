@@ -1,0 +1,47 @@
+{{ define "main" }}
+<h2 class="section-heading">{{ .Title }}</h2>
+
+<div class="cat-cards">
+  <button type="button" class="cat-card" data-cat="all">ހުރިހާ</button>
+  <button type="button" class="cat-card" data-cat="politics">ސިޔާސީ</button>
+  <button type="button" class="cat-card" data-cat="legal">ޤާނޫނީ</button>
+  <button type="button" class="cat-card" data-cat="religion">ދީނީ</button>
+</div>
+
+{{ range (where .Pages "Params.unlisted" "ne" true).ByDate.Reverse }}
+<article class="post-card" data-cat="{{ $c := .Params.category }}{{ if reflect.IsSlice $c }}{{ delimit $c " " }}{{ else }}{{ $c }}{{ end }}">
+  <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "date.html" .Date }}</time>
+  <p class="post-content">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 200 }}{{ end }}</p>
+</article>
+{{ end }}
+
+<style>
+.cat-cards{display:flex;flex-wrap:nowrap;gap:6px;margin:0 0 18px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.cat-card{flex:1 0 auto;font:inherit;font-size:.85rem;line-height:1.3;color:inherit;cursor:pointer;padding:6px 10px;text-align:center;white-space:nowrap;
+  border:1px solid rgba(128,128,128,.5);border-radius:999px;background:rgba(128,128,128,.08)}
+.cat-card:hover{background:rgba(128,128,128,.18)}
+.cat-card.active{background:rgba(128,128,128,.32);border-color:currentColor}
+@media (min-width:600px){.cat-card{font-size:1rem;padding:8px 16px}}
+</style>
+<script>
+(function () {
+  var cards = document.querySelectorAll(".cat-card");
+  var posts = document.querySelectorAll("article.post-card[data-cat]");
+  function show(c) {
+    var all = !c || c === "all";
+    for (var i = 0; i < posts.length; i++) {
+      posts[i].style.display = (all || (" " + posts[i].getAttribute("data-cat") + " ").indexOf(" " + c + " ") > -1) ? "" : "none";
+    }
+    for (var j = 0; j < cards.length; j++) {
+      cards[j].classList.toggle("active", cards[j].getAttribute("data-cat") === (all ? "all" : c));
+    }
+    try { history.replaceState(null, "", all ? location.pathname + location.search : "#" + c); } catch (e) {}
+  }
+  for (var k = 0; k < cards.length; k++) {
+    cards[k].addEventListener("click", function () { show(this.getAttribute("data-cat")); });
+  }
+  show(location.hash.replace("#", "") || "all");
+})();
+</script>
+{{ end }}

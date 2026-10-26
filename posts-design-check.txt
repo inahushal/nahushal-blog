@@ -1,0 +1,95 @@
+=== hugo.toml ===
+defaultContentLanguage = "dv"
+baseURL = "https://nahushal.com/"
+languageCode = "dv"
+title = "Þ‚Þ¦Þ€ÞªÞÞ¦ÞÞ° Þ„Þ°ÞÞ®ÞŽÞ°"
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  description = "Þ‚Þ¦Þ€ÞªÞÞ¦ÞÞ°ÞŽÞ¬ Þ„Þ°ÞÞ®ÞŽÞ°: Þ‹Þ¨ÞˆÞ¬Þ€Þ¨ Þ„Þ¦Þ€ÞªÞ‚Þ° ÞÞ¨Þ”Þ¬ÞˆÞ­ ÞÞ¨Þ”ÞªÞ‚Þ°ÞŒÞ¦Þ‡Þ°"
+  substack = "https://substack.com/@ibrahimnahushal"
+  ga4 = "G-5JMJJ24VM9"
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[[menus.main]]
+  name = "ÞÞ¨Þ”ÞªÞ‚Þ°"
+  url = "/posts/"
+  weight = 1
+[[menus.main]]
+  name = "ÞŠÞ®ÞŒÞ°"
+  url = "/books/"
+  weight = 2
+[[menus.main]]
+  name = "Journal Articles"
+  url = "/journal-articles/"
+  weight = 4
+[[menus.main]]
+  name = "ÞŽÞªÞ…Þ§ÞÞªÞ‰Þ¦ÞÞ°"
+  url = "/contact/"
+  weight = 3
+
+[[menus.main]]
+  name = "English"
+  url = "https://substack.com/@ibrahimnahushal"
+  weight = 5
+=== layouts\list.html ===
+{{ define "main" }}
+<h2 class="section-heading">{{ .Title }}</h2>
+{{ range (where .Pages "Params.unlisted" "ne" true).ByDate.Reverse }}
+<article class="post-card">
+  <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "date.html" .Date }}</time>
+  <p class="post-content">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 200 }}{{ end }}</p>
+</article>
+{{ end }}
+{{ end }}
+=== content\posts files ===
+content\posts\27th-amendment.md
+content\posts\about-the-book.md
+content\posts\analysing-rasmale.md
+content\posts\bodu-badhalu.md
+content\posts\economic-literature.md
+content\posts\friday-sermon.md
+content\posts\islamic-epistemology-2.md
+content\posts\islamic-epistemology.md
+content\posts\member-privileges.md
+content\posts\multi-poverty-index-maldives.md
+content\posts\my-new-post.md
+content\posts\nizaamee-inthihaabu.md
+content\posts\rasmale.md
+content\posts\state-procurement.md
+content\posts\vazeerun-zinmaadhaarukurun.md
+content\posts\_index.md
+content\posts\rasmale\cover.png
+=== content\posts\_index.md ===
+---
+title: "ÞÞ¨Þ”ÞªÞ‚Þ°"
+---
+=== front matter of two recent posts ===
+vazeerun-zinmaadhaarukurun.md
+---
+image: /images/vazeerun-zinmaadhaarukurun.jpg
+title: "Þ’Þ¨Þ‚Þ°Þ‰Þ§Þ‹Þ§ÞƒÞªÞ†Þ¦Þ‰ÞªÞ‚Þ° ÞÞ¨Þ”Þ§ÞÞ© ÞÞ®Þ“Þ¦ÞƒÞ©Þ‡Þ¦Þ†Þ¦ÞÞ°: 1932ÞŽÞ¬ Þ¤Þ§Þ‚Þ«Þ‚ÞªÞ‡Þ¦ÞÞ§ÞÞ©Þ‚Þ° 2008 Þ‡Þ¦ÞÞ°"
+date: 2026-10-22T13:27:57+02:00
+description: ""
+draft: false
+---
+
+![Þ†Þ¦Þ‚Þ‘ÞªÞ‡Þ¦Þ‘Þ©ÞŽÞ¦Þ‡Þ¨ Þ„Þ­Þ‡Þ°ÞˆÞªÞ‚Þª ÞˆÞ¦Þ’Þ©ÞƒÞªÞ‚Þ°ÞŽÞ¬ Þ‰Þ¦Þ–Þ¨ÞÞ©Þ€ÞªÞŽÞ¬ Þ„Þ¦Þ‡Þ°Þ‹ÞªÞÞªÞˆÞªÞ‰Þ¦ÞÞ° ÞŒÞ¦Þ‡Þ°Þ”Þ§ÞƒÞªÞ†ÞªÞƒÞ¬ÞˆÞ¨ÞŠÞ¦Þ‡Þ¨](/images/vazeerun-zinmaadhaarukurun.jpg "Þ†Þ¦Þ‚Þ‘ÞªÞ‡Þ¦Þ‘Þ©ÞŽÞ¦Þ‡Þ¨ Þ„Þ­Þ‡Þ°ÞˆÞªÞ‚Þª ÞˆÞ¦Þ’Þ©ÞƒÞªÞ‚Þ°ÞŽÞ¬ Þ‰Þ¦Þ–Þ¨ÞÞ©Þ€ÞªÞŽÞ¬ Þ„Þ¦Þ‡Þ°Þ‹ÞªÞÞªÞˆÞªÞ‰Þ¦ÞÞ° ÞŒÞ¦Þ‡Þ°Þ”Þ§ÞƒÞªÞ†ÞªÞƒÞ¬ÞˆÞ¨ÞŠÞ¦Þ‡Þ¨")
+
+
+
+member-privileges.md
+---
+title: "Þ‰Þ¦Þ–Þ¨ÞÞ¨ÞÞ° Þ‰Þ¬Þ‚Þ°Þ„Þ¦ÞƒÞªÞ‚Þ°ÞŽÞ¬ Þ‡Þ¨Þ‚Þ§Þ”Þ¦ÞŒÞ°ÞŒÞ¦Þ‡Þ°: Þ€Þ¦Þ‡Þ°ÞÞ¦Þ†Þ© ÞƒÞ¦Þ‡Þ°Þ”Þ¨ÞŒÞªÞ‚Þ° ÞŽÞ®ÞŒÞ°Þ‚Þ¨Þ‚Þ°Þ‰ÞªÞ‚Þ°"
+date: 2026-10-20T13:01:07+02:00
+description: ""
+draft: false
+---
+
+![](/images/member-privileges.jpg)
+
+Þ‹Þ¦Þ‡ÞªÞÞ¦ÞŒÞªÞŽÞ¬ Þ„Þ§ÞƒÞªÞŒÞ¦Þ†ÞªÞŽÞ¬ ÞŒÞ¬ÞƒÞ¬Þ‡Þ¨Þ‚Þ° ÞƒÞ¦Þ‡Þ°Þ”Þ¨ÞŒÞªÞ‚Þ°ÞŽÞ¬ Þ‰Þ¦Þ–Þ¨ÞÞ©Þ€Þ¦Þ†Þ© Þ‹Þ¦Þ‡ÞªÞÞ¦ÞŒÞªÞŽÞ¬ Þ„Þ¦Þ–Þ¬Þ“Þª ÞŠÞ§ÞÞ°Þ†ÞªÞƒÞªÞ‰Þ§Þ‡Þ¨ Þ‰Þ§ÞÞ© Þ†Þ¦Þ‚Þ°Þ†Þ¦Þ‚Þ° Þ€Þ¦Þ‰Þ¦Þ–Þ¬Þ‡Þ°ÞÞªÞ‰ÞªÞŽÞ¬ Þ‡Þ¬Þ‚Þ°Þ‰Þ¬ Þ‰Þ¦ÞŒÞ© Þ„Þ§ÞƒÞª Þ‡Þ®Þ‚Þ°Þ‚Þ¦ ÞŽÞªÞ‚Þ¦ÞˆÞ¦Þ‚Þ¬ÞˆÞ¬. Þ‚Þ¦Þ‰Þ¦ÞˆÞ¬ÞÞ°ØŒ Þ‰Þ¦Þ–Þ¨ÞÞ¨ÞÞ° Þ‰Þ¬Þ‚Þ°Þ„Þ¦ÞƒÞªÞ‚Þ° Þ‡Þ¦Þ‰Þ¨Þ‡Þ°ÞÞ¦Þ‡Þ¦ÞÞ° Þ‡Þ¬ Þ‰Þ¬Þ‰Þ°Þ„Þ¦ÞƒÞªÞ‚Þ°ÞŽÞ¬ Þ‰ÞªÞÞ§ÞƒÞ¦Þ‡Þ§Þ‡Þ¨ Þ‡Þ¨Þ‚Þ§Þ”Þ¦ÞŒÞ°ÞŒÞ¦Þ‡Þ° Þ†Þ¦Þ‚Þ‘Þ¦Þ‡Þ¬Þ…ÞªÞ‰ÞªÞŽÞ¬ Þ„Þ§ÞƒÞª Þ‡Þ¬ Þ‰Þ¬Þ‚Þ°Þ„Þ¦ÞƒÞªÞ‚Þ°ÞŽÞ¬ Þ‡Þ¦ÞŒÞ°Þ‰Þ¦Þ‡Þ°Þ—Þ¦ÞÞ° Þ‹Þ«Þ†Þ®ÞÞ°ÞÞ¬ÞˆÞ¨ÞŠÞ¦Þ‡Þ¨ Þ‡Þ®ÞŒÞªÞ‰Þ¦Þ†Þ© Þ‰Þ¦ÞÞ°ÞÞ¦Þ€Þ¦ÞŒÞª ÞŠÞªÞÞªÞ‡Þ¬ÞƒÞªÞ‰Þ¬Þ‡Þ° Þ‡ÞªÞŠÞ¬Þ‹Þ­ Þ†Þ¦Þ‰Þ¬Þ†Þ¬ÞˆÞ¬. Þ‰Þ¨ Þ‰Þ¦Þ‡Þ°ÞÞ¦ÞÞ¦Þ‡Þ¦ÞÞ° Þ€Þ¦Þ‡Þ°ÞÞ¬Þ‡Þ° Þ€Þ¯Þ‹ÞªÞ‰ÞªÞŽÞ¬ ÞŽÞ®ÞŒÞªÞ‚Þ° Þ„Þ¦Þ‡Þ¬Þ‡Þ° ÞŠÞ¦ÞƒÞ§ÞŒÞ°ÞŒÞ¦Þ†ÞªÞ‚Þ° ÞˆÞ¦Þ†Þ¨ÞˆÞ¦Þ†Þ¨ Þ†Þ®Þ‰Þ¨ÞÞ¦Þ‚Þ°ÞŒÞ¦Þ†Þ§Þ‡Þ¨ Þ“Þ°ÞƒÞ¦Þ‡Þ¨Þ„Þ¨Þ‡ÞªÞ‚Þ¦ÞÞ°ÞŒÞ¦Þ‡Þ° Þ‡ÞªÞŠÞ¬Þ‡Þ°Þ‹ÞªÞ‰Þ¦ÞÞ° Þ€ÞªÞÞ¦Þ€Þ¬Þ…Þ¨ Þ‚Þ¦Þ‰Þ¦ÞˆÞ¬ÞÞ°ØŒ Þ‰Þ¨Þ‡Þ© Þ‰Þ¦Þ‡Þ°ÞÞ¦ÞÞ¦ Þ€Þ¦Þ‡Þ°ÞÞªÞˆÞªÞ‰ÞªÞŽÞ¬ Þ„Þ¦Þ‹Þ¦ÞÞªÞŽÞ¦Þ‡Þ¨ Þ‹Þ¦Þ‡ÞªÞÞ¦ÞŒÞªÞŽÞ¬ Þ€Þ¨Þ‚Þ°ÞŽÞªÞ‚Þ° Þ‡Þ¨ÞŒÞªÞƒÞ¦ÞÞ° Þ„Þ®Þ‘ÞªÞˆÞ¬ØŒ Þ‡Þ®Þ…ÞªÞ‚Þ°Þ„Þ®Þ…ÞªÞ‚Þ° Þ‡Þ¨ÞŒÞªÞƒÞªÞˆÞ§ Þ†Þ¦Þ‰Þ¬Þ†Þ¬ÞˆÞ¬. Þ‰Þ¨Þ‡Þ¦ÞÞ°ÞˆÞªÞƒÞ¬ Þ‰Þ§ Þ€Þ¦ÞƒÞªÞ‹Þ¦Þ‚Þ§ Þ‡Þ¦Þ‹Þ¨ Þ‘Þ¨Þ‰Þ®Þ†Þ°ÞƒÞ¬Þ“Þ¨Þ†Þ° Þ€Þ¦Þ‡Þ°ÞÞ¦Þ†Þ©ØŒ Þ‡Þ¨ÞŒÞªÞƒÞª Þ‰ÞªÞ‡Þ¦Þ‡Þ°ÞÞ¦ÞÞ§ÞŒÞ¦Þ‡Þ° Þ‡ÞªÞŠÞ¬Þ‡Þ°Þ‹ÞªÞ‰ÞªÞŽÞ¬ Þ„Þ¦Þ‹Þ¦ÞÞªÞŽÞ¦Þ‡Þ¨ØŒ Þ‰ÞªÞÞ§ÞƒÞ¦Þ‡Þ¨ÞŽÞ¬ Þ‚Þ¨Þ‚Þ°Þ‰ÞªÞ‚Þ°ÞŒÞ¦Þ‡Þ° ÞˆÞ¦ÞŽÞªÞŒÞªÞ‚Þ° ÞŒÞ¦Þ‚Þ°ÞŠÞ©Þ’ÞªÞ‚ÞªÞˆÞ¬ Þ‹Þ¬Þ‚Þ° Þ‡Þ¦Þ‚Þ°Þ‚Þ¦ Þ‹Þ¦Þ‡ÞªÞƒÞ¦Þ†Þ¦ÞÞ° ÞŠÞ¦ÞÞ°Þ†ÞªÞƒÞªÞ‰Þ§Þ‡Þ¨ØŒ Þ‡Þ¬ Þ‚Þ¨Þ‚Þ°Þ‰ÞªÞ‚Þ°ÞŒÞ¦Þ†Þ¦ÞÞ° ÞŠÞ§Þ‘ÞªÞ†Þ¨Þ”ÞªÞ‰ÞªÞŽÞ¬ ÞŠÞªÞƒÞ¨Þ€Þ¦Þ‰Þ¦ Þ„Þ§ÞƒÞª ÞƒÞ¦Þ‡Þ°Þ”Þ¨ÞŒÞªÞ‚Þ°ÞŽÞ¬ ÞˆÞ¯Þ“Þ¦ÞÞ° Þ‹Þ«Þ†Þ®ÞÞ°ÞÞªÞ‰Þ¬ÞˆÞ¬.
+
+## Þ‡Þ¨Þ‹Þ§ÞƒÞ© Þ‡Þ®Þ‚Þ¨ÞŽÞ¦Þ‚Þ‘ÞªÞŒÞ¦Þ‡Þ° ÞŽÞ¨Þ‚Þ¦Þ†ÞªÞƒÞªÞ‰ÞªÞŽÞ¬ Þ‚Þ¦ÞŒÞ©Þ–Þ§

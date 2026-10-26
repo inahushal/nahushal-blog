@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="dv" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ބްލޮގް އޮފީސް</title>
+<style>
+:root{--desk:#0a2229;--panel:#10333c;--line:#27535e;--paper:#f3f6f4;--ink:#14262b;--txt:#e4f0ee;--mut:#8fb0b3;--gold:#d4af37;--tea:#5eead4;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--desk);color:var(--txt);font:16px/1.7 "Faruma","MV Boli","Noto Sans Thaana",system-ui,sans-serif}
+button,input,textarea{font:inherit;color:inherit}
+.th{font-family:"Faruma","MV Boli","Noto Sans Thaana","Thaana Unicode Std",system-ui,sans-serif}
+.top{display:flex;align-items:center;gap:14px;padding:10px 18px;border-bottom:1px solid var(--line)}
+.top h1{margin:0;margin-inline-end:auto;position:relative;padding-inline-start:14px;font:400 1.9rem/1.5 "MV Boli","Faruma","Noto Sans Thaana","Thaana Unicode Std",system-ui,sans-serif;color:var(--gold);background:linear-gradient(90deg,#f6e3a0,#d4af37 55%,#b98a1f);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.top h1::before{content:"";position:absolute;inset-inline-start:0;top:22%;bottom:22%;width:3px;border-radius:2px;background:var(--tea)}
+#st{font-size:.85rem;color:var(--mut)} #st.ok{color:var(--tea)} #st.bad{color:#ff9d8f}
+#st a{color:inherit}
+.app{display:grid;grid-template-columns:250px 1fr;gap:18px;padding:18px;max-width:1180px;margin:0 auto}
+.side{align-self:start;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px}
+.side summary{cursor:pointer;font-weight:600;margin-bottom:10px}
+#list{list-style:none;margin:10px 0 0;padding:0;max-height:62vh;overflow:auto}
+#list li{padding:7px 8px;border-radius:6px;cursor:pointer;font-size:.9rem;word-break:break-all}
+#list li:hover{background:rgba(94,234,212,.1)} #list li.on{background:rgba(212,175,55,.18);color:#fff}
+input,textarea{background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:7px;padding:8px 10px;width:100%}
+input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--tea);outline-offset:1px}
+button{cursor:pointer;border:1px solid var(--line);background:transparent;border-radius:7px;padding:7px 12px}
+button:hover{background:rgba(94,234,212,.1)}
+button.gold{background:var(--gold);color:#1b1503;border-color:var(--gold);font-weight:600}
+button.gold:hover{background:#e3c04e}
+.side .gold{width:100%;margin-bottom:12px}
+#ldl{list-style:none;margin:0 0 12px;padding:0;max-height:28vh;overflow:auto}
+#ldl li{display:flex;gap:6px;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer;font-size:.9rem}
+#ldl li:hover{background:rgba(94,234,212,.1)} #ldl li.on{background:rgba(212,175,55,.18);color:#fff}
+#ldl .t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#ldl small{color:var(--mut);font-size:.7rem}
+#ldl .x{padding:0 6px;border:0;color:#ff9d8f}
+#list small{color:var(--gold)}
+#flt{margin-top:8px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;display:grid;gap:12px}
+.big{font-size:1.5rem;padding:10px 12px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label{display:grid;gap:4px;font-size:.82rem;color:var(--mut)}
+fieldset{border:1px solid var(--line);border-radius:7px;margin:0;padding:8px 10px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+fieldset legend{font-size:.82rem;color:var(--mut);padding:0 4px}
+fieldset label{display:flex;align-items:center;gap:6px;color:var(--txt);font-size:1rem}
+fieldset input{width:auto}
+.cover{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.82rem;color:var(--mut)}
+.cover code{color:var(--txt);word-break:break-all}
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 0}
+.tools button{min-width:40px}
+.tabs{display:flex;gap:4px;margin:10px 0 0}
+.tabs button{border-radius:7px 7px 0 0;border-bottom:0;color:var(--mut)}
+.tabs button.on{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+#body,#prev{background:var(--paper);color:var(--ink);border:0;border-radius:0 8px 8px 8px;min-height:56vh;padding:20px 24px;width:100%;font-size:1.15rem;line-height:1.95}
+#body{display:block;resize:vertical;font-family:"Faruma","MV Boli","Noto Sans Thaana",Georgia,serif}
+#prev{overflow:auto;font-family:"Faruma","MV Boli","Noto Sans Thaana",Georgia,serif}
+#prev img{max-width:100%;height:auto;display:block;margin:0 auto}
+#prev figure{margin:1em 0;text-align:center} #prev figcaption{font-size:.85em;opacity:.7}
+#prev blockquote{margin:1em 0;padding:0 1em;border-inline-start:3px solid var(--gold);opacity:.85}
+.bar{display:flex;gap:10px;justify-content:flex-end;margin-top:12px;flex-wrap:wrap}
+.bar button{padding:10px 20px}
+dialog{background:var(--panel);color:var(--txt);border:1px solid var(--line);border-radius:12px;padding:20px;width:min(440px,92vw)}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog h2{margin:0 0 12px;font-size:1.1rem} dialog label{margin-bottom:10px}
+dialog p{font-size:.8rem;color:var(--mut);margin:0 0 12px}
+.tools button:nth-child(2){font-weight:900}.tools button:nth-child(3){font-style:italic}
+.tools .pic{border-color:var(--gold);color:var(--gold)}
+.bar .del{margin-inline-end:auto;border-color:#c0504d;color:#ff9d8f}
+#prev{padding:0;min-height:0;background:none}#pf{display:block;width:100%;height:68vh;border:0;border-radius:0 8px 8px 8px;background:#fff}
+@media(max-width:780px){.top h1{font-size:1.5rem}.app{grid-template-columns:1fr;padding:12px}.row{grid-template-columns:1fr}#body,#prev{padding:14px}}
+</style>
+</head>
+<body>
+<header class="top"><h1>ބްލޮގް އޮފީސް</h1><span id="st"></span><button id="bset">ސެޓިންގްސް</button></header>
+<div class="app">
+<aside class="side"><button id="bnew" class="gold">އާ ލިޔުމެއް</button>
+<details open><summary>ޑްރާފްޓްތައް (މި ބްރައުޒަރުގައި)</summary><ul id="ldl"></ul></details>
+<details open><summary>ލިޔުންތައް</summary>
+<input id="flt" dir="ltr" placeholder="ފައިލްގެ ނަމުން ހޯދާ">
+<ul id="list"></ul></details></aside>
+<section>
+<div class="card">
+<input id="title" class="big th" dir="auto" placeholder="ސުރުޚީ">
+<div class="row">
+<label>ފައިލްގެ ނަން (އިނގިރޭސި އަކުރު، ނަންބަރު، ހައިފަން)<input id="slug" dir="ltr" placeholder="state-procurement" autocomplete="off"></label>
+<label>ކުރު ތަފްސީލު<input id="desc" class="th" dir="auto"></label>
+</div>
+<div class="row">
+<fieldset id="cats"><legend>ގިންތިތައް</legend></fieldset>
+<div class="cover"><span>ކަވަރު ފޮޓޯ:</span><code id="covp" dir="ltr">ނެތް</code><button id="bcov">އަޕްލޯޑް</button><button id="bnocov">ފުހެލާ</button></div>
+</div>
+</div>
+<div class="tools" id="tools"><button id="bimg" class="pic">+ ލިޔުމުގެ ތެރެއަށް ފޮޓޯ</button></div>
+<div class="tabs"><button data-t="w" class="on">ލިޔާ</button><button data-t="p">ކުރިން ބަލާ</button></div>
+<textarea id="body" dir="auto" placeholder="މިތަނުގައި ލިޔުން ލިޔާ"></textarea>
+<article id="prev" dir="auto" hidden></article>
+<div class="bar"><button id="bdel" class="del" hidden>ލިޔުން ފުހެލާ</button><button id="bntest" hidden>ޓެސްޓެއް ފޮނުވާ</button><button id="bnews" hidden>ނިއުސްލެޓަރ ފޮނުވާ</button><button id="bdraft">ޑްރާފްޓެއްގެ ގޮތުގައި ރައްކާކުރޭ</button><button id="bpub" class="gold">ޝާއިޢު ކުރޭ</button></div>
+</section>
+</div>
+<dialog id="dlg"><form method="dialog" id="fset">
+<h2>ބްލޮގާ ގުޅާ</h2>
+<p>github.com ގެ Settings › Developer settings ގައި Fine-grained token އެއް ހަދާ. އެ ޓޯކަން ބްލޮގްގެ ރެޕޮސިޓަރީއަށް ހަނި ކުރައްވާ، Contents އަށް Read and write ދެއްވާ. ޓޯކަން ރައްކާކުރެވޭނީ މި ބްރައުޒަރުގައެވެ.</p>
+<label>ރެޕޮސިޓަރީ<input id="crepo" dir="ltr"></label>
+<label>ބްރާންޗް<input id="cbr" dir="ltr"></label>
+<label>ޓޯކަން<input id="ctok" dir="ltr" type="password" autocomplete="off"></label>
+<label>ނިއުސްލެޓަރ ފޮނުވާ ލިންކް (Worker address)<input id="cnurl" dir="ltr" placeholder="https://....workers.dev"></label>
+<label>ފޮނުވުމުގެ ޕާސްކޯޑް<input id="cnkey" dir="ltr" type="password" autocomplete="off"></label>
+<label>ޓެސްޓް އީމެއިލް އެޑްރެސް<input id="cntest" dir="ltr" type="email" placeholder="you@example.com" autocomplete="off"></label>
+<label>ސުރުޚީގެ ފޮންޓް (ބްލޮގްގެ ފޮންޓުގެ ނަން، އިޚްތިޔާރީ)<input id="ctfont" dir="ltr" placeholder="" autocomplete="off"></label>
+<div class="bar"><button type="button" id="cclose">ބަންދުކުރޭ</button><button class="gold" id="csave">ސެޓިންގްސް ރައްކާކުރޭ</button></div>
+</form></dialog>
+<input type="file" id="fimg" accept="image/*" multiple hidden>
+<script>
+const $=s=>document.querySelector(s);
+const CATS=[["politics","ސިޔާސީ"],["legal","ޤާނޫނީ"],["religion","ދީނީ"]];
+const SITE="https://nahushal.com";
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+let cfg=Object.assign({repo:"inahushal/nahushal-blog",branch:"main",token:"",nurl:"",nkey:"",ntest:"",tfont:""},JSON.parse(ls.get("nh-cfg")||"{}"));
+let cur={name:null,sha:null,date:null,extra:[]},cover="",imgs={},pickFor="body";
+
+const LDK="nh-drafts",GHK="nh-ghdrafts";
+const jget=(k,d)=>{try{const v=JSON.parse(ls.get(k)||"");return v==null?d:v}catch(e){return d}};
+const getLd=()=>jget(LDK,[]);
+let ldId=null,lastSig="";
+let ghd=new Set(jget(GHK,[]));
+const putGh=()=>ls.set(GHK,JSON.stringify([...ghd]));
+const sigOf=()=>{const f=form();return JSON.stringify([f.title,f.slug,f.desc,f.body,f.cats,cover])};
+const mark=()=>{lastSig=sigOf()};
+function renderLd(){
+  const a=getLd().sort((x,y)=>y.t-x.t);
+  $("#ldl").innerHTML=a.map(d=>`<li data-d="${d.id}"${d.id===ldId?' class="on"':""}><span class="t th">${esc(d.title||"ސުރުޚީ ނެތް")}</span><small dir="ltr">${new Date(d.t).toLocaleDateString("en-GB")}</small><button class="x" data-x="${d.id}" title="ފުހެލާ" aria-label="ފުހެލާ">✕</button></li>`).join("")||'<li style="cursor:default">ޑްރާފްޓެއް ނެތް</li>'}
+function saveLocal(){
+  if(cur.name)return;
+  const f=form();
+  if(!ldId&&!f.title&&!f.body.trim())return;
+  const s=sigOf();if(s===lastSig)return;lastSig=s;
+  if(!ldId)ldId="d"+Date.now().toString(36);
+  const a=getLd(),d={id:ldId,title:f.title,slug:f.slug,desc:f.desc,body:f.body,cats:f.cats,cover,t:Date.now()};
+  const i=a.findIndex(x=>x.id===ldId);if(i>=0)a[i]=d;else a.push(d);
+  ls.set(LDK,JSON.stringify(a));renderLd()}
+function removeLocal(id){ls.set(LDK,JSON.stringify(getLd().filter(x=>x.id!==id)));renderLd()}
+function openLocal(id){
+  const d=getLd().find(x=>x.id===id);if(!d)return;
+  saveLocal();ldId=id;cur={name:null,sha:null,date:null,extra:[]};
+  fill(d);mark();document.querySelectorAll("#list li").forEach(x=>x.classList.remove("on"));renderLd();toast("")}
+
+function toast(m,cls,html){const s=$("#st");s.className=cls||"";html?s.innerHTML=m:s.textContent=m}
+async function api(p,o={}){
+  const r=await fetch(`https://api.github.com/repos/${cfg.repo}/${p}`,Object.assign({},o,{headers:{Authorization:"Bearer "+cfg.token,Accept:"application/vnd.github+json","Content-Type":"application/json"}}));
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(r.status===401?"GitHub އިން ޓޯކަން ބަލައެއް ނުގަނެ. ސެޓިންގްސް ޗެކްކުރޭ.":(j.message||("މައްސަލައެއް ދިމާވެއްޖެ ("+r.status+")")));
+  return j}
+const toB64=u=>{let s="";for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return btoa(s)};
+const enc=t=>toB64(new TextEncoder().encode(t));
+const dec=b=>new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\s/g,"")),c=>c.charCodeAt(0)));
+
+function isoNow(){const d=new Date(),p=n=>String(n).padStart(2,"0"),o=-d.getTimezoneOffset(),sg=o>=0?"+":"-";
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}${sg}${p(Math.floor(Math.abs(o)/60))}:${p(Math.abs(o)%60)}`}
+function unq(v){v=(v||"").trim();if(v[0]==='"'){try{return JSON.parse(v)}catch(e){}}if(v[0]==="'")return v.slice(1,-1);return v}
+function parse(md){
+  md=md.replace(/\r\n/g,"\n");
+  const m=md.match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+  if(!m)return{fm:{},extra:[],body:md};
+  const fm={},extra=[],known=["title","date","description","draft","category","image"];
+  m[1].split("\n").forEach(l=>{const k=l.match(/^([A-Za-z_]+):\s*(.*)$/);
+    if(k&&known.includes(k[1]))fm[k[1]]=k[2];else extra.push(l)});
+  return{fm,extra,body:m[2].replace(/^\n+/,"")}}
+function build(f,draft){
+  const L=[];
+  if(cover)L.push("image: "+cover);
+  L.push("title: "+JSON.stringify(f.title),"date: "+(cur.date||isoNow()),"description: "+JSON.stringify(f.desc),"draft: "+draft);
+  if(f.cats.length===1)L.push("category: "+f.cats[0]);else if(f.cats.length>1)L.push("category: ["+f.cats.join(", ")+"]");
+  return"---\n"+L.concat(cur.extra).join("\n")+"\n---\n\n"+f.body.trim()+"\n"}
+
+CATS.forEach(([v,t])=>{$("#cats").insertAdjacentHTML("beforeend",`<label class="th"><input type="checkbox" value="${v}">${t}</label>`)});
+const form=()=>({title:$("#title").value.trim(),slug:$("#slug").value.trim(),desc:$("#desc").value.trim(),body:$("#body").value,
+  cats:[...document.querySelectorAll("#cats input:checked")].map(i=>i.value)});
+function setCover(c){cover=c||"";$("#covp").textContent=cover||"ނެތް"}
+function fill(o){$("#title").value=o.title||"";$("#slug").value=o.slug||"";$("#desc").value=o.desc||"";$("#body").value=o.body||"";
+  document.querySelectorAll("#cats input").forEach(i=>i.checked=(o.cats||[]).includes(i.value));setCover(o.cover);
+  $("#slug").readOnly=!!cur.name;sync();tab("w")}
+function fresh(){saveLocal();ldId=null;cur={name:null,sha:null,date:null,extra:[]};fill({});mark();document.querySelectorAll("#list li").forEach(x=>x.classList.remove("on"));renderLd();toast("")}
+
+async function refreshList(){
+  try{const j=await api(`contents/content/posts?ref=${cfg.branch}`);
+    const names=j.filter(x=>/\.md$/.test(x.name)&&x.name!=="_index.md").map(x=>x.name).sort();
+    $("#list").innerHTML=names.map(n=>`<li data-n="${n}"${n===cur.name?' class="on"':""}>${n.replace(/\.md$/,"")}${ghd.has(n)?' <small class="th">· ޑްރާފްޓް</small>':""}</li>`).join("")||"<li>އަދި ލިޔުމެއް ނެތް</li>";
+    filter()}catch(e){toast(e.message,"bad")}}
+function filter(){const q=$("#flt").value.toLowerCase();document.querySelectorAll("#list li").forEach(li=>li.style.display=li.textContent.toLowerCase().includes(q)?"":"none")}
+async function openPost(name){
+  saveLocal();
+  toast("ހުޅުވަނީ…");
+  try{const j=await api(`contents/content/posts/${name}?ref=${cfg.branch}`),p=parse(dec(j.content));
+    const c=(p.fm.category||"").replace(/[\[\]"']/g,"").split(",").map(s=>s.trim()).filter(Boolean);
+    ldId=null;cur={name,sha:j.sha,date:p.fm.date||null,extra:p.extra,draft:p.fm.draft==="true"};
+    if(cur.draft)ghd.add(name);else ghd.delete(name);putGh();
+    fill({title:unq(p.fm.title),slug:name.replace(/\.md$/,""),desc:unq(p.fm.description),body:p.body,cats:c,cover:unq(p.fm.image)});
+    document.querySelectorAll("#list li").forEach(li=>li.classList.toggle("on",li.dataset.n===name));
+    renderLd();
+    toast(p.fm.draft==="true"?"ހުޅުވިއްޖެ (ޑްރާފްޓް)":"ހުޅުވިއްޖެ (ޝާއިޢުކުރެވިފައި)","ok")}catch(e){toast(e.message,"bad")}}
+
+async function save(draft){
+  const f=form();
+  if(!cfg.token){openSettings();return}
+  if(!f.title){toast("ފުރަތަމަ ސުރުޚީ ލިޔާ.","bad");return}
+  if(!/^[a-z0-9][a-z0-9-]*$/.test(f.slug)){toast("ފައިލްގެ ނަމަށް ކުޑަ އިނގިރޭސި އަކުރު، ނަންބަރު، ހައިފަން ބޭނުންކުރޭ.","bad");return}
+  const name=f.slug+".md",path="content/posts/"+name;
+  toast(draft?"ޑްރާފްޓް ރައްކާކުރަނީ…":"ޝާއިޢު ކުރަނީ…");
+  try{
+    if(!cur.name){let exists=true;try{await api(`contents/${path}?ref=${cfg.branch}`)}catch(e){exists=false}
+      if(exists){toast("މި ފައިލް ނަމުގައި ލިޔުމެއް ހުރެއެވެ. ލިސްޓުން އެ ލިޔުން ހުޅުވާ، ނުވަތަ ނަން ބަދަލުކޮށްލާ.","bad");return}}
+    const r=await api("contents/"+path,{method:"PUT",body:JSON.stringify({message:(draft?"Save draft: ":"Publish: ")+f.slug,content:enc(build(f,draft)),branch:cfg.branch,sha:cur.sha||undefined})});
+    cur.name=name;cur.sha=r.content.sha;cur.draft=draft;sync();$("#slug").readOnly=true;if(ldId){removeLocal(ldId);ldId=null}draft?ghd.add(name):ghd.delete(name);putGh();await refreshList();
+    toast(draft?"ޑްރާފްޓް ރައްކާކުރެވިއްޖެ.":`ޝާއިޢު ކުރެވިއްޖެ. 1–2 މިނިޓުތެރޭގައި ކަމުދާނެ: <a href="${SITE}/posts/${f.slug}/" target="_blank" rel="noopener">ލިޔުން ހުޅުވާ</a>`,"ok",!draft)
+  }catch(e){toast(e.message,"bad")}}
+
+async function upload(file){
+  if(!cfg.token){openSettings();return null}
+  const ext=(file.name.split(".").pop()||"").toLowerCase();
+  if(!["jpg","jpeg","png","webp","gif","svg"].includes(ext)){toast("jpg، png، webp، gif ނުވަތަ svg ފޮޓޯއެއް ބޭނުންކުރޭ.","bad");return null}
+  const base=($("#slug").value.trim()||"image").replace(/[^a-z0-9-]/g,"")||"image";
+  const name=`${base}-${Date.now().toString(36)}.${ext}`;
+  toast("ފޮޓޯ އަޕްލޯޑް ކުރަނީ…");
+  try{const buf=new Uint8Array(await file.arrayBuffer());
+    await api("contents/static/images/"+name,{method:"PUT",body:JSON.stringify({message:"Add image: "+name,content:toB64(buf),branch:cfg.branch})});
+    const url="/images/"+name;imgs[url]=await dataUrl(file);toast("ފޮޓޯ އަޕްލޯޑް ކުރެވިއްޖެ.","ok");return url}
+  catch(e){toast(e.message,"bad");return null}}
+
+const ta=$("#body");
+function ins(t){ta.focus();if(!document.execCommand("insertText",false,t))ta.setRangeText(t,ta.selectionStart,ta.selectionEnd,"end")}
+function wrap(a,b,ph){const s=ta.value.slice(ta.selectionStart,ta.selectionEnd)||ph;ins(a+s+(b===undefined?a:b))}
+function lines(pre){let s=ta.selectionStart,e=ta.selectionEnd;s=ta.value.lastIndexOf("\n",s-1)+1;ta.setSelectionRange(s,e);
+  ins(ta.value.slice(s,e).split("\n").map((l,i)=>(pre==="1. "?(i+1)+". ":pre)+l).join("\n"))}
+const TOOLS=[["B","ބޯލްޑް",()=>wrap("**","**","ލިޔުން")],["I","އިޓަލިކް",()=>wrap("*","*","ލިޔުން")],["H2","ސުރުޚީ",()=>lines("## ")],["H3","ކުޑަ ސުރުޚީ",()=>lines("### ")],
+ ["❝","ބަޔާން",()=>lines("> ")],["•","ބުޅެޓް ލިސްޓް",()=>lines("- ")],["1.","ނަންބަރު ލިސްޓް",()=>lines("1. ")],
+ ["ލިންކް","ލިންކް",()=>{const u=prompt("ލިންކުގެ އެޑްރެސް");if(u)wrap("[","]("+u+")","ލިޔުން")}],
+ ["―","ވަކިކުރާ ރޮނގު",()=>ins("\n\n---\n\n")]];
+TOOLS.forEach(([l,t,f])=>{const b=document.createElement("button");b.textContent=l;b.title=t;b.setAttribute("aria-label",t);b.onclick=()=>{tab("w");f()};$("#tools").appendChild(b)});
+
+$("#fimg").onchange=async e=>{const fs=[...e.target.files];e.target.value="";
+  for(const f of fs){const u=await upload(f);if(!u)continue;
+    if(pickFor==="cover"){setCover(u);break}
+    const c=prompt("ކެޕްޝަން (ނުލިޔަންޏާ ހުސްކޮށް ބާއްވާ)")||"";tab("w");ins(`\n\n![${c}](${u}${c?` "${c}"`:""})\n\n`)}};
+$("#bcov").onclick=()=>{pickFor="cover";$("#fimg").click()};$("#bnocov").onclick=()=>setCover("");
+
+const esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const src=u=>imgs[u]||(u[0]==="/"?SITE+u:u);
+function inl(s){return esc(s)
+  .replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,(m,a,u,c)=>`<figure><img src="${src(u)}" alt="${a.replace(/"/g,"&quot;")}">${c?`<figcaption>${c}</figcaption>`:""}</figure>`)
+  .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g,'<a href="$2">$1</a>').replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").replace(/\*(.+?)\*/g,"<i>$1</i>")}
+function md2html(t){return t.replace(/\r\n/g,"\n").split(/\n{2,}/).map(b=>{b=b.trim();if(!b)return"";let m;
+  if(m=b.match(/^(#{1,6})\s+(.*)$/s))return`<h${m[1].length} dir="auto">${inl(m[2])}</h${m[1].length}>`;
+  if(/^---+$/.test(b))return"<hr>";
+  if(/^>/.test(b))return`<blockquote dir="auto">${inl(b.replace(/^>\s?/gm,""))}</blockquote>`;
+  if(/^[-*]\s/.test(b))return"<ul>"+b.split("\n").map(l=>`<li dir="auto">${inl(l.replace(/^[-*]\s+/,""))}</li>`).join("")+"</ul>";
+  if(/^\d+\.\s/.test(b))return"<ol>"+b.split("\n").map(l=>`<li dir="auto">${inl(l.replace(/^\d+\.\s+/,""))}</li>`).join("")+"</ol>";
+  const h=inl(b).replace(/\n/g,"<br>");return/^<figure>.*<\/figure>$/s.test(h)?h:`<p dir="auto">${h}</p>`}).join("")}
+const dataUrl=b=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(b)});
+let siteCss=null;
+async function loadCss(){if(siteCss!==null)return siteCss;siteCss="";
+  try{let css=dec((await api(`contents/assets/css/style.css?ref=${cfg.branch}`)).content);
+    const urls=[...new Set([...css.matchAll(/url\(["']?([^"')]+\.(?:ttf|otf|woff2?))["']?\)/gi)].map(m=>m[1]))];
+    for(const u of urls){let q=u.replace(/^(\.\.\/|\/)+/,"");try{q=decodeURIComponent(q)}catch(e){}
+      for(const b of["static/","assets/"]){try{const r=await fetch(`https://api.github.com/repos/${cfg.repo}/contents/${b}${q}?ref=${cfg.branch}`,{headers:{Authorization:"Bearer "+cfg.token,Accept:"application/vnd.github.raw"}});
+        if(r.ok){css=css.split(u).join(await dataUrl(await r.blob()));break}}catch(e){}}}
+    siteCss=css}catch(e){siteCss=""}
+  return siteCss}
+async function loadTitleFont(){
+  if(!cfg.token)return;
+  try{const css=await loadCss();if(!css)return;
+    const faces=css.match(/@font-face\s*\{[^}]*\}/g)||[];if(!faces.length)return;
+    const old=document.getElementById("blogfonts");if(old)old.remove();
+    const st=document.createElement("style");st.id="blogfonts";st.textContent=faces.join("\n");document.head.appendChild(st);
+    window.blogFams=[...new Set(faces.map(f=>(f.match(/font-family\s*:\s*["']?([^;"'}]+)["']?/)||[])[1]).filter(Boolean).map(x=>x.trim()))];
+    const want=cfg.tfont||window.blogFams[0];
+    if(want)document.querySelector(".top h1").style.fontFamily=`"${want}","MV Boli","Faruma","Noto Sans Thaana",system-ui,sans-serif`}catch(e){}}
+async function tab(t){const p=t==="p";
+  if(p){const f=form();$("#prev").innerHTML='<iframe id="pf"></iframe>';toast("ކުރިން ބަލާ ތައްޔާރުކުރަނީ…");
+    const css=await loadCss(),d=(cur.date||isoNow()).slice(0,10);
+    $("#pf").srcdoc=`<!doctype html><html lang="dv" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="${SITE}/"><style>${css}</style></head><body><article class="post-card article"><h2 class="post-title">${esc(f.title)}</h2><time class="post-date">${d}</time><div class="post-content" id="article-content">${md2html(f.body).replace(/ dir="auto"/g,"")}</div></article></body></html>`;
+    toast(css?"":"ސައިޓްގެ ސްޓައިލް ނުލިބުނީ. ސެޓިންގްސް ޗެކްކުރޭ.",css?"":"bad")}
+  $("#prev").hidden=!p;ta.hidden=p;document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===t))}
+function sync(){$("#bdel").hidden=!cur.name;$("#bnews").hidden=!cur.name;$("#bntest").hidden=!cur.name}
+async function del(){
+  if(!cur.name||!confirm("މި ލިޔުން ސައިޓުން ފުހެލާނެ. ކުރިއަށް ދާންވީތަ؟"))return;
+  toast("ފުހެލަނީ…");
+  try{await api("contents/content/posts/"+cur.name,{method:"DELETE",body:JSON.stringify({message:"Delete: "+cur.name,sha:cur.sha,branch:cfg.branch})});
+    ghd.delete(cur.name);putGh();fresh();await refreshList();toast("ލިޔުން ފުހެލެވިއްޖެ.","ok")}catch(e){toast(e.message,"bad")}}
+
+// ---- newsletter ----
+function excerpt(f){
+  if(f.desc)return f.desc;
+  const b=f.body.replace(/\r\n/g,"\n").split(/\n{2,}/).map(s=>s.trim()).find(s=>s&&!s.startsWith("![")&&!s.startsWith("#"));
+  return b?b.replace(/!\[[^\]]*\]\([^)]*\)/g,"").replace(/\[([^\]]*)\]\([^)]*\)/g,"$1").replace(/[*_`>]/g,"").replace(/\s+/g," ").trim():""}
+async function send(f,test,force){
+  toast(test?"ޓެސްޓް ފޮނުވަނީ…":"ފޮނުވަނީ…");
+  try{
+    const r=await fetch(cfg.nurl,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+      passcode:cfg.nkey,title:f.title,excerpt:excerpt(f),url:`${SITE}/posts/${f.slug}/`,
+      test:test?cfg.ntest:undefined,force:force||undefined})});
+    const x=await r.text();let j={};try{j=JSON.parse(x)}catch(e){}
+    if(r.status===409&&!test){
+      if(confirm("މި ލިޔުމުގެ ނިއުސްލެޓަރ ކުރިން ފޮނުވާފައިވެއެވެ. އަދިވެސް ފޮނުވާންވީތަ؟"))return send(f,test,true);
+      toast("");return}
+    if(!r.ok)throw new Error(r.status===401?"ޕާސްކޯޑް ރަނގަޅެއް ނޫން. ސެޓިންގްސް ޗެކްކުރޭ.":(j.error||x||("Error "+r.status)));
+    toast(test?"ޓެސްޓް ފޮނުވިއްޖެ. އިންބޮކްސް ބަލާ.":"ނިއުސްލެޓަރ ފޮނުވިއްޖެ.","ok")
+  }catch(e){toast(e.message,"bad")}}
+async function news(test){
+  const f=form();if(!cur.name)return;
+  if(!test&&cur.draft){toast("ފުރަތަމަ ލިޔުން ޝާއިޢު ކުރޭ.","bad");return}
+  if(!cfg.nurl||!cfg.nkey){toast("ނިއުސްލެޓަރ ލިންކާއި ޕާސްކޯޑް ސެޓިންގްސްގައި ޖަހާ.","bad");return}
+  if(test&&!cfg.ntest){toast("ޓެސްޓް އީމެއިލް އެޑްރެސް ސެޓިންގްސްގައި ޖަހާ.","bad");return}
+  if(!test&&!confirm("ސަބްސްކްރައިބަރުންނަށް މި ލިޔުމުގެ ނިއުސްލެޓަރ ފޮނުވާނެ. ފޮނުވުމަށްފަހު އެކަން ފަހަތަށް ނުދެވޭނެ. ކުރިއަށް ދާންވީތަ؟"))return;
+  await send(f,test,false)}
+ta.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&!e.shiftKey){const k=e.key.toLowerCase();
+  if(k==="b"){e.preventDefault();wrap("**","**","ލިޔުން")}else if(k==="i"){e.preventDefault();wrap("*","*","ލިޔުން")}}});
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>tab(b.dataset.t));
+
+$("#bnew").onclick=fresh;$("#bdel").onclick=del;$("#bnews").onclick=()=>news(false);$("#bntest").onclick=()=>news(true);$("#bimg").onclick=()=>{pickFor="body";$("#fimg").click()};$("#bpub").onclick=()=>save(false);$("#bdraft").onclick=()=>save(true);
+$("#ldl").onclick=e=>{
+  const x=e.target.closest("[data-x]");
+  if(x){const id=x.dataset.x;
+    if(confirm("މި ޑްރާފްޓް ފުހެލާނެ. ކުރިއަށް ދާންވީތަ؟")){removeLocal(id);
+      if(id===ldId){ldId=null;cur={name:null,sha:null,date:null,extra:[]};fill({});mark();renderLd()}}
+    return}
+  const li=e.target.closest("li[data-d]");if(li)openLocal(li.dataset.d)};
+$("#list").onclick=e=>{const li=e.target.closest("li[data-n]");if(li)openPost(li.dataset.n)};$("#flt").oninput=filter;
+function openSettings(){$("#crepo").value=cfg.repo;$("#cbr").value=cfg.branch;$("#ctok").value=cfg.token;$("#cnurl").value=cfg.nurl||"";$("#cnkey").value=cfg.nkey||"";$("#cntest").value=cfg.ntest||"";$("#ctfont").value=cfg.tfont||"";$("#ctfont").placeholder=(window.blogFams||[]).join(", ");$("#dlg").showModal()}
+$("#bset").onclick=openSettings;
+$("#cclose").onclick=()=>$("#dlg").close();
+$("#fset").onsubmit=()=>{cfg={repo:$("#crepo").value.trim()||"inahushal/nahushal-blog",branch:$("#cbr").value.trim()||"main",token:$("#ctok").value.trim(),nurl:$("#cnurl").value.trim(),nkey:$("#cnkey").value.trim(),ntest:$("#cntest").value.trim(),tfont:$("#ctfont").value.trim()};ls.set("nh-cfg",JSON.stringify(cfg));siteCss=null;refreshList();loadTitleFont()};
+
+setInterval(saveLocal,3000);
+window.addEventListener("beforeunload",saveLocal);
+document.addEventListener("visibilitychange",()=>{if(document.hidden)saveLocal()});
+(function(){const old=jget("nh-draft",null);
+  if(old&&(old.title||old.body)){const a=getLd();
+    a.push({id:"d"+Date.now().toString(36),title:old.title||"",slug:old.slug||"",desc:old.desc||"",body:old.body||"",cats:old.cats||[],cover:old.cover||"",t:Date.now()});
+    ls.set(LDK,JSON.stringify(a))}
+  ls.del("nh-draft")})();
+renderLd();
+const lastD=getLd().sort((x,y)=>y.t-x.t)[0];
+if(lastD){openLocal(lastD.id);toast("ފަހުގެ ޑްރާފްޓް ހުޅުވިއްޖެ.","ok")}
+if(!cfg.token)openSettings();else{refreshList();loadTitleFont()}
+</script>
+</body>
+</html>

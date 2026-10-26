@@ -1,0 +1,67 @@
+{{ define "main" }}
+
+<!-- BOOK HEADING -->
+
+<h2 class="section-heading">ފޮތް</h2>
+
+<!-- BOOK BLOCK -->
+
+{{ partial "book-slider.html" . }}
+
+<!-- ARTICLES HEADING -->
+
+<h2 class="section-heading">ލިޔުންތައް</h2>
+
+<!-- ARTICLES -->
+
+{{ $articles := (where site.RegularPages "Section" "posts").ByDate.Reverse }}
+
+{{ $paginator := .Paginate $articles 3 }}
+
+{{ range $paginator.Pages }}
+
+<article class="post-card">
+
+  <h2 class="post-title">
+    <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+  </h2>
+
+  <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">
+    {{ partial "date.html" .Date }}
+  </time>
+
+  <p class="post-content">
+    {{ with .Description }}
+      {{ . }}
+    {{ else }}
+      {{ .Summary | plainify | truncate 200 }}
+    {{ end }}
+  </p>
+
+</article>
+
+{{ end }}
+
+<!-- PAGINATION -->
+
+{{ if or $paginator.HasPrev $paginator.HasNext }}
+
+<nav class="pagination">
+
+  {{ if $paginator.HasPrev }}
+    <a href="{{ $paginator.Prev.URL }}" class="pagination-prev">
+      ← ފަހަތަށް
+    </a>
+  {{ end }}
+
+  {{ if $paginator.HasNext }}
+    <a href="{{ $paginator.Next.URL }}" class="pagination-next">
+      ކުރިއަށް →
+    </a>
+  {{ end }}
+
+</nav>
+
+{{ end }}
+
+{{ end }}
