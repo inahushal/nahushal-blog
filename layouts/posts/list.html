@@ -21,6 +21,8 @@
 {{ end }}
 </div>
 
+<nav class="pagination" id="pager"></nav>
+
 <style>
 .post-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 20px}
 @media (max-width:600px){.post-grid{gap:22px 12px}}
@@ -39,22 +41,51 @@
 </style>
 <script>
 (function () {
+  var PER = 6, cat = "all", page = 1;
   var cards = document.querySelectorAll(".cat-card");
   var posts = document.querySelectorAll("article.post-card[data-cat]");
-  function show(c) {
-    var all = !c || c === "all";
+  var pager = document.getElementById("pager");
+  function matches(p) {
+    return cat === "all" || (" " + p.getAttribute("data-cat") + " ").indexOf(" " + cat + " ") > -1;
+  }
+  function render() {
+    var list = [];
     for (var i = 0; i < posts.length; i++) {
-      posts[i].style.display = (all || (" " + posts[i].getAttribute("data-cat") + " ").indexOf(" " + c + " ") > -1) ? "" : "none";
+      if (matches(posts[i])) { list.push(posts[i]); } else { posts[i].style.display = "none"; }
     }
-    for (var j = 0; j < cards.length; j++) {
-      cards[j].classList.toggle("active", cards[j].getAttribute("data-cat") === (all ? "all" : c));
+    var pages = Math.max(1, Math.ceil(list.length / PER));
+    if (page > pages) { page = pages; }
+    for (var j = 0; j < list.length; j++) {
+      list[j].style.display = (j >= (page - 1) * PER && j < page * PER) ? "" : "none";
     }
-    try { history.replaceState(null, "", all ? location.pathname + location.search : "#" + c); } catch (e) {}
+    for (var k = 0; k < cards.length; k++) {
+      cards[k].classList.toggle("active", cards[k].getAttribute("data-cat") === cat);
+    }
+    var h = "";
+    if (pages > 1) {
+      if (page > 1) { h += '<a href="#" class="pagination-prev" data-go="' + (page - 1) + '">\u2190 \u078A\u07A6\u0780\u07A6\u078C\u07A6\u0781</a>'; }
+      h += '<span class="pager-num">' + page + ' / ' + pages + '</span>';
+      if (page < pages) { h += '<a href="#" class="pagination-next" data-go="' + (page + 1) + '">\u0786\u07AA\u0783\u07A8\u0787\u07A6\u0781 \u2192</a>'; }
+    }
+    pager.innerHTML = h;
+  }
+  function setCat(c) {
+    cat = c || "all"; page = 1; render();
+    try { history.replaceState(null, "", cat === "all" ? location.pathname + location.search : "#" + cat); } catch (e) {}
   }
   for (var k = 0; k < cards.length; k++) {
-    cards[k].addEventListener("click", function () { show(this.getAttribute("data-cat")); });
+    cards[k].addEventListener("click", function () { setCat(this.getAttribute("data-cat")); });
   }
-  show(location.hash.replace("#", "") || "all");
+  pager.addEventListener("click", function (e) {
+    var a = e.target.closest("a[data-go]");
+    if (!a) { return; }
+    e.preventDefault();
+    page = parseInt(a.getAttribute("data-go"), 10);
+    render();
+    var g = document.querySelector(".post-grid");
+    if (g) { g.scrollIntoView({ behavior: "smooth", block: "start" }); }
+  });
+  setCat(location.hash.replace("#", "") || "all");
 })();
 </script>
 {{ end }}
