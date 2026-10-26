@@ -16,7 +16,7 @@
 
 {{ $articles := (where site.RegularPages "Section" "posts").ByDate.Reverse }}
 
-{{ $paginator := .Paginate $articles 3 }}
+{{ $paginator := .Paginate $articles 6 }}
 
 <div class="post-grid">
 {{ range $paginator.Pages }}
