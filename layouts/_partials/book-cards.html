@@ -4,6 +4,13 @@
   .book-intro summary { list-style: none; cursor: pointer; display: inline-block; }
   .book-intro summary::-webkit-details-marker { display: none; }
   .book-intro .post-content { margin-top: 1rem; }
+
+  /* book-smaller */
+  .book-card .post-title { font-size: 1.05rem; line-height: 1.7; }
+  .book-card .substack-link { font-size: .8rem; padding: 5px 12px; line-height: 1.6; }
+  .book-card .book-status { font-size: .85rem; margin: .2rem 0 .7rem; }
+  .book-card .book-intro .post-content { font-size: .85rem; line-height: 1.8; }
+  /* end book-smaller */
 </style>
 {{ $s := .slider }}
 {{ if $s }}<div class="book-slide">{{ end }}
