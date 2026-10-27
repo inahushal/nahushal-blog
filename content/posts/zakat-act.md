@@ -4,7 +4,7 @@ title: "ޒަކާތުގެ ޤާނޫނަށް ތަންޤީދެއް"
 date: 2026-10-26T12:54:23+01:00
 description: ""
 draft: false
-category: [politics, legal, religion]
+category: [legal, religion, law-critique]
 ---
 
 ![](/images/zakat-act-mvqlz9qx.jpg)
