@@ -112,7 +112,7 @@ dialog p{font-size:.8rem;color:var(--mut);margin:0 0 12px}
 <input type="file" id="fimg" accept="image/*" multiple hidden>
 <script>
 const $=s=>document.querySelector(s);
-const CATS=[["politics","ސިޔާސީ"],["legal","ޤާނޫނީ"],["religion","ދީނީ"]];
+const CATS=[["politics","ސިޔާސީ"],["legal","ޤާނޫނީ"],["religion","ދީނީ"],["law-critique","ޤާނޫނުގެ ތަންޤީދު"]];
 const SITE="https://nahushal.com";
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 let cfg=Object.assign({repo:"inahushal/nahushal-blog",branch:"main",token:"",nurl:"",nkey:"",ntest:"",tfont:""},JSON.parse(ls.get("nh-cfg")||"{}"));
