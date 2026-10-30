@@ -22,6 +22,7 @@
     </div>
   </div>
   <div class="voice-time" dir="ltr">0:00 / 0:00</div>
+  <button type="button" class="voice-speed" dir="ltr" aria-label="Playback speed" title="Playback speed">1x</button>
 </div>
 
 <style>
@@ -33,6 +34,8 @@
   .voice-bar{height:6px;border-radius:3px;background:rgba(128,128,128,.3);cursor:pointer;overflow:hidden}
   .voice-fill{height:100%;width:0;background:currentColor;border-radius:3px}
   .voice-time{flex:none;font-size:.75rem;opacity:.7;font-variant-numeric:tabular-nums}
+  .voice-speed{flex:none;min-width:44px;padding:4px 8px;font-size:.78rem;font-variant-numeric:tabular-nums;color:inherit;background:transparent;border:1px solid rgba(128,128,128,.5);border-radius:999px;cursor:pointer}
+  .voice-speed:hover{background:rgba(128,128,128,.15)}
 </style>
 
 <script>
@@ -41,7 +44,8 @@
   var a=box.querySelector('audio'),btn=box.querySelector('.voice-btn'),
       play=box.querySelector('.i-play'),pause=box.querySelector('.i-pause'),
       bar=box.querySelector('.voice-bar'),fill=box.querySelector('.voice-fill'),
-      time=box.querySelector('.voice-time');
+      time=box.querySelector('.voice-time'),label=box.querySelector('.voice-label'),speedBtn=box.querySelector('.voice-speed');
+  var speeds=[0.75,1,1.25,1.5,2],si=1;
   function f(s){s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
   function ui(){
     var p=a.duration?a.currentTime/a.duration*100:0;
@@ -50,7 +54,8 @@
     time.textContent=f(a.currentTime)+' / '+f(a.duration);
   }
   btn.addEventListener('click',function(){a.paused?a.play():a.pause();});
-  a.addEventListener('play',function(){play.style.display='none';pause.style.display='';});
+  a.addEventListener('play',function(){play.style.display='none';pause.style.display='';label.style.display='none';});
+  speedBtn.addEventListener('click',function(){si=(si+1)%speeds.length;a.playbackRate=speeds[si];speedBtn.textContent=speeds[si]+'x';});
   a.addEventListener('pause',function(){play.style.display='';pause.style.display='none';});
   a.addEventListener('timeupdate',ui);
   a.addEventListener('loadedmetadata',ui);
