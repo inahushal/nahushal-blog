@@ -1343,3 +1343,10 @@ html body nav.reader-pager > a {
 html.flip-pending #reader { opacity: 0; }
 #reader { transition: opacity .25s ease; }
 ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .22s; }
+
+/* Equal-size book covers */
+.book-cover img {
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  object-position: center;
+}
