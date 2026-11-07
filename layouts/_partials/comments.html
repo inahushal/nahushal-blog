@@ -107,7 +107,7 @@
       if (r.ok) {
         form.reset();
         status.className = 'ok';
-        status.textContent = T.thanks;
+        status.textContent = T.thanks; if (window.nhTrack) { window.nhTrack("comment", (document.title || "").slice(0, 80)); }
         return load();
       }
       return r.json().catch(function () { return {}; }).then(function (j) {
