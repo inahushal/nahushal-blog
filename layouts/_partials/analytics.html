@@ -26,7 +26,7 @@
       if (localStorage.getItem("nahushal-notrack") === "1") { return; }
       var h = location.hostname;
       if (h === "localhost" || h === "127.0.0.1") { return; }
-      var data = JSON.stringify({ p: location.pathname, r: document.referrer });
+      var v = ""; try { v = localStorage.getItem("nahushal-vid"); if (!v) { v = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2); localStorage.setItem("nahushal-vid", v); } } catch (e2) { v = ""; } var data = JSON.stringify({ p: location.pathname, r: document.referrer, v: v });
       var url = "https://nahushal-analytics.inahushal.workers.dev/collect";
       if (navigator.sendBeacon) { navigator.sendBeacon(url, data); }
       else { fetch(url, { method: "POST", body: data, keepalive: true, mode: "no-cors" }); }
