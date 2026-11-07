@@ -33,4 +33,40 @@
     } catch (e) {}
   })();
 </script>
+<script>
+(function () {
+  var EP = "https://nahushal-analytics.inahushal.workers.dev/event";
+  var vid = "";
+  try {
+    vid = localStorage.getItem("nh_ev_id") || "";
+    if (!vid) {
+      vid = crypto.randomUUID ? crypto.randomUUID() : String(Math.random()).slice(2) + Date.now();
+      localStorage.setItem("nh_ev_id", vid);
+    }
+  } catch (e) {}
+  function send(n, d) {
+    try {
+      fetch(EP, { method: "POST", keepalive: true, headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ n: n, d: d || "", p: location.pathname, v: vid }) });
+    } catch (e) {}
+  }
+  window.nhTrack = send;
+
+  var seen = {};
+  addEventListener("scroll", function () {
+    var h = document.documentElement;
+    var total = h.scrollHeight - h.clientHeight;
+    if (total < 200) return;
+    var pct = (window.scrollY || h.scrollTop) / total * 100;
+    [25, 50, 75, 100].forEach(function (m) {
+      if (pct >= m - 1 && !seen[m]) { seen[m] = 1; send("scroll", String(m)); }
+    });
+  }, { passive: true });
+
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest && e.target.closest(
+      '[data-bookmark],.bookmark,[class*="bookmark"],[id*="bookmark"],[aria-label*="bookmark" i],[title*="bookmark" i]');
+    if (el) send("bookmark", (document.title || "").slice(0, 80));
+  });
+})();</script>
 {{ end }}
