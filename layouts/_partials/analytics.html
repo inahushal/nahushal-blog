@@ -52,6 +52,34 @@
   }
   window.nhTrack = send;
 
+  var cSeen = false;
+  function watchComments() {
+    var el = document.querySelector('#comments,.comments,#disqus_thread,.giscus,#giscus,[id*="comment"],[class*="comment"]');
+    if (!el || !("IntersectionObserver" in window)) return;
+    new IntersectionObserver(function (en, ob) {
+      if (en[0].isIntersecting && !cSeen) { cSeen = true; send("comments_seen", (document.title || "").slice(0, 80)); ob.disconnect(); }
+    }).observe(el);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", watchComments); else watchComments();
+
+  document.addEventListener("submit", function (e) {
+    var fm = e.target;
+    if (!fm || !fm.querySelector || !fm.querySelector("textarea")) return;
+    var s = (fm.id + " " + fm.className + " " + (fm.getAttribute("action") || "")).toLowerCase();
+    if (/comment|reply|respond/.test(s) || (fm.closest && fm.closest('[id*="comment"],[class*="comment"]'))) {
+      send("comment", (document.title || "").slice(0, 80));
+    }
+  }, true);
+
+  var gcount = null;
+  addEventListener("message", function (e) {
+    if (e.origin !== "https://giscus.app") return;
+    var d = e.data && e.data.giscus && e.data.giscus.discussion;
+    if (!d || typeof d.totalCommentCount !== "number") return;
+    if (gcount !== null && d.totalCommentCount > gcount) send("comment", (document.title || "").slice(0, 80));
+    gcount = d.totalCommentCount;
+  });
+
   var seen = {};
   addEventListener("scroll", function () {
     var h = document.documentElement;
