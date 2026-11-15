@@ -106,6 +106,33 @@
 </script>
 {{ end }}
 </main>
+<style>
+.fonts-wrap { text-align: center; margin: 2rem 0 1.5rem; }
+.reader-site .fonts-wrap { display: none; }
+.fonts-btn { font: inherit; font-size: .85rem; padding: .35rem 1.1rem; border-radius: 999px; border: 1px solid #1fc8ac; background: transparent; color: #4de3c5; cursor: pointer; }
+.fonts-btn:hover { background: #1fc8ac; color: #04202b; }
+#fontsDlg { max-width: 34rem; width: 90%; border: 1px solid #1fc8ac; border-radius: 14px; background: #062a38; color: #fff; padding: 1.4rem 1.6rem; }
+#fontsDlg::backdrop { background: rgba(0,0,0,.6); }
+#fontsDlg h3 { margin: 0 0 1rem; text-align: center; }
+#fontsDlg ul { list-style: none; margin: 0; padding: 0; text-align: left; }
+#fontsDlg li { padding: .7rem 0; border-top: 1px solid rgba(31,200,172,.25); font-family: system-ui, 'Segoe UI', Arial, sans-serif; font-size: .9rem; line-height: 1.6; }
+#fontsDlg li strong { color: #4de3c5; }
+#fontsDlg a { color: #4de3c5; }
+#fontsDlg .fonts-close { display: block; margin: 1rem auto 0; font: inherit; background: transparent; border: 1px solid #1fc8ac; color: #4de3c5; border-radius: 999px; padding: .3rem 1.2rem; cursor: pointer; }
+</style>
+<div class="fonts-wrap">
+  <button type="button" class="fonts-btn" onclick="document.getElementById('fontsDlg').showModal()">&#1930;&#1966;&#1922;&#1968;&#1939;&#1962;&#1932;&#1958;&#1954;&#1968;</button>
+</div>
+<dialog id="fontsDlg" onclick="if(event.target===this)this.close()">
+  <h3>&#1930;&#1966;&#1922;&#1968;&#1939;&#1962;&#1932;&#1958;&#1954;&#1968;</h3>
+  <ul>
+    <li><strong>MV Izyan Bodu Akuru 3D</strong><br>Used for: the header title of the blog<br>Downloaded from: <a href="https://dhivehifont.com/archives/35109?dhf_font_id=36432" target="_blank" rel="noopener">dhivehifont.com</a></li>
+    <li><strong>MV A Waheed</strong><br>Used for: article titles, book titles, menu tabs and section headings<br>Downloaded from: <a href="https://www.thaanafontgallery.com/font/mv-a-waheed/" target="_blank" rel="noopener">Thaana Font Gallery</a></li>
+    <li><strong>MV Izyan</strong><br>Used for: fallback font across the site<br>Downloaded from: <a href="https://dhivehifont.com/archives/font/mvizyaregular-2" target="_blank" rel="noopener">dhivehifont.com</a></li>
+    <li><strong>Noto Sans Thaana</strong><br>Used for: fallback font across the site<br>Source: Google Noto Fonts (SIL Open Font License)</li>
+  </ul>
+  <button type="button" class="fonts-close" onclick="document.getElementById('fontsDlg').close()">&times;</button>
+</dialog>
 <style>/* footer-smaller */ footer p, footer p a { font-size: .8rem !important; line-height: 1.7 !important; }</style>
 <footer>
   <p class="footer-social">
