@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="dv" dir="rtl">
 <head>
 <meta charset="utf-8">
@@ -277,7 +277,8 @@ async function loadTitleFont(){
 async function tab(t){const p=t==="p";
   if(p){const f=form();$("#prev").innerHTML='<iframe id="pf"></iframe>';toast("ކުރިން ބަލާ ތައްޔާރުކުރަނީ…");
     const css=await loadCss(),d=(cur.date||isoNow()).slice(0,10);
-    $("#pf").srcdoc=`<!doctype html><html lang="dv" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="${SITE}/"><style>${css}</style></head><body><article class="post-card article"><h2 class="post-title">${esc(f.title)}</h2><time class="post-date">${d}</time><div class="post-content" id="article-content">${md2html(f.body).replace(/ dir="auto"/g,"")}</div></article></body></html>`;
+    $("#pf").srcdoc=`<!doctype html><html lang="dv" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><base href="${SITE}/"><style>${css}</style></head><body><article class="post-card article"><h2 class="post-title">${esc(f.title)}</h2><time class="post-date">${d}</time><div class="post-content" id="article-content">${md2html(f.body).replace(/ dir="auto"/g,"")}</div></article><!-- BMC-Widget --><script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="nahushal" data-description="Support me on Buy me a coffee!" data-message="" data-color="#FF5F5F" data-position="Right" data-x_margin="18" data-y_margin="18"></script><!-- /BMC-Widget -->
+</body></html>`;
     toast(css?"":"ސައިޓްގެ ސްޓައިލް ނުލިބުނީ. ސެޓިންގްސް ޗެކްކުރޭ.",css?"":"bad")}
   $("#prev").hidden=!p;ta.hidden=p;document.querySelectorAll(".tabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===t))}
 function sync(){$("#bdel").hidden=!cur.name;$("#bnews").hidden=!cur.name;$("#bntest").hidden=!cur.name}
@@ -343,5 +344,8 @@ const lastD=getLd().sort((x,y)=>y.t-x.t)[0];
 if(lastD){openLocal(lastD.id);toast("ފަހުގެ ޑްރާފްޓް ހުޅުވިއްޖެ.","ok")}
 if(!cfg.token)openSettings();else{refreshList();loadTitleFont()}
 </script>
+<!-- BMC-Widget --><script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="nahushal" data-description="Support me on Buy me a coffee!" data-message="" data-color="#FF5F5F" data-position="Right" data-x_margin="18" data-y_margin="18"></script><!-- /BMC-Widget -->
 </body>
 </html>
+
+
